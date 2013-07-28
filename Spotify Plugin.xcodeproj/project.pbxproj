@@ -1,0 +1,283 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7DB4EB0417A4B81E00520108 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB4EB0317A4B81E00520108 /* Cocoa.framework */; };
+		7DB4EB0617A4B81E00520108 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB4EB0517A4B81E00520108 /* ScriptingBridge.framework */; };
+		7DB4EB0C17A4B81E00520108 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7DB4EB0A17A4B81E00520108 /* InfoPlist.strings */; };
+		7DB4EB1817A4B81E00520108 /* Spotify_PluginAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DB4EB1717A4B81E00520108 /* Spotify_PluginAction.m */; };
+		7DB4EB1B17A4B81E00520108 /* Spotify_PluginSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DB4EB1A17A4B81E00520108 /* Spotify_PluginSource.m */; };
+		7DB4EB2217A4B8A000520108 /* Spotify.app in Resources */ = {isa = PBXBuildFile; fileRef = 7DB4EB2117A4B8A000520108 /* Spotify.app */; };
+		7DB4EB2617A4BB9C00520108 /* Spotify.app in Sources */ = {isa = PBXBuildFile; fileRef = 7DB4EB2117A4B8A000520108 /* Spotify.app */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXBuildRule section */
+		7DB4EB2417A4B95F00520108 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.app";
+			fileType = pattern.proxy;
+			isEditable = 1;
+			outputFiles = (
+				"$(DERIVED_FILES_DIR)/$(INPUT_FILE_BASE).h",
+			);
+			script = "sdef \"$INPUT_FILE_PATH\" | sdp -fh -o \"$DERIVED_FILES_DIR\" --basename \"$INPUT_FILE_BASE\" --bundleid `defaults read \"$INPUT_FILE_PATH/Contents/Info\" CFBundleIdentifier`";
+		};
+/* End PBXBuildRule section */
+
+/* Begin PBXFileReference section */
+		7DB4EB0017A4B81E00520108 /* Spotify Plugin.qsplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spotify Plugin.qsplugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7DB4EB0317A4B81E00520108 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		7DB4EB0517A4B81E00520108 /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
+		7DB4EB0917A4B81E00520108 /* Spotify Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Spotify Info.plist"; sourceTree = SOURCE_ROOT; };
+		7DB4EB0B17A4B81E00520108 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7DB4EB0E17A4B81E00520108 /* Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Common.xcconfig; sourceTree = "<group>"; };
+		7DB4EB0F17A4B81E00520108 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		7DB4EB1017A4B81E00520108 /* Developer.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Developer.xcconfig; sourceTree = "<group>"; };
+		7DB4EB1117A4B81E00520108 /* QSPlugIn.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = QSPlugIn.xcconfig; sourceTree = "<group>"; };
+		7DB4EB1217A4B81E00520108 /* Quicksilver.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Quicksilver.pch; sourceTree = "<group>"; };
+		7DB4EB1317A4B81E00520108 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		7DB4EB1617A4B81E00520108 /* Spotify_PluginAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Spotify_PluginAction.h; sourceTree = "<group>"; };
+		7DB4EB1717A4B81E00520108 /* Spotify_PluginAction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Spotify_PluginAction.m; sourceTree = "<group>"; };
+		7DB4EB1917A4B81E00520108 /* Spotify_PluginSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Spotify_PluginSource.h; sourceTree = "<group>"; };
+		7DB4EB1A17A4B81E00520108 /* Spotify_PluginSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Spotify_PluginSource.m; sourceTree = "<group>"; };
+		7DB4EB2117A4B8A000520108 /* Spotify.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; name = Spotify.app; path = /tmp/QS/build/Debug/../../../../../Applications/Spotify.app; sourceTree = "<absolute>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7DB4EAFD17A4B81E00520108 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7DB4EB0417A4B81E00520108 /* Cocoa.framework in Frameworks */,
+				7DB4EB0617A4B81E00520108 /* ScriptingBridge.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7DB4EAF617A4B81E00520108 = {
+			isa = PBXGroup;
+			children = (
+				7DB4EB2117A4B8A000520108 /* Spotify.app */,
+				7DB4EB0717A4B81E00520108 /* Spotify Plugin */,
+				7DB4EB0217A4B81E00520108 /* Frameworks */,
+				7DB4EB0117A4B81E00520108 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7DB4EB0117A4B81E00520108 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7DB4EB0017A4B81E00520108 /* Spotify Plugin.qsplugin */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7DB4EB0217A4B81E00520108 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7DB4EB0317A4B81E00520108 /* Cocoa.framework */,
+				7DB4EB0517A4B81E00520108 /* ScriptingBridge.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7DB4EB0717A4B81E00520108 /* Spotify Plugin */ = {
+			isa = PBXGroup;
+			children = (
+				7DB4EB1617A4B81E00520108 /* Spotify_PluginAction.h */,
+				7DB4EB1717A4B81E00520108 /* Spotify_PluginAction.m */,
+				7DB4EB1917A4B81E00520108 /* Spotify_PluginSource.h */,
+				7DB4EB1A17A4B81E00520108 /* Spotify_PluginSource.m */,
+				7DB4EB0D17A4B81E00520108 /* Configuration */,
+				7DB4EB0817A4B81E00520108 /* Supporting Files */,
+			);
+			path = "Spotify Plugin";
+			sourceTree = "<group>";
+		};
+		7DB4EB0817A4B81E00520108 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7DB4EB0917A4B81E00520108 /* Spotify Info.plist */,
+				7DB4EB0A17A4B81E00520108 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7DB4EB0D17A4B81E00520108 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				7DB4EB0E17A4B81E00520108 /* Common.xcconfig */,
+				7DB4EB0F17A4B81E00520108 /* Debug.xcconfig */,
+				7DB4EB1017A4B81E00520108 /* Developer.xcconfig */,
+				7DB4EB1117A4B81E00520108 /* QSPlugIn.xcconfig */,
+				7DB4EB1217A4B81E00520108 /* Quicksilver.pch */,
+				7DB4EB1317A4B81E00520108 /* Release.xcconfig */,
+			);
+			name = Configuration;
+			path = /private/tmp/QS/Configuration;
+			sourceTree = "<absolute>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7DB4EAFF17A4B81E00520108 /* Spotify Plugin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7DB4EB1E17A4B81E00520108 /* Build configuration list for PBXNativeTarget "Spotify Plugin" */;
+			buildPhases = (
+				7DB4EAFB17A4B81E00520108 /* ShellScript */,
+				7DB4EAFC17A4B81E00520108 /* Sources */,
+				7DB4EAFD17A4B81E00520108 /* Frameworks */,
+				7DB4EAFE17A4B81E00520108 /* Resources */,
+			);
+			buildRules = (
+				7DB4EB2417A4B95F00520108 /* PBXBuildRule */,
+			);
+			dependencies = (
+			);
+			name = "Spotify Plugin";
+			productName = "Spotify Plugin";
+			productReference = 7DB4EB0017A4B81E00520108 /* Spotify Plugin.qsplugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7DB4EAF717A4B81E00520108 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Jin Yifan";
+			};
+			buildConfigurationList = 7DB4EAFA17A4B81E00520108 /* Build configuration list for PBXProject "Spotify Plugin" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7DB4EAF617A4B81E00520108;
+			productRefGroup = 7DB4EB0117A4B81E00520108 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7DB4EAFF17A4B81E00520108 /* Spotify Plugin */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7DB4EAFE17A4B81E00520108 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7DB4EB0C17A4B81E00520108 /* InfoPlist.strings in Resources */,
+				7DB4EB2217A4B8A000520108 /* Spotify.app in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7DB4EAFB17A4B81E00520108 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "\"$QS_BUILD_ROOT/Tools/bltrversion\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7DB4EAFC17A4B81E00520108 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7DB4EB2617A4BB9C00520108 /* Spotify.app in Sources */,
+				7DB4EB1817A4B81E00520108 /* Spotify_PluginAction.m in Sources */,
+				7DB4EB1B17A4B81E00520108 /* Spotify_PluginSource.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		7DB4EB0A17A4B81E00520108 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7DB4EB0B17A4B81E00520108 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7DB4EB1C17A4B81E00520108 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7DB4EB0F17A4B81E00520108 /* Debug.xcconfig */;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		7DB4EB1D17A4B81E00520108 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7DB4EB1317A4B81E00520108 /* Release.xcconfig */;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		7DB4EB1F17A4B81E00520108 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7DB4EB1117A4B81E00520108 /* QSPlugIn.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		7DB4EB2017A4B81E00520108 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7DB4EB1117A4B81E00520108 /* QSPlugIn.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7DB4EAFA17A4B81E00520108 /* Build configuration list for PBXProject "Spotify Plugin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7DB4EB1C17A4B81E00520108 /* Debug */,
+				7DB4EB1D17A4B81E00520108 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7DB4EB1E17A4B81E00520108 /* Build configuration list for PBXNativeTarget "Spotify Plugin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7DB4EB1F17A4B81E00520108 /* Debug */,
+				7DB4EB2017A4B81E00520108 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7DB4EAF717A4B81E00520108 /* Project object */;
+}
