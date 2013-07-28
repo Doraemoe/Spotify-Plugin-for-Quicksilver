@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7DA9FFC117A4C7F8001742FB /* SpotifyBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DA9FFC017A4C7F8001742FB /* SpotifyBridge.m */; };
 		7DB4EB0417A4B81E00520108 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB4EB0317A4B81E00520108 /* Cocoa.framework */; };
 		7DB4EB0617A4B81E00520108 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB4EB0517A4B81E00520108 /* ScriptingBridge.framework */; };
 		7DB4EB0C17A4B81E00520108 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7DB4EB0A17A4B81E00520108 /* InfoPlist.strings */; };
@@ -31,6 +32,8 @@
 /* End PBXBuildRule section */
 
 /* Begin PBXFileReference section */
+		7DA9FFBF17A4C7F8001742FB /* SpotifyBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpotifyBridge.h; sourceTree = "<group>"; };
+		7DA9FFC017A4C7F8001742FB /* SpotifyBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotifyBridge.m; sourceTree = "<group>"; };
 		7DB4EB0017A4B81E00520108 /* Spotify Plugin.qsplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spotify Plugin.qsplugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DB4EB0317A4B81E00520108 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		7DB4EB0517A4B81E00520108 /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
@@ -92,6 +95,8 @@
 		7DB4EB0717A4B81E00520108 /* Spotify Plugin */ = {
 			isa = PBXGroup;
 			children = (
+				7DA9FFBF17A4C7F8001742FB /* SpotifyBridge.h */,
+				7DA9FFC017A4C7F8001742FB /* SpotifyBridge.m */,
 				7DB4EB1617A4B81E00520108 /* Spotify_PluginAction.h */,
 				7DB4EB1717A4B81E00520108 /* Spotify_PluginAction.m */,
 				7DB4EB1917A4B81E00520108 /* Spotify_PluginSource.h */,
@@ -209,6 +214,7 @@
 				7DB4EB2617A4BB9C00520108 /* Spotify.app in Sources */,
 				7DB4EB1817A4B81E00520108 /* Spotify_PluginAction.m in Sources */,
 				7DB4EB1B17A4B81E00520108 /* Spotify_PluginSource.m in Sources */,
+				7DA9FFC117A4C7F8001742FB /* SpotifyBridge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
