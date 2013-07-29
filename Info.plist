@@ -77,34 +77,13 @@
 			<key>QSSpotify_PluginActionProvider</key>
 			<string>QSSpotify_PluginActionProvider</string>
 		</dict>
-		<key>QSApplicationActionsTemplate</key>
-		<dict>
-			<key>com.domain.application</key>
-			<dict>
-				<key>Spotify_PluginExampleCommand</key>
-				<dict>
-					<key>actionClass</key>
-					<string>QSSpotify_PluginActionProvider</string>
-					<key>command</key>
-					<string>Spotify_PluginExampleCommand</string>
-					<key>name</key>
-					<string>Application Action Example</string>
-				</dict>
-			</dict>
-		</dict>
+		<key>QSApplicationActions</key>
+		<dict/>
 		<key>QSBundleChildHandlers</key>
-		<dict>
-			<key>QSSpotify_PluginType</key>
-			<string>QSSpotify_PluginSource</string>
-		</dict>
-		<key>QSBundleChildHandlersTemplate</key>
-		<dict>
-			<key>com.domain.application</key>
-			<string>QSSpotify_PluginSource</string>
-		</dict>
+		<dict/>
 		<key>QSCommands</key>
 		<dict>
-			<key>QSSpotifyCopyToClipboard</key>
+			<key>QSSpotifyNextSong</key>
 			<dict>
 				<key>command</key>
 				<dict>
@@ -119,16 +98,43 @@
 								<key>actionClass</key>
 								<string>QSSpotify_PluginControlProvider</string>
 								<key>actionSelector</key>
-								<string>copyTrackURLToClipboard</string>
+								<string>next</string>
 								<key>icon</key>
 								<string>SpotifyIcon</string>
 								<key>name</key>
-								<string>Copy Link To Clipboard</string>
+								<string>Next Song</string>
 							</dict>
 						</dict>
 					</dict>
 					<key>directID</key>
-					<string>Spotify_PluginCopyToClipboard</string>
+					<string>Spotify_PluginNextSong</string>
+				</dict>
+			</dict>
+			<key>QSSpotifyToggleRepeat</key>
+			<dict>
+				<key>command</key>
+				<dict>
+					<key>actionID</key>
+					<string>QSObjCSendMessageAction</string>
+					<key>directArchive</key>
+					<dict>
+						<key>data</key>
+						<dict>
+							<key>qs.action</key>
+							<dict>
+								<key>actionClass</key>
+								<string>QSSpotify_PluginControlProvider</string>
+								<key>actionSelector</key>
+								<string>toggleRepeat</string>
+								<key>icon</key>
+								<string>SpotifyIcon</string>
+								<key>name</key>
+								<string>Repeat</string>
+							</dict>
+						</dict>
+					</dict>
+					<key>directID</key>
+					<string>Spotify_PluginToggleRepeat</string>
 				</dict>
 			</dict>
 			<key>QSSpotifyDecreaseVolume</key>
@@ -155,7 +161,7 @@
 						</dict>
 					</dict>
 					<key>directID</key>
-					<string>Spotify_PluginVolumeDecrease</string>
+					<string>Spotify_PluginDecreaseVolume</string>
 				</dict>
 			</dict>
 			<key>QSSpotifyIncreaseVolume</key>
@@ -182,7 +188,7 @@
 						</dict>
 					</dict>
 					<key>directID</key>
-					<string>Spotify_PluginVolumeIncrease</string>
+					<string>Spotify_PluginIncreaseVolume</string>
 				</dict>
 			</dict>
 			<key>QSSpotifyMute</key>
@@ -209,10 +215,10 @@
 						</dict>
 					</dict>
 					<key>directID</key>
-					<string>Spotify_PluginVolumeMute</string>
+					<string>Spotify_PluginMute</string>
 				</dict>
 			</dict>
-			<key>QSSpotifyOpenInBrowser</key>
+			<key>QSSpotifyToggleShuffling</key>
 			<dict>
 				<key>command</key>
 				<dict>
@@ -227,16 +233,16 @@
 								<key>actionClass</key>
 								<string>QSSpotify_PluginControlProvider</string>
 								<key>actionSelector</key>
-								<string>openInBrowser</string>
+								<string>toggleShuffling</string>
 								<key>icon</key>
 								<string>SpotifyIcon</string>
 								<key>name</key>
-								<string>Open Music Link In Browser</string>
+								<string>Shuffling</string>
 							</dict>
 						</dict>
 					</dict>
 					<key>directID</key>
-					<string>Spotify_PluginOpenInBrowser</string>
+					<string>Spotify_PluginToggleShuffling</string>
 				</dict>
 			</dict>
 			<key>QSSpotifyPause</key>
@@ -371,7 +377,7 @@
 						</dict>
 					</dict>
 					<key>directID</key>
-					<string>Spotify_PluginsendToTwitter</string>
+					<string>Spotify_PluginSendToTwitter</string>
 				</dict>
 			</dict>
 		</dict>
@@ -384,6 +390,8 @@
 		<dict>
 			<key>QSSpotify_PluginSource</key>
 			<string>QSSpotify_PluginSource</string>
+			<key>QSSpotifyControlSource</key>
+			<string>QSSpotifyControlSource</string>
 		</dict>
 		<key>QSPreferencePanesTemplate</key>
 		<dict>
@@ -399,23 +407,23 @@
 				<string>Spotify_Plugin</string>
 			</dict>
 		</dict>
-		<key>QSProxiesTemplate</key>
+		<key>QSProxies</key>
 		<dict>
-			<key>Spotify_PluginSomeProxy</key>
+			<key>Spotify_PluginObjectProxy</key>
 			<dict>
 				<key>icon</key>
 				<string>GenericDocumentIcon</string>
 				<key>name</key>
 				<string>Spotify_Plugin Proxy</string>
 				<key>providerClass</key>
-				<string>QSSpotify_PluginSource</string>
+				<string>Spotify_PluginSource</string>
 				<key>types</key>
 				<array>
 					<string>QSSpotify_PluginType</string>
 				</array>
 			</dict>
 		</dict>
-		<key>QSTriggerEventsTemplate</key>
+		<key>QSTriggerEvents</key>
 		<dict>
 			<key>Spotify_PluginSomeEvent</key>
 			<dict>
@@ -427,14 +435,14 @@
 				<string>QSSpotify_PluginSource</string>
 			</dict>
 		</dict>
-		<key>QSTriggerSetsTemplates</key>
+		<key>QSTriggerSets</key>
 		<dict>
-			<key>Spotify_PluginTriggers</key>
+			<key>com.spotify.client</key>
 			<dict>
 				<key>icon</key>
-				<string>KEXT</string>
+				<string>com.spotify.client</string>
 				<key>name</key>
-				<string>Spotify Plugin</string>
+				<string>Spotify</string>
 			</dict>
 		</dict>
 		<key>QSTypeDefinitions</key>
@@ -460,32 +468,47 @@
 	<key>QSTriggerAdditions</key>
 	<array>
 		<dict>
-			<key>ID</key>
-			<string>Spotify_PluginOpenInBrowser</string>
+			<key>set</key>
+			<string>Spotify</string>
+			<key>name</key>
+			<string>Next Song</string>
+			<key>defaults</key>
+			<dict>
+				<key>type</key>
+				<string>QSHotKeyTrigger</string>
+			</dict>
 			<key>command</key>
-			<string>QSSpotifyOpenInBrowser</string>
+			<string>QSSpotifyNextSong</string>
+			<key>ID</key>
+			<string>Spotify_PluginNextSong</string>
+		</dict>
+		<dict>
+			<key>ID</key>
+			<string>Spotify_PluginToggleRepeat</string>
+			<key>command</key>
+			<string>QSSpotifyToggleRepeat</string>
 			<key>defaults</key>
 			<dict>
 				<key>type</key>
 				<string>QSHotKeyTrigger</string>
 			</dict>
 			<key>name</key>
-			<string>Open In Browser</string>
+			<string>Repeat</string>
 			<key>set</key>
 			<string>Spotify</string>
 		</dict>
 		<dict>
 			<key>ID</key>
-			<string>Spotify_PluginCopyToClipboard</string>
+			<string>Spotify_PluginToggleShuffling</string>
 			<key>command</key>
-			<string>QSSpotifyCopyToClipboard</string>
+			<string>QSSpotifyToggleShuffling</string>
 			<key>defaults</key>
 			<dict>
 				<key>type</key>
 				<string>QSHotKeyTrigger</string>
 			</dict>
 			<key>name</key>
-			<string>Copy To Clipboard</string>
+			<string>Shuffling</string>
 			<key>set</key>
 			<string>Spotify</string>
 		</dict>
@@ -610,5 +633,43 @@
 			<string>Spotify</string>
 		</dict>
 	</array>
+	<key>QSResourceAdditions</key>
+	<dict>
+		<key>iTunesNext</key>
+		<dict>
+			<key>bundle</key>
+			<string>com.blacktree.Quicksilver.QSiTunesPlugIn</string>
+			<key>resource</key>
+			<string>iTunesNext.icns</string>
+		</dict>
+		<key>iTunesPause</key>
+		<dict>
+			<key>bundle</key>
+			<string>com.blacktree.Quicksilver.QSiTunesPlugIn</string>
+			<key>resource</key>
+			<string>iTunesPause.icns</string>
+		</dict>
+		<key>iTunesPlay</key>
+		<dict>
+			<key>bundle</key>
+			<string>com.blacktree.Quicksilver.QSiTunesPlugIn</string>
+			<key>resource</key>
+			<string>iTunesPlay.icns</string>
+		</dict>
+		<key>iTunesPlay-Pause</key>
+		<dict>
+			<key>bundle</key>
+			<string>com.blacktree.Quicksilver.QSiTunesPlugIn</string>
+			<key>resource</key>
+			<string>iTunesPlay-Pause.icns</string>
+		</dict>
+		<key>iTunesPrevious</key>
+		<dict>
+			<key>bundle</key>
+			<string>com.blacktree.Quicksilver.QSiTunesPlugIn</string>
+			<key>resource</key>
+			<string>iTunesPrevious.icns</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

@@ -70,36 +70,49 @@
 {
     [Spotify setSoundVolume:0];
 }
-
+/*
 - (void)copyTrackURLToClipboard
 {
     NSString *url = [[Spotify currentTrack] spotifyUrl];
     [[NSPasteboard generalPasteboard] clearContents];
     [[NSPasteboard generalPasteboard] setString:url forType:NSStringPboardType];
 }
-
+*/
 - (void)sendTrackToTwitter
 {
-    NSString *url = [[Spotify currentTrack] spotifyUrl];
     NSImage *albumImg = [[Spotify currentTrack] artwork];
     NSString *artist = [[Spotify currentTrack] artist];
     NSString *album = [[Spotify currentTrack] album];
     NSString *name = [[Spotify currentTrack] name];
-    NSSharingService * service = [NSSharingService sharingServiceNamed:NSSharingServiceNamePostOnTwitter];
     
-    NSArray *shareItems = [NSArray arrayWithObjects:@"#NowPlaying", name, @" - ", album, @" by ", artist, @" ", url, albumImg, nil];
+    NSSharingService * service = [NSSharingService sharingServiceNamed:NSSharingServiceNamePostOnTwitter];
+    NSString *shareString = [NSString stringWithFormat:@"#NowPlaying %@ - %@ by %@", name, album, artist];
+    
+    NSArray *shareItems = [NSArray arrayWithObjects:shareString, albumImg, nil];
     
     service.delegate = self;
     if ([service canPerformWithItems:shareItems]) {
         [service performWithItems:shareItems];
     }
 }
-
+/*
 - (void)openInBrowser
 {
     NSString *urlString = [[Spotify currentTrack] spotifyUrl];
     NSURL *url = [NSURL URLWithString:urlString];
     [[NSWorkspace sharedWorkspace] openURL:url];
+}
+*/
+- (void)toggleRepeat
+{
+    [Spotify setRepeating:![Spotify repeatingEnabled]];
+}
+
+- (void)toggleShuffling
+{
+
+    [Spotify setShuffling:![Spotify shufflingEnabled]];
+    
 }
 
 @end

@@ -69,6 +69,13 @@
 	return YES;
 }
 */
+
+- (id)eventDidFail:(const AppleEvent *)event withError:(NSError *)error
+{
+    NSLog(@"iTunes Communication Error: %@", [error localizedDescription]);
+    return nil;
+}
+
 @end
 
 @implementation QSSpotifyControlSource
@@ -93,7 +100,7 @@
 	NSString *actionID = nil;
 	NSDictionary *actionDict = nil;
 	// create catalog objects using info specified in the plist (under QSCommands)
-	NSArray *controls = [NSArray arrayWithObjects:@"QSSpotifyPlay", @"QSSpotifyCopyToClipboard", @"QSSpotifySendToTwitter", @"QSSpotifyPreviousSong", @"QSSpotifyOpenInBrowser", @"QSSpotifyIncreaseVolume", @"QSSpotifyMute", @"QSSpotifyPause", @"QSSpotifyDecreaseVolume", @"QSSpotifyPlayPause", nil];
+	NSArray *controls = [NSArray arrayWithObjects:@"QSSpotifyPlay", @"QSSpotifyNextSong", @"QSSpotifySendToTwitter", @"QSSpotifyPreviousSong", @"QSSpotifyToggleRepeat", @"QSSpotifyIncreaseVolume", @"QSSpotifyMute", @"QSSpotifyPause", @"QSSpotifyDecreaseVolume", @"QSSpotifyPlayPause", @"QSSpotifyToggleShuffling", nil];
 	for (NSString *control in controls) {
 		command = [QSCommand commandWithIdentifier:control];
 		if (command) {
@@ -101,7 +108,7 @@
 			actionID = [commandDict objectForKey:@"directID"];
 			actionDict = [[[commandDict objectForKey:@"directArchive"] objectForKey:@"data"] objectForKey:QSActionType];
 			if (actionDict) {
-				newObject = [QSAction actionWithDictionary:actionDict identifier:actionID bundle:nil];
+				newObject = [QSAction actionWithDictionary:actionDict identifier:actionID];
 				[controlObjects addObject:newObject];
 			}
 		}
