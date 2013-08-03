@@ -1,30 +1,31 @@
 Spotify Quicksilver Plugin
+==========================
 
 Support 11 different commands to control Spotify, Shuffling and Repeat do not work as expect, reason unknown.
 
 Commands include:
 
-SDcrease Volume
+* SDcrease Volume
 
-SIncrease Volume
+* SIncrease Volume
 
-SMute
+* SMute
 
-SNext Song
+* SNext Song
 
-SPrevious Song
+* SPrevious Song
 
-SPlay
+* SPlay
 
-SPause
+* SPause
 
-SPlay/Pause
+* SPlay/Pause
 
-Share on Twitter*
+* Share on Twitter*
 
-Shuffling**
+* Shuffling**
 
-Repeat**
+* Repeat**
 
 *Share on Twitter function relays on OS X's Twitter integration.
 
