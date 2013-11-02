@@ -56,11 +56,11 @@
 &lt;li&gt;&lt;p&gt;Repeat**&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;*Share on Twitter function relays on OS X&apos;s Twitter integration.&lt;/p&gt;
+&lt;p&gt;*Share on Twitter function relays on OS X's Twitter integration.&lt;/p&gt;
 
 &lt;p&gt;**Not work properly&lt;/p&gt;
 
-&lt;p&gt;Added &quot;S&quot; prefix to some command in order to distinguish with iTunes command.&lt;/p&gt;</string>
+&lt;p&gt;Added "S" prefix to some command in order to distinguish with iTunes command.&lt;/p&gt;</string>
 		<key>icon</key>
 		<string>com.spotify.client</string>
 		<key>relatedBundles</key>

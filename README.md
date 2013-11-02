@@ -29,6 +29,6 @@ Commands include:
 
 *Share on Twitter function relays on OS X's Twitter integration.
 
-**not work properly
+**Not work properly
 
 Added "S" prefix to some command in order to distinguish with iTunes command.
