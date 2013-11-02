@@ -7,10 +7,6 @@
 
 #import "Spotify_PluginAction.h"
 
-@implementation QSSpotify_PluginActionProvider
-
-@end
-
 @implementation QSSpotify_PluginControlProvider
 
 - (id)init

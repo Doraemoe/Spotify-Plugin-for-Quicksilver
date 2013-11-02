@@ -7,9 +7,6 @@
 
 #import "SpotifyBridge.h"
 
-@interface QSSpotify_PluginActionProvider : QSActionProvider
-
-@end
 
 @interface QSSpotify_PluginControlProvider : QSActionProvider <NSApplicationDelegate, NSSharingServiceDelegate, NSSharingServicePickerDelegate, NSTextViewDelegate>
 {

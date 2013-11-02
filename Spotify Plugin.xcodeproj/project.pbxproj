@@ -32,6 +32,8 @@
 /* End PBXBuildRule section */
 
 /* Begin PBXFileReference section */
+		7D0910D4182491D300991277 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
+		7D0910D61824936900991277 /* Spotify.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Spotify.h; sourceTree = "<group>"; };
 		7DA9FFBF17A4C7F8001742FB /* SpotifyBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpotifyBridge.h; sourceTree = "<group>"; };
 		7DA9FFC017A4C7F8001742FB /* SpotifyBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotifyBridge.m; sourceTree = "<group>"; };
 		7DB4EB0017A4B81E00520108 /* Spotify Plugin.qsplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spotify Plugin.qsplugin"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -110,6 +112,8 @@
 		7DB4EB0817A4B81E00520108 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				7D0910D61824936900991277 /* Spotify.h */,
+				7D0910D4182491D300991277 /* Info.plist */,
 				7DB4EB0917A4B81E00520108 /* Spotify Info.plist */,
 				7DB4EB0A17A4B81E00520108 /* InfoPlist.strings */,
 			);

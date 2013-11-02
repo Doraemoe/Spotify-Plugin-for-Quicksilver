@@ -36,7 +36,31 @@
 		<key>description</key>
 		<string>Allows you to control Spotify</string>
 		<key>extendedDescription</key>
-		<string>HTML formatted documentation for this plug-in.</string>
+		<string>&lt;h1&gt;Spotify Quicksilver Plugin&lt;/h1&gt;
+
+&lt;p&gt;Support 11 different commands to control Spotify, Shuffling and Repeat do not work as expect, reason unknown.&lt;/p&gt;
+
+&lt;p&gt;Commands include:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;SDcrease Volume&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;SIncrease Volume&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;SMute&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;SNext Song&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;SPrevious Song&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;SPlay&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;SPause&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;SPlay/Pause&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Share on Twitter*&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Shuffling**&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Repeat**&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;*Share on Twitter function relays on OS X&apos;s Twitter integration.&lt;/p&gt;
+
+&lt;p&gt;**Not work properly&lt;/p&gt;
+
+&lt;p&gt;Added &quot;S&quot; prefix to some command in order to distinguish with iTunes command.&lt;/p&gt;</string>
 		<key>icon</key>
 		<string>com.spotify.client</string>
 		<key>relatedBundles</key>
@@ -181,7 +205,7 @@
 								<key>actionSelector</key>
 								<string>next</string>
 								<key>icon</key>
-								<string>SpotifyIcon</string>
+								<string>iTunesNext</string>
 								<key>name</key>
 								<string>SNext Song</string>
 							</dict>
@@ -289,7 +313,7 @@
 								<key>actionSelector</key>
 								<string>previous</string>
 								<key>icon</key>
-								<string>SpotifyIcon</string>
+								<string>iTunesPrevious</string>
 								<key>name</key>
 								<string>SPrevious Song</string>
 							</dict>
@@ -457,14 +481,7 @@
 		</dict>
 	</dict>
 	<key>QSRequirements</key>
-	<dict>
-		<key>obsoletes</key>
-		<array>
-			<string>com.blacktree.Quicksilver.QSMusicSupport</string>
-		</array>
-		<key>version</key>
-		<string>3926</string>
-	</dict>
+	<dict/>
 	<key>QSResourceAdditions</key>
 	<dict>
 		<key>iTunesNext</key>
