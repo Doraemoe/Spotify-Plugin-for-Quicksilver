@@ -73,25 +73,14 @@
 		<dict>
 			<key>ID</key>
 			<string>QSPresetSpotify_PluginGroup</string>
-			<key>children</key>
-			<array>
-				<dict>
-					<key>ID</key>
-					<string>QSPresetSpotify_PluginControlScripts</string>
-					<key>icon</key>
-					<string>com.spotify.client</string>
-					<key>name</key>
-					<string>Spotify Controls</string>
-					<key>source</key>
-					<string>QSSpotifyControlSource</string>
-				</dict>
-			</array>
+			<key>enabled</key>
+			<true/>
 			<key>icon</key>
 			<string>com.spotify.client</string>
 			<key>name</key>
 			<string>Spotify</string>
 			<key>source</key>
-			<string>QSGroupObjectSource</string>
+			<string>QSSpotifyControlSource</string>
 		</dict>
 	</array>
 	<key>QSRegistration</key>
