@@ -39,7 +39,6 @@
 		7DB4EB0017A4B81E00520108 /* Spotify Plugin.qsplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spotify Plugin.qsplugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DB4EB0317A4B81E00520108 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		7DB4EB0517A4B81E00520108 /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
-		7DB4EB0917A4B81E00520108 /* Spotify Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Spotify Info.plist"; sourceTree = SOURCE_ROOT; };
 		7DB4EB0B17A4B81E00520108 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7DB4EB0E17A4B81E00520108 /* Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Common.xcconfig; sourceTree = "<group>"; };
 		7DB4EB0F17A4B81E00520108 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
@@ -114,7 +113,6 @@
 			children = (
 				7D0910D61824936900991277 /* Spotify.h */,
 				7D0910D4182491D300991277 /* Info.plist */,
-				7DB4EB0917A4B81E00520108 /* Spotify Info.plist */,
 				7DB4EB0A17A4B81E00520108 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";

@@ -5,30 +5,26 @@ Support 11 different commands to control Spotify, Shuffling and Repeat do not wo
 
 Commands include:
 
-* SDcrease Volume
+* Dcrease Volume (Spotify)
 
-* SIncrease Volume
+* Increase Volume (Spotify)
 
-* SMute
+* Mute (Spotify)
 
-* SNext Song
+* Next Song (Spotify)
 
-* SPrevious Song
+* Previous Song (Spotify)
 
-* SPlay
+* Play (Spotify)
 
-* SPause
+* Pause (Spotify)
 
-* SPlay/Pause
+* Play/Pause (Spotify)
 
-* Share on Twitter*
-
-* Shuffling**
-
-* Repeat**
+* Share on Twitter (Spotify)*
 
 *Share on Twitter function relays on OS X's Twitter integration.
 
-**Not work properly
+Added "(Spotify)" suffix to some command in order to distinguish with iTunes command.
 
-Added "S" prefix to some command in order to distinguish with iTunes command.
+Thanks for Rob McBroom at Quicksilver Development Google group for all those suggestions.

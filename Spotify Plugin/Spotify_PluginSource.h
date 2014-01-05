@@ -8,12 +8,6 @@
 
 #define QSSpotify_PluginType @"QSSpotify_PluginType"
 
-@interface QSSpotify_PluginSource : QSObjectSource <SBApplicationDelegate>
-{
-    SpotifyApplication *Spotify;
-}
-@end
-
 @interface QSSpotifyControlSource : QSObjectSource
 
 @end

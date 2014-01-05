@@ -21,7 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>2</string>
 	<key>QSActions</key>
 	<dict/>
 	<key>QSPlugIn</key>
@@ -36,31 +36,27 @@
 		<key>description</key>
 		<string>Allows you to control Spotify</string>
 		<key>extendedDescription</key>
-		<string>&lt;h1&gt;Spotify Quicksilver Plugin&lt;/h1&gt;
+		<string>&lt;h1 id=&quot;spotifyquicksilverplugin&quot;&gt;Spotify Quicksilver Plugin&lt;/h1&gt;
 
 &lt;p&gt;Support 11 different commands to control Spotify, Shuffling and Repeat do not work as expect, reason unknown.&lt;/p&gt;
 
 &lt;p&gt;Commands include:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;SDcrease Volume&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;SIncrease Volume&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;SMute&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;SNext Song&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;SPrevious Song&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;SPlay&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;SPause&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;SPlay/Pause&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Share on Twitter*&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Shuffling**&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Repeat**&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Dcrease Volume (Spotify)&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Increase Volume (Spotify)&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Mute (Spotify)&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Next Song (Spotify)&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Previous Song (Spotify)&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Play (Spotify)&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Pause (Spotify)&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Play/Pause (Spotify)&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Share on Twitter (Spotify)*&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;*Share on Twitter function relays on OS X's Twitter integration.&lt;/p&gt;
+&lt;p&gt;*Share on Twitter function relays on OS X&apos;s Twitter integration.&lt;/p&gt;
 
-&lt;p&gt;**Not work properly&lt;/p&gt;
-
-&lt;p&gt;Added "S" prefix to some command in order to distinguish with iTunes command.&lt;/p&gt;</string>
+&lt;p&gt;Added &quot;(Spotify)&quot; suffix to some command in order to distinguish with iTunes command.&lt;/p&gt;</string>
 		<key>icon</key>
 		<string>com.spotify.client</string>
 		<key>relatedBundles</key>
@@ -115,7 +111,7 @@
 								<key>icon</key>
 								<string>SpotifyIcon</string>
 								<key>name</key>
-								<string>SDecrease Volume</string>
+								<string>Decrease Volume (Spotify)</string>
 							</dict>
 						</dict>
 					</dict>
@@ -142,7 +138,7 @@
 								<key>icon</key>
 								<string>SpotifyIcon</string>
 								<key>name</key>
-								<string>SIncrease Volume</string>
+								<string>Increase Volume (Spotify)</string>
 							</dict>
 						</dict>
 					</dict>
@@ -169,7 +165,7 @@
 								<key>icon</key>
 								<string>SpotifyIcon</string>
 								<key>name</key>
-								<string>SMute</string>
+								<string>Mute (Spotify)</string>
 							</dict>
 						</dict>
 					</dict>
@@ -196,7 +192,7 @@
 								<key>icon</key>
 								<string>iTunesNext</string>
 								<key>name</key>
-								<string>SNext Song</string>
+								<string>Next Song (Spotify)</string>
 							</dict>
 						</dict>
 					</dict>
@@ -223,7 +219,7 @@
 								<key>icon</key>
 								<string>iTunesPause</string>
 								<key>name</key>
-								<string>SPause</string>
+								<string>Pause (Spotify)</string>
 							</dict>
 						</dict>
 					</dict>
@@ -250,7 +246,7 @@
 								<key>icon</key>
 								<string>iTunesPlay</string>
 								<key>name</key>
-								<string>SPlay</string>
+								<string>Play (Spotify)</string>
 							</dict>
 						</dict>
 					</dict>
@@ -277,7 +273,7 @@
 								<key>icon</key>
 								<string>iTunesPlay-Pause</string>
 								<key>name</key>
-								<string>SPlay/Pause</string>
+								<string>Play/Pause (Spotify)</string>
 							</dict>
 						</dict>
 					</dict>
@@ -304,7 +300,7 @@
 								<key>icon</key>
 								<string>iTunesPrevious</string>
 								<key>name</key>
-								<string>SPrevious Song</string>
+								<string>Previous Song (Spotify)</string>
 							</dict>
 						</dict>
 					</dict>
@@ -331,66 +327,12 @@
 								<key>icon</key>
 								<string>SpotifyIcon</string>
 								<key>name</key>
-								<string>Share on Twitter</string>
+								<string>Share on Twitter (Spotify)</string>
 							</dict>
 						</dict>
 					</dict>
 					<key>directID</key>
 					<string>Spotify_PluginSendToTwitter</string>
-				</dict>
-			</dict>
-			<key>QSSpotifyToggleRepeat</key>
-			<dict>
-				<key>command</key>
-				<dict>
-					<key>actionID</key>
-					<string>QSObjCSendMessageAction</string>
-					<key>directArchive</key>
-					<dict>
-						<key>data</key>
-						<dict>
-							<key>qs.action</key>
-							<dict>
-								<key>actionClass</key>
-								<string>QSSpotify_PluginControlProvider</string>
-								<key>actionSelector</key>
-								<string>toggleRepeat</string>
-								<key>icon</key>
-								<string>SpotifyIcon</string>
-								<key>name</key>
-								<string>Repeat</string>
-							</dict>
-						</dict>
-					</dict>
-					<key>directID</key>
-					<string>Spotify_PluginToggleRepeat</string>
-				</dict>
-			</dict>
-			<key>QSSpotifyToggleShuffling</key>
-			<dict>
-				<key>command</key>
-				<dict>
-					<key>actionID</key>
-					<string>QSObjCSendMessageAction</string>
-					<key>directArchive</key>
-					<dict>
-						<key>data</key>
-						<dict>
-							<key>qs.action</key>
-							<dict>
-								<key>actionClass</key>
-								<string>QSSpotify_PluginControlProvider</string>
-								<key>actionSelector</key>
-								<string>toggleShuffling</string>
-								<key>icon</key>
-								<string>SpotifyIcon</string>
-								<key>name</key>
-								<string>Shuffling</string>
-							</dict>
-						</dict>
-					</dict>
-					<key>directID</key>
-					<string>Spotify_PluginToggleShuffling</string>
 				</dict>
 			</dict>
 		</dict>
@@ -420,34 +362,6 @@
 				<string>Spotify_Plugin</string>
 			</dict>
 		</dict>
-		<key>QSProxies</key>
-		<dict>
-			<key>Spotify_PluginObjectProxy</key>
-			<dict>
-				<key>icon</key>
-				<string>GenericDocumentIcon</string>
-				<key>name</key>
-				<string>Spotify_Plugin Proxy</string>
-				<key>providerClass</key>
-				<string>Spotify_PluginSource</string>
-				<key>types</key>
-				<array>
-					<string>QSSpotify_PluginType</string>
-				</array>
-			</dict>
-		</dict>
-		<key>QSTriggerEvents</key>
-		<dict>
-			<key>Spotify_PluginSomeEvent</key>
-			<dict>
-				<key>icon</key>
-				<string>KEXT</string>
-				<key>name</key>
-				<string>Do something in response to this event</string>
-				<key>provider</key>
-				<string>QSSpotify_PluginSource</string>
-			</dict>
-		</dict>
 		<key>QSTriggerSets</key>
 		<dict>
 			<key>com.spotify.client</key>
@@ -470,7 +384,10 @@
 		</dict>
 	</dict>
 	<key>QSRequirements</key>
-	<dict/>
+	<dict>
+		<key>version</key>
+		<string>4001</string>
+	</dict>
 	<key>QSResourceAdditions</key>
 	<dict>
 		<key>iTunesNext</key>
