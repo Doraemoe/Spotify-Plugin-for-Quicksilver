@@ -29,13 +29,13 @@
 	NSString *actionID = nil;
 	NSDictionary *actionDict = nil;
 	// create catalog objects using info specified in the plist (under QSCommands)
-	NSArray *controls = [NSArray arrayWithObjects:@"QSSpotifyPlay", @"QSSpotifyNextSong", @"QSSpotifySendToTwitter", @"QSSpotifyPreviousSong", @"QSSpotifyToggleRepeat", @"QSSpotifyIncreaseVolume", @"QSSpotifyMute", @"QSSpotifyPause", @"QSSpotifyDecreaseVolume", @"QSSpotifyPlayPause", @"QSSpotifyToggleShuffling", nil];
+	NSArray *controls = @[@"QSSpotifyPlay", @"QSSpotifyNextSong", @"QSSpotifySendToTwitter", @"QSSpotifyPreviousSong", @"QSSpotifyToggleRepeat", @"QSSpotifyIncreaseVolume", @"QSSpotifyMute", @"QSSpotifyPause", @"QSSpotifyDecreaseVolume", @"QSSpotifyPlayPause", @"QSSpotifyToggleShuffling"];
 	for (NSString *control in controls) {
 		command = [QSCommand commandWithIdentifier:control];
 		if (command) {
 			commandDict = [command commandDict];
-			actionID = [commandDict objectForKey:@"directID"];
-			actionDict = [[[commandDict objectForKey:@"directArchive"] objectForKey:@"data"] objectForKey:QSActionType];
+			actionID = commandDict[@"directID"];
+			actionDict = commandDict[@"directArchive"][@"data"][QSActionType];
 			if (actionDict) {
 				newObject = [QSAction actionWithDictionary:actionDict identifier:actionID];
 				[controlObjects addObject:newObject];

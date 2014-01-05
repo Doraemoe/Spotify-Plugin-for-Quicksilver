@@ -12,16 +12,11 @@
 - (id)init
 {
     if (self = [super init]) {
-        Spotify = [QSSpotify() retain];
+        Spotify = QSSpotify();
     }
     return self;
 }
 
-- (void)dealloc
-{
-    [Spotify release];
-    [super dealloc];
-}
 
 - (void)play
 {
@@ -84,7 +79,7 @@
     NSSharingService * service = [NSSharingService sharingServiceNamed:NSSharingServiceNamePostOnTwitter];
     NSString *shareString = [NSString stringWithFormat:@"#NowPlaying %@ - %@ by %@", name, album, artist];
     
-    NSArray *shareItems = [NSArray arrayWithObjects:shareString, albumImg, nil];
+    NSArray *shareItems = @[shareString, albumImg];
     
     service.delegate = self;
     if ([service canPerformWithItems:shareItems]) {

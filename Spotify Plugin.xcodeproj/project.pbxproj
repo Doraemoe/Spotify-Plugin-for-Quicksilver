@@ -252,7 +252,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7DB4EB1117A4B81E00520108 /* QSPlugIn.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -260,7 +262,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7DB4EB1117A4B81E00520108 /* QSPlugIn.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
