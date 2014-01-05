@@ -25,6 +25,6 @@ Commands include:
 
 *Share on Twitter function relays on OS X's Twitter integration.
 
-Added "(Spotify)" suffix to some command in order to distinguish with iTunes command.
+Added "(Spotify)" suffix to some commands in order to distinguish with iTunes command.
 
 Thanks for Rob McBroom at Quicksilver Development Google group for all those suggestions.

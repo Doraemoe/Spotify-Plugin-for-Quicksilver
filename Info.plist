@@ -56,7 +56,7 @@
 
 &lt;p&gt;*Share on Twitter function relays on OS X&apos;s Twitter integration.&lt;/p&gt;
 
-&lt;p&gt;Added &quot;(Spotify)&quot; suffix to some command in order to distinguish with iTunes command.&lt;/p&gt;</string>
+&lt;p&gt;Added &quot;(Spotify)&quot; suffix to some commands in order to distinguish with iTunes command.&lt;/p&gt;</string>
 		<key>icon</key>
 		<string>com.spotify.client</string>
 		<key>relatedBundles</key>
