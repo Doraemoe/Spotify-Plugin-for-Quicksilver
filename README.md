@@ -1,7 +1,7 @@
 Spotify Quicksilver Plugin
 ==========================
 
-Support 9 different commands to control Spotify, Shuffling and Repeat do not work as expect, reason unknown.
+Support 9 different commands to control Spotify.
 
 Commands include:
 
