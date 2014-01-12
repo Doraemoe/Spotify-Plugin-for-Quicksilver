@@ -25,7 +25,7 @@ Commands include:
 
 * Share on Twitter (Spotify)*
 
-*Share on Twitter function relays on OS X's Twitter integration.
+*Share on Twitter function relies on OS X's Twitter integration.
 
 Added "(Spotify)" suffix to some commands in order to distinguish with iTunes command.
 

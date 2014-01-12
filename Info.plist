@@ -36,7 +36,7 @@
 		<key>description</key>
 		<string>Allows you to control Spotify</string>
 		<key>extendedDescription</key>
-		<string>&lt;h1 id=&quot;spotifyquicksilverplugin&quot;&gt;Spotify Quicksilver Plugin&lt;/h1&gt;
+		<string>&lt;h1 id="spotifyquicksilverplugin"&gt;Spotify Quicksilver Plugin&lt;/h1&gt;
 
 &lt;p&gt;Support 9 different commands to control Spotify.&lt;/p&gt;
 
@@ -54,9 +54,9 @@
 &lt;li&gt;&lt;p&gt;Share on Twitter (Spotify)*&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;*Share on Twitter function relays on OS X&apos;s Twitter integration.&lt;/p&gt;
+&lt;p&gt;*Share on Twitter function relies on OS X's Twitter integration.&lt;/p&gt;
 
-&lt;p&gt;Added &quot;(Spotify)&quot; suffix to some commands in order to distinguish with iTunes command.&lt;/p&gt;</string>
+&lt;p&gt;Added "(Spotify)" suffix to some commands in order to distinguish with iTunes command.&lt;/p&gt;</string>
 		<key>icon</key>
 		<string>com.spotify.client</string>
 		<key>relatedBundles</key>
@@ -387,44 +387,6 @@
 	<dict>
 		<key>version</key>
 		<string>4001</string>
-	</dict>
-	<key>QSResourceAdditions</key>
-	<dict>
-		<key>iTunesNext</key>
-		<dict>
-			<key>bundle</key>
-			<string>com.blacktree.Quicksilver.QSiTunesPlugIn</string>
-			<key>resource</key>
-			<string>iTunesNext.icns</string>
-		</dict>
-		<key>iTunesPause</key>
-		<dict>
-			<key>bundle</key>
-			<string>com.blacktree.Quicksilver.QSiTunesPlugIn</string>
-			<key>resource</key>
-			<string>iTunesPause.icns</string>
-		</dict>
-		<key>iTunesPlay</key>
-		<dict>
-			<key>bundle</key>
-			<string>com.blacktree.Quicksilver.QSiTunesPlugIn</string>
-			<key>resource</key>
-			<string>iTunesPlay.icns</string>
-		</dict>
-		<key>iTunesPlay-Pause</key>
-		<dict>
-			<key>bundle</key>
-			<string>com.blacktree.Quicksilver.QSiTunesPlugIn</string>
-			<key>resource</key>
-			<string>iTunesPlay-Pause.icns</string>
-		</dict>
-		<key>iTunesPrevious</key>
-		<dict>
-			<key>bundle</key>
-			<string>com.blacktree.Quicksilver.QSiTunesPlugIn</string>
-			<key>resource</key>
-			<string>iTunesPrevious.icns</string>
-		</dict>
 	</dict>
 	<key>QSTriggerAdditions</key>
 	<array>
