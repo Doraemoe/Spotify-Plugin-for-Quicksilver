@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		7D026622190CB7A500953F58 /* QSSpotifyPrefPane.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D026621190CB7A500953F58 /* QSSpotifyPrefPane.xib */; };
 		7D026625190CB7C500953F58 /* QSSpotifyPrefPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D026624190CB7C500953F58 /* QSSpotifyPrefPane.m */; };
+		7D52EC77190CE9FA00D8A1DB /* CocoaLibSpotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D52EC76190CE9FA00D8A1DB /* CocoaLibSpotify.framework */; };
+		7D52EC78190CEA3E00D8A1DB /* CocoaLibSpotify.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7D52EC76190CE9FA00D8A1DB /* CocoaLibSpotify.framework */; };
+		7D52EC7A190CEA6500D8A1DB /* libspotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D52EC79190CEA6500D8A1DB /* libspotify.framework */; };
+		7D52EC7B190CEA7600D8A1DB /* libspotify.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7D52EC79190CEA6500D8A1DB /* libspotify.framework */; };
 		7DA9FFC117A4C7F8001742FB /* SpotifyBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DA9FFC017A4C7F8001742FB /* SpotifyBridge.m */; };
 		7DB4EB0417A4B81E00520108 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB4EB0317A4B81E00520108 /* Cocoa.framework */; };
 		7DB4EB0617A4B81E00520108 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB4EB0517A4B81E00520108 /* ScriptingBridge.framework */; };
@@ -33,12 +37,28 @@
 		};
 /* End PBXBuildRule section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		7D52EC71190CE82400D8A1DB /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7D52EC7B190CEA7600D8A1DB /* libspotify.framework in CopyFiles */,
+				7D52EC78190CEA3E00D8A1DB /* CocoaLibSpotify.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		7D026621190CB7A500953F58 /* QSSpotifyPrefPane.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QSSpotifyPrefPane.xib; sourceTree = "<group>"; };
 		7D026623190CB7C500953F58 /* QSSpotifyPrefPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSpotifyPrefPane.h; sourceTree = "<group>"; };
 		7D026624190CB7C500953F58 /* QSSpotifyPrefPane.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSpotifyPrefPane.m; sourceTree = "<group>"; };
 		7D0910D4182491D300991277 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		7D0910D61824936900991277 /* Spotify.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Spotify.h; sourceTree = "<group>"; };
+		7D52EC76190CE9FA00D8A1DB /* CocoaLibSpotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLibSpotify.framework; path = "Spotify Plugin/CocoaLibSpotify.framework"; sourceTree = "<group>"; };
+		7D52EC79190CEA6500D8A1DB /* libspotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = libspotify.framework; path = "Spotify Plugin/libspotify.framework"; sourceTree = "<group>"; };
 		7DA9FFBF17A4C7F8001742FB /* SpotifyBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpotifyBridge.h; sourceTree = "<group>"; };
 		7DA9FFC017A4C7F8001742FB /* SpotifyBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotifyBridge.m; sourceTree = "<group>"; };
 		7DB4EB0017A4B81E00520108 /* Spotify Plugin.qsplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spotify Plugin.qsplugin"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -64,7 +84,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				7DB4EB0417A4B81E00520108 /* Cocoa.framework in Frameworks */,
+				7D52EC7A190CEA6500D8A1DB /* libspotify.framework in Frameworks */,
 				7DB4EB0617A4B81E00520108 /* ScriptingBridge.framework in Frameworks */,
+				7D52EC77190CE9FA00D8A1DB /* CocoaLibSpotify.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,6 +115,8 @@
 		7DB4EB0217A4B81E00520108 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7D52EC79190CEA6500D8A1DB /* libspotify.framework */,
+				7D52EC76190CE9FA00D8A1DB /* CocoaLibSpotify.framework */,
 				7DB4EB0317A4B81E00520108 /* Cocoa.framework */,
 				7DB4EB0517A4B81E00520108 /* ScriptingBridge.framework */,
 			);
@@ -151,6 +175,7 @@
 				7DB4EAFC17A4B81E00520108 /* Sources */,
 				7DB4EAFD17A4B81E00520108 /* Frameworks */,
 				7DB4EAFE17A4B81E00520108 /* Resources */,
+				7D52EC71190CE82400D8A1DB /* CopyFiles */,
 			);
 			buildRules = (
 				7DB4EB2417A4B95F00520108 /* PBXBuildRule */,
@@ -263,6 +288,11 @@
 			baseConfigurationReference = 7DB4EB1117A4B81E00520108 /* QSPlugIn.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Spotify",
+					Plugin,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -273,6 +303,11 @@
 			baseConfigurationReference = 7DB4EB1117A4B81E00520108 /* QSPlugIn.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Spotify",
+					Plugin,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
