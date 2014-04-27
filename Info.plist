@@ -348,18 +348,18 @@
 			<key>QSSpotify_PluginSource</key>
 			<string>QSSpotify_PluginSource</string>
 		</dict>
-		<key>QSPreferencePanesTemplate</key>
+		<key>QSPreferencePanes</key>
 		<dict>
-			<key>Spotify_PluginPrefPaneTemplate</key>
+			<key>QSSpotifyPrefPane</key>
 			<dict>
 				<key>class</key>
-				<string>Spotify_PluginPrefPane</string>
+				<string>QSSpotifyPrefPane</string>
 				<key>description</key>
 				<string>Preferences</string>
 				<key>icon</key>
-				<string>KEXT</string>
+				<string>com.spotify.client</string>
 				<key>name</key>
-				<string>Spotify_Plugin</string>
+				<string>Spotify</string>
 			</dict>
 		</dict>
 		<key>QSTriggerSets</key>
@@ -402,36 +402,6 @@
 			</dict>
 			<key>name</key>
 			<string>Next Song</string>
-			<key>set</key>
-			<string>Spotify</string>
-		</dict>
-		<dict>
-			<key>ID</key>
-			<string>Spotify_PluginToggleRepeat</string>
-			<key>command</key>
-			<string>QSSpotifyToggleRepeat</string>
-			<key>defaults</key>
-			<dict>
-				<key>type</key>
-				<string>QSHotKeyTrigger</string>
-			</dict>
-			<key>name</key>
-			<string>Repeat</string>
-			<key>set</key>
-			<string>Spotify</string>
-		</dict>
-		<dict>
-			<key>ID</key>
-			<string>Spotify_PluginToggleShuffling</string>
-			<key>command</key>
-			<string>QSSpotifyToggleShuffling</string>
-			<key>defaults</key>
-			<dict>
-				<key>type</key>
-				<string>QSHotKeyTrigger</string>
-			</dict>
-			<key>name</key>
-			<string>Shuffling</string>
 			<key>set</key>
 			<string>Spotify</string>
 		</dict>
