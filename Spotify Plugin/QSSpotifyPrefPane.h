@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <CocoaLibSpotify/CocoaLibSpotify.h>
 
 @interface QSSpotifyPrefPane : QSPreferencePane {
     IBOutlet NSTextField *usr;
@@ -16,6 +17,7 @@
     IBOutlet NSButton *signInOutButton;
 }
 
+- (void)setPseudoContext;
 - (IBAction)authenticate:(id)sender;
 - (void)startAnimation;
 - (void)endAnimation;

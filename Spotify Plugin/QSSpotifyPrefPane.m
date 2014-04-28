@@ -14,9 +14,8 @@
 - (NSView *)loadMainView {
     NSView *view = [super loadMainView];
     [[QSSpotifyUtil sharedInstance] setPrefPane:self];
-    //[ind setHidden:NO];
-    //[ind startAnimation:self];
-    //[self updateUI];
+    [self startAnimation];
+    [self updateUI];
     return view;
 }
 
@@ -31,22 +30,39 @@
 
 }
 
+- (void)setPseudoContext {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *usrName = [defaults valueForKey:@"spotifyUser"];
+    
+    [usr setStringValue:usrName];
+    [pass setStringValue:@"FAKE"];
+}
+
 
 - (IBAction)authenticate:(id)sender {
-    [self startAnimation];
-    NSLog(@"%@", [usr stringValue]);
-    QSSpotifyUtil *su = [QSSpotifyUtil sharedInstance];
-    [su attemptLoginWithName:[usr stringValue] password:[pass stringValue]];
+    if ([[signInOutButton title]  isEqual: @"Sign In"]) {
+        [self startAnimation];
+        QSSpotifyUtil *su = [QSSpotifyUtil sharedInstance];
+        [su attemptLoginWithName:[usr stringValue] password:[pass stringValue]];
+    }
+    else {
+        
+    }
+    
 }
 
 - (void)finishLogin {
-    NSLog(@"this");
     [usr setEditable:NO];
-    [usr setBackgroundColor:[NSColor grayColor]];
+    [usr setBackgroundColor:[NSColor secondarySelectedControlColor]];
     [pass setEditable:NO];
-    [pass setBackgroundColor:[NSColor grayColor]];
+    [pass setBackgroundColor:[NSColor secondarySelectedControlColor]];
     [signInOutButton setTitle:@"Sign Out"];
     [self setWarningMessage:@"Login Successful" withColor:[NSColor greenColor]];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *usrName = [usr stringValue];
+    [defaults setValue:usrName forKey:@"spotifyUser"];
+    
     [self endAnimation];
 }
 
@@ -56,7 +72,20 @@
 }
 
 - (void)updateUI {
-    //QSSpotifyUtil *su = [QSSpotifyUtil sharedInstance];
+    QSSpotifyUtil *su = [QSSpotifyUtil sharedInstance];
+    if ([su getLoginState] == SP_CONNECTION_STATE_LOGGED_OUT || [su getLoginState] == SP_CONNECTION_STATE_UNDEFINED) {
+        NSLog(@"logged out");
+        [su attemptLoginWithCredential];
+        [self endAnimation];
+    }
+    else if([su getLoginState] == SP_CONNECTION_STATE_LOGGED_IN){
+        NSLog(@"already logged in");
+        [self finishLogin];
+    }
+    else {
+        NSLog(@"%d", [su getLoginState]);
+        [self endAnimation];
+    }
 }
 
 @end
