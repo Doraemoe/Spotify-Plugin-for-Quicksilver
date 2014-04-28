@@ -16,6 +16,10 @@
     IBOutlet NSButton *signInOutButton;
 }
 
--(IBAction)authenticate:(id)sender;
+- (IBAction)authenticate:(id)sender;
+- (void)startAnimation;
+- (void)endAnimation;
+- (void)finishLogin;
+- (void)setWarningMessage:(NSString *)msg withColor:(NSColor *)color;
 
 @end

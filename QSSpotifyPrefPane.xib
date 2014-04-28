@@ -84,6 +84,9 @@
                                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
+                                    <connections>
+                                        <outlet property="nextKeyView" destination="DnY-Ub-e67" id="yUB-MO-Aka"/>
+                                    </connections>
                                 </textField>
                                 <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DnY-Ub-e67">
                                     <rect key="frame" x="92" y="70" width="120" height="16"/>
@@ -96,6 +99,9 @@
                                             <string>NSAllRomanInputSourcesLocaleIdentifier</string>
                                         </allowedInputSourceLocales>
                                     </secureTextFieldCell>
+                                    <connections>
+                                        <outlet property="nextKeyView" destination="XbI-Vf-Rvd" id="YxM-Bx-ocI"/>
+                                    </connections>
                                 </secureTextField>
                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="56a-HQ-gbx">
                                     <rect key="frame" x="92" y="37" width="122" height="25"/>

@@ -6,12 +6,12 @@
 //
 
 #import "SpotifyBridge.h"
-#import <CocoaLibSpotify/CocoaLibSpotify.h>
 
 @interface QSSpotify_PluginControlProvider : QSActionProvider <NSApplicationDelegate, NSSharingServiceDelegate, NSSharingServicePickerDelegate, NSTextViewDelegate>
 {
     SpotifyApplication *Spotify;
 }
+
 - (void)play;
 - (void)pause;
 - (void)togglePlayPause;
@@ -20,9 +20,6 @@
 - (void)volumeIncrease;
 - (void)volumeDecrease;
 - (void)volumeMute;
-//- (void)copyTrackURLToClipboard;
 - (void)sendTrackToTwitter;
-//- (void)openInBrowser;
-- (void)toggleRepeat;
-- (void)toggleShuffling;
+
 @end
