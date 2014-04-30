@@ -7,7 +7,7 @@ Support 9 different commands to control Spotify.
 
 Commands include:
 
-* Dcrease Volume (Spotify)
+* Decrease Volume (Spotify)
 
 * Increase Volume (Spotify)
 
