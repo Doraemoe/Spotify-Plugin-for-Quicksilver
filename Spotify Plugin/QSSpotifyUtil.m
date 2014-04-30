@@ -39,7 +39,6 @@
         }
         
         [[SPSession sharedSession] setDelegate:self];
-        NSLog(@"ffffffff");
     }
     return self;
 }
@@ -211,22 +210,21 @@ OSStatus DelPasswordKeychain (char *acctName) {
 
 -(void)sessionDidLogOut:(SPSession *)aSession {
     NSLog(@"log out");
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *usrName = [defaults valueForKey:@"spotifyUser"];
+    
+    if (usrName == nil) {
+        
+    }
+    else {
+        OSStatus status;
+        char *usr = (char *)[usrName UTF8String];
+        status = DelPasswordKeychain(usr);
+    }
 }
 
 -(void)signOut {
     [[SPSession sharedSession] logout:^{
-        NSLog(@"logout");
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSString *usrName = [defaults valueForKey:@"spotifyUser"];
-        
-        if (usrName == nil) {
-            
-        }
-        else {
-            OSStatus status;
-            char *usr = (char *)[usrName UTF8String];
-            status = DelPasswordKeychain(usr);
-        }
     }];
 }
 

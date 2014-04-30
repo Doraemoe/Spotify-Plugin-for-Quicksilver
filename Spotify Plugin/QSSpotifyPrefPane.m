@@ -15,6 +15,7 @@
     NSView *view = [super loadMainView];
     [[QSSpotifyUtil sharedInstance] setPrefPane:self];
     [self startAnimation];
+    [signInOutButton setEnabled:NO];
     [self updateUI];
     return view;
 }
@@ -41,11 +42,13 @@
 
 - (IBAction)authenticate:(id)sender {
     if ([[signInOutButton title]  isEqual: @"Sign In"]) {
+        [signInOutButton setEnabled:NO];
         [self startAnimation];
         QSSpotifyUtil *su = [QSSpotifyUtil sharedInstance];
         [su attemptLoginWithName:[usr stringValue] password:[pass stringValue]];
     }
     else {
+        [signInOutButton setEnabled:NO];
         [self startAnimation];
         [[QSSpotifyUtil sharedInstance] signOut];
         [self finishLogout];
@@ -64,8 +67,9 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *usrName = [usr stringValue];
     [defaults setValue:usrName forKey:@"spotifyUser"];
-    
+    [signInOutButton setEnabled:YES];
     [self endAnimation];
+    
 }
 
 - (void)finishLogout {
@@ -76,6 +80,7 @@
     [pass setStringValue:@""];
     [signInOutButton setTitle:@"Sign In"];
     [self setWarningMessage:@"Logout Successful" withColor:[NSColor greenColor]];
+    [signInOutButton setEnabled:YES];
     [self endAnimation];
 }
 
@@ -89,6 +94,7 @@
     if ([su getLoginState] == SP_CONNECTION_STATE_LOGGED_OUT || [su getLoginState] == SP_CONNECTION_STATE_UNDEFINED) {
         NSLog(@"logged out");
         [su attemptLoginWithCredential];
+        [signInOutButton setEnabled:YES];
         [self endAnimation];
     }
     else if([su getLoginState] == SP_CONNECTION_STATE_LOGGED_IN){
@@ -97,6 +103,7 @@
     }
     else {
         NSLog(@"%d", [su getLoginState]);
+        [signInOutButton setEnabled:YES];
         [self endAnimation];
     }
 }
