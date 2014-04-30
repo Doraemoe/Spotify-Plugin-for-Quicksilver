@@ -407,36 +407,6 @@
 		</dict>
 		<dict>
 			<key>ID</key>
-			<string>Spotify_PluginToggleRepeat</string>
-			<key>command</key>
-			<string>QSSpotifyToggleRepeat</string>
-			<key>defaults</key>
-			<dict>
-				<key>type</key>
-				<string>QSHotKeyTrigger</string>
-			</dict>
-			<key>name</key>
-			<string>Repeat</string>
-			<key>set</key>
-			<string>Spotify</string>
-		</dict>
-		<dict>
-			<key>ID</key>
-			<string>Spotify_PluginToggleShuffling</string>
-			<key>command</key>
-			<string>QSSpotifyToggleShuffling</string>
-			<key>defaults</key>
-			<dict>
-				<key>type</key>
-				<string>QSHotKeyTrigger</string>
-			</dict>
-			<key>name</key>
-			<string>Shuffling</string>
-			<key>set</key>
-			<string>Spotify</string>
-		</dict>
-		<dict>
-			<key>ID</key>
 			<string>Spotify_PluginSendToTwitter</string>
 			<key>command</key>
 			<string>QSSpotifySendToTwitter</string>
