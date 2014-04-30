@@ -46,7 +46,9 @@
         [su attemptLoginWithName:[usr stringValue] password:[pass stringValue]];
     }
     else {
-        
+        [self startAnimation];
+        [[QSSpotifyUtil sharedInstance] signOut];
+        [self finishLogout];
     }
     
 }
@@ -63,6 +65,17 @@
     NSString *usrName = [usr stringValue];
     [defaults setValue:usrName forKey:@"spotifyUser"];
     
+    [self endAnimation];
+}
+
+- (void)finishLogout {
+    [usr setEditable:YES];
+    [usr setBackgroundColor:[NSColor clearColor]];
+    [pass setEditable:YES];
+    [pass setBackgroundColor:[NSColor clearColor]];
+    [pass setStringValue:@""];
+    [signInOutButton setTitle:@"Sign In"];
+    [self setWarningMessage:@"Logout Successful" withColor:[NSColor greenColor]];
     [self endAnimation];
 }
 

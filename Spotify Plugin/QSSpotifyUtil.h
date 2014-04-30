@@ -19,8 +19,9 @@
 
 + (QSSpotifyUtil *)sharedInstance;
 
-- (void) attemptLoginWithName:(NSString *)name password:(NSString *)pass;
--(int)getLoginState;
+- (void)attemptLoginWithName:(NSString *)name password:(NSString *)pass;
+- (int)getLoginState;
 - (void)attemptLoginWithCredential;
+- (void)signOut;
 
 @end

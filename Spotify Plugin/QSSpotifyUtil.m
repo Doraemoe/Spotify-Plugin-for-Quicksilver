@@ -84,6 +84,28 @@ OSStatus GetPasswordKeychain (void **passwordData, UInt32 *passwordLength,
     return (status1);
 }
 
+OSStatus DelPasswordKeychain (char *acctName) {
+    OSStatus status;
+
+    void *passwordData = NULL;
+    SecKeychainItemRef itemRef = NULL;
+    UInt32 passwordDataLength = 0;
+    
+    status = GetPasswordKeychain(&passwordData, &passwordDataLength, &itemRef, acctName);
+    
+    if (status == noErr) {
+        SecKeychainItemFreeContent(NULL, passwordData);
+        status = SecKeychainItemDelete(itemRef);
+        
+    }
+    else if (status == errSecItemNotFound) {
+        //safe
+        SecKeychainItemFreeContent(NULL, passwordData);
+    }
+    
+    return status;
+}
+
 
 #pragma mark -
 #pragma mark Spotify login
@@ -134,7 +156,7 @@ OSStatus GetPasswordKeychain (void **passwordData, UInt32 *passwordLength,
 }
 
 -(void)session:(SPSession *)aSession didGenerateLoginCredentials:(NSString *)credential forUserName:(NSString *)userName {
-    NSLog(@"saving credit");
+    NSLog(@"saving Credentials");
     OSStatus status;
     
     char *usr = (char *)[userName UTF8String];
@@ -165,6 +187,19 @@ OSStatus GetPasswordKeychain (void **passwordData, UInt32 *passwordLength,
 }
 
 -(void)session:(SPSession *)aSession didFailToLoginWithError:(NSError *)error {
+    //delete saved credentials if exists
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *usrName = [defaults valueForKey:@"spotifyUser"];
+    
+    if (usrName == nil) {
+        
+    }
+    else {
+        OSStatus status;
+        char *usr = (char *)[usrName UTF8String];
+        status = DelPasswordKeychain(usr);
+    }
+    
     [prefPane setWarningMessage:[error localizedDescription] withColor:[NSColor redColor]];
     [prefPane endAnimation];
 }
@@ -181,6 +216,17 @@ OSStatus GetPasswordKeychain (void **passwordData, UInt32 *passwordLength,
 -(void)signOut {
     [[SPSession sharedSession] logout:^{
         NSLog(@"logout");
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSString *usrName = [defaults valueForKey:@"spotifyUser"];
+        
+        if (usrName == nil) {
+            
+        }
+        else {
+            OSStatus status;
+            char *usr = (char *)[usrName UTF8String];
+            status = DelPasswordKeychain(usr);
+        }
     }];
 }
 
