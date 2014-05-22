@@ -3,6 +3,8 @@ Spotify Quicksilver Plugin
 
 DDL: [Dropbox](https://dl.dropboxusercontent.com/u/1660391/Spotify%20Plugin.qsplugin.zip)
 
+DDL (Advanced version, beta) [Dropbox](https://dl.dropboxusercontent.com/u/1660391/Spotify%20Plugin.qsplugin%20%28adv%20beta%29.zip)
+
 Support 9 different commands to control Spotify.
 
 Commands include:
@@ -25,7 +27,12 @@ Commands include:
 
 * Share on Twitter (Spotify)*
 
+* Star (Spotify)** 
+
+
 *Share on Twitter function relies on OS X's Twitter integration.
+ 
+**Require advanced version, need to login before it functional.
 
 Added "(Spotify)" suffix to some commands in order to distinguish with iTunes command.
 
