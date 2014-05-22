@@ -44,6 +44,19 @@
 }
 
 #pragma mark -
+#pragma mark function
+- (void)starSongWithURI:(NSString *) URI {
+    NSLog(@"%@", URI);
+    if ([self getLoginState] == SP_CONNECTION_STATE_LOGGED_IN) {
+        [[SPSession sharedSession] trackForURL:[NSURL URLWithString:URI] callback:^(SPTrack* track) {
+            NSLog(@"%hhd", [track starred]);
+            [track setValue:[NSNumber numberWithBool:YES] forKey:@"starred"];
+            NSLog(@"%@", [track spotifyURL]);
+        }];
+    }
+}
+
+#pragma mark -
 #pragma mark keychain
 
 //Call SecKeychainAddGenericPassword to add a new password to the keychain:
@@ -131,7 +144,10 @@ OSStatus DelPasswordKeychain (char *acctName) {
             SecKeychainItemFreeContent(NULL, passwordData);
             
             [[SPSession sharedSession] attemptLoginWithUserName:usrName existingCredential:password];
-            [prefPane setPseudoContext];
+            if (prefPane != NULL) {
+                [prefPane setPseudoContext];
+            }
+            
         }
         else if (status == errSecItemNotFound) {
             NSLog(@"error not found");
@@ -148,8 +164,10 @@ OSStatus DelPasswordKeychain (char *acctName) {
         
     }
     else {
-        [prefPane setWarningMessage:@"Please enter username and password" withColor:[NSColor redColor]];
-        [prefPane endAnimation];
+        if (prefPane != NULL) {
+            [prefPane setWarningMessage:@"Please enter username and password" withColor:[NSColor redColor]];
+            [prefPane endAnimation];
+        }
         NSBeep();
     }
 }
@@ -181,7 +199,9 @@ OSStatus DelPasswordKeychain (char *acctName) {
 }
 
 -(void)sessionDidLoginSuccessfully:(SPSession *)aSession {
-    [prefPane finishLogin];
+    if (prefPane != NULL) {
+        [prefPane finishLogin];
+    }
     NSLog(@"success");
 }
 
@@ -198,14 +218,17 @@ OSStatus DelPasswordKeychain (char *acctName) {
         char *usr = (char *)[usrName UTF8String];
         status = DelPasswordKeychain(usr);
     }
-    
-    [prefPane setWarningMessage:[error localizedDescription] withColor:[NSColor redColor]];
-    [prefPane endAnimation];
+    if (prefPane != NULL) {
+        [prefPane setWarningMessage:[error localizedDescription] withColor:[NSColor redColor]];
+        [prefPane endAnimation];
+    }
 }
 
 -(void)session:(SPSession *)aSession didEncounterNetworkError:(NSError *)error {
-    [prefPane setWarningMessage:[error localizedDescription] withColor:[NSColor redColor]];
-    [prefPane endAnimation];
+    if (prefPane != NULL) {
+        [prefPane setWarningMessage:[error localizedDescription] withColor:[NSColor redColor]];
+        [prefPane endAnimation];
+    }
 }
 
 -(void)sessionDidLogOut:(SPSession *)aSession {
@@ -220,6 +243,10 @@ OSStatus DelPasswordKeychain (char *acctName) {
         OSStatus status;
         char *usr = (char *)[usrName UTF8String];
         status = DelPasswordKeychain(usr);
+    }
+    if (prefPane != NULL) {
+        [prefPane setWarningMessage:@"Successfully Logged Out" withColor:[NSColor greenColor]];
+        [prefPane finishLogout];
     }
 }
 

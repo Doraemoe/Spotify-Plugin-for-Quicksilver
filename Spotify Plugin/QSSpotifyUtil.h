@@ -23,5 +23,6 @@
 - (int)getLoginState;
 - (void)attemptLoginWithCredential;
 - (void)signOut;
+- (void)starSongWithURI:(NSString *) URI;
 
 @end

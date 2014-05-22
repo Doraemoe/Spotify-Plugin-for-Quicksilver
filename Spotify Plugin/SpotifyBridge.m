@@ -17,3 +17,4 @@ SpotifyApplication *QSSpotify()
     }
     return Spotify;
 }
+

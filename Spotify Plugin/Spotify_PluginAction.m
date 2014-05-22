@@ -6,6 +6,7 @@
 //
 
 #import "Spotify_PluginAction.h"
+#import "QSSpotifyUtil.h"
 
 @implementation QSSpotify_PluginControlProvider
 
@@ -62,6 +63,15 @@
 - (void)volumeMute
 {
     [Spotify setSoundVolume:0];
+}
+
+- (void)star
+{
+    SpotifyTrack *track = [Spotify currentTrack];
+    NSString *uri = [track spotifyUrl];
+    QSSpotifyUtil* ut = [QSSpotifyUtil sharedInstance];
+    [ut starSongWithURI:uri];
+    
 }
 
 - (void)sendTrackToTwitter

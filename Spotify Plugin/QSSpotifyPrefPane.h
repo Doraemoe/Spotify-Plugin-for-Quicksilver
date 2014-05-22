@@ -22,6 +22,7 @@
 - (void)startAnimation;
 - (void)endAnimation;
 - (void)finishLogin;
+- (void)finishLogout;
 - (void)setWarningMessage:(NSString *)msg withColor:(NSColor *)color;
 
 @end
