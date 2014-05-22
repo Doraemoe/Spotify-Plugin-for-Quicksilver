@@ -20,9 +20,7 @@
 - (void)volumeIncrease;
 - (void)volumeDecrease;
 - (void)volumeMute;
-//- (void)copyTrackURLToClipboard;
 - (void)sendTrackToTwitter;
-//- (void)openInBrowser;
 - (void)toggleRepeat;
 - (void)toggleShuffling;
 @end

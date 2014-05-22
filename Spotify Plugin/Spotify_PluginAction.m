@@ -61,14 +61,7 @@
 {
     [Spotify setSoundVolume:0];
 }
-/*
-- (void)copyTrackURLToClipboard
-{
-    NSString *url = [[Spotify currentTrack] spotifyUrl];
-    [[NSPasteboard generalPasteboard] clearContents];
-    [[NSPasteboard generalPasteboard] setString:url forType:NSStringPboardType];
-}
-*/
+
 - (void)sendTrackToTwitter
 {
     NSImage *albumImg = [[Spotify currentTrack] artwork];
@@ -85,25 +78,6 @@
     if ([service canPerformWithItems:shareItems]) {
         [service performWithItems:shareItems];
     }
-}
-/*
-- (void)openInBrowser
-{
-    NSString *urlString = [[Spotify currentTrack] spotifyUrl];
-    NSURL *url = [NSURL URLWithString:urlString];
-    [[NSWorkspace sharedWorkspace] openURL:url];
-}
-*/
-- (void)toggleRepeat
-{
-    [Spotify setRepeating:![Spotify repeatingEnabled]];
-}
-
-- (void)toggleShuffling
-{
-
-    [Spotify setShuffling:![Spotify shufflingEnabled]];
-    
 }
 
 @end
