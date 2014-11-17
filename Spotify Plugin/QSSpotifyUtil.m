@@ -8,10 +8,9 @@
 
 #import "QSSpotifyUtil.h"
 #import "QSSpotifyPrefPane.h"
-#include "appkey.c"
 
 NSString *kClientID = @"eb2dca7a77924a878c2c8cb910bf5713";
-NSString *kClientSecret = @"eb22038e34504b1b99c0abb9246a6170";
+NSString *kClientSecret = @"";
 NSString *kRedirect = @"http://tuidao.me/callback";
 NSString *kToken = @"https://accounts.spotify.com/api/token";
 NSString *kAuthorization = @"https://accounts.spotify.com/authorize";
@@ -114,6 +113,7 @@ NSString *kUserPlaylistsWildcard = @"https://api.spotify.com/v1/users/USERID/pla
               _accessToken = [tokenData valueForKey:@"access_token"];
               _refreshToken = [tokenData valueForKey:@"refresh_token"];
               [self storeRefreshToken];
+              [_prefPane finishLogin];
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               NSLog(@"Error: %@", error);

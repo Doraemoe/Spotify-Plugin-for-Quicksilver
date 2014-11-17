@@ -32,14 +32,12 @@
 
 - (IBAction)authenticate:(id)sender {
     if ([[_signInOutButton title]  isEqual: @"Sign In"]) {
-        //[_signInOutButton setEnabled:NO];
         [self startAnimation];
         QSSpotifyUtil *su = [QSSpotifyUtil sharedInstance];
         
         [su attemptLogin];
     }
     else {
-        //[_signInOutButton setEnabled:NO];
         [self startAnimation];
         [[QSSpotifyUtil sharedInstance] signOut];
         [self finishLogout];
@@ -49,7 +47,6 @@
 - (void)finishLogin {
     [_signInOutButton setTitle:@"Sign Out"];
     [self setWarningMessage:@"Login Successful" withColor:[NSColor greenColor]];
-    [_signInOutButton setEnabled:YES];
     [self endAnimation];
     
 }
@@ -57,7 +54,6 @@
 - (void)finishLogout {
     [_signInOutButton setTitle:@"Sign In"];
     [self setWarningMessage:@"Logout Successful" withColor:[NSColor greenColor]];
-    [_signInOutButton setEnabled:YES];
     [self endAnimation];
 }
 
