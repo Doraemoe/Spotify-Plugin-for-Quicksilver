@@ -20,7 +20,6 @@
 		7D8875691A198AC8008A8F9B /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D88755F1A198AC8008A8F9B /* AFURLResponseSerialization.m */; };
 		7D88756A1A198AC8008A8F9B /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D8875611A198AC8008A8F9B /* AFURLSessionManager.m */; };
 		7D88756C1A198BC2008A8F9B /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D88756B1A198BC2008A8F9B /* WebKit.framework */; };
-		7D8875701A19B407008A8F9B /* QSInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D88756F1A19B407008A8F9B /* QSInterface.framework */; };
 		7DA9FFC117A4C7F8001742FB /* SpotifyBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DA9FFC017A4C7F8001742FB /* SpotifyBridge.m */; };
 		7DAA9BF1190CF182002652EC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB4EB0317A4B81E00520108 /* Cocoa.framework */; };
 		7DB4EB0617A4B81E00520108 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB4EB0517A4B81E00520108 /* ScriptingBridge.framework */; };
@@ -112,7 +111,6 @@
 			files = (
 				7D88756C1A198BC2008A8F9B /* WebKit.framework in Frameworks */,
 				7DAA9BF1190CF182002652EC /* Cocoa.framework in Frameworks */,
-				7D8875701A19B407008A8F9B /* QSInterface.framework in Frameworks */,
 				7DB4EB0617A4B81E00520108 /* ScriptingBridge.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

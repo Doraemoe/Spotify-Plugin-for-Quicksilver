@@ -11,14 +11,13 @@
 @interface QSSpotifyPrefPane : QSPreferencePane
     
 @property (weak) IBOutlet NSProgressIndicator *ind;
-@property (weak) IBOutlet NSTextField *warning;
 @property (weak) IBOutlet NSButton *signInOutButton;
+@property (weak) IBOutlet NSTextField *username;
 
 - (IBAction)authenticate:(id)sender;
 - (void)startAnimation;
 - (void)endAnimation;
-- (void)finishLogin;
+- (void)finishLoginWithUsername:(NSString *)username;
 - (void)finishLogout;
-- (void)setWarningMessage:(NSString *)msg withColor:(NSColor *)color;
 
 @end

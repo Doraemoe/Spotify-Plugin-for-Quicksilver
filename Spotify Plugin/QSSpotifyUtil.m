@@ -38,6 +38,7 @@ NSString *kUserPlaylistsWildcard = @"https://api.spotify.com/v1/users/USERID/pla
     if (self = [super init]) {
         _accessToken = @"AccessTokenPlaceholder";
         _refreshToken = @"RefreshTokenPlaceholder";
+        _displayName = @"NamePlaceholder";
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(loadStart:)
@@ -47,6 +48,14 @@ NSString *kUserPlaylistsWildcard = @"https://api.spotify.com/v1/users/USERID/pla
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(playlistsAdded:)
                                                      name:@"PlaylistItemsAddedJobFinishedNotification"
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(profileGet:)
+                                                     name:@"UserProfileDidGetNotification"
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(tokenGet:)
+                                                     name:@"AccessTokenDidGetNotification"
                                                    object:nil];
 
         
@@ -69,6 +78,15 @@ NSString *kUserPlaylistsWildcard = @"https://api.spotify.com/v1/users/USERID/pla
     if ([url length] > 26 && [[url substringToIndex:25] compare:kRedirect] == NSOrderedSame) {
         [self finishAuthWithCallback:url];
     }
+}
+
+- (void)profileGet:(NSNotification *)note {
+    NSLog(@"profile get?");
+    //[_prefPane finishLoginWithUsername:_displayName];
+}
+
+- (void)tokenGet:(NSNotification *)note {
+    //[self accessUserProfile];
 }
 
 #pragma mark -
@@ -113,7 +131,8 @@ NSString *kUserPlaylistsWildcard = @"https://api.spotify.com/v1/users/USERID/pla
               _accessToken = [tokenData valueForKey:@"access_token"];
               _refreshToken = [tokenData valueForKey:@"refresh_token"];
               [self storeRefreshToken];
-              [_prefPane finishLogin];
+              [self accessUserProfile];
+              [[NSNotificationCenter defaultCenter] postNotificationName:@"AccessTokenDidGetNotification" object:nil];
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               NSLog(@"Error: %@", error);
@@ -145,11 +164,12 @@ NSString *kUserPlaylistsWildcard = @"https://api.spotify.com/v1/users/USERID/pla
        parameters:parameters
           success:^(AFHTTPRequestOperation *operation, NSDictionary *tokenData) {
               _accessToken = [tokenData valueForKey:@"access_token"];
+              [self accessUserProfile];
+              [[NSNotificationCenter defaultCenter] postNotificationName:@"AccessTokenDidGetNotification" object:nil];
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               NSLog(@"Error: %@", error);
           }];
-
 }
 
 - (void)createLoginWindow {
@@ -171,6 +191,30 @@ NSString *kUserPlaylistsWildcard = @"https://api.spotify.com/v1/users/USERID/pla
 
 #pragma mark -
 #pragma mark function
+
+- (void)accessUserProfile {
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    NSString *accessHeader = [NSString stringWithFormat:@"Bearer %@", _accessToken];
+    [manager.requestSerializer setValue:accessHeader forHTTPHeaderField:@"Authorization"];
+    
+    [manager GET:kCurrectUserProfile
+      parameters:nil
+         success:^(AFHTTPRequestOperation *operation, NSDictionary *userProfile) {
+             NSLog(@"access profile");
+             _userID = [userProfile valueForKey:@"id"];
+             _displayName = [userProfile valueForKey:@"display_name"];
+             if (_prefPane) {
+                 [_prefPane finishLoginWithUsername:_displayName];
+             }
+             [[NSNotificationCenter defaultCenter] postNotificationName:@"UserProfileDidGetNotification" object:nil];
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             NSLog(@"Error: %@", error);
+         }];
+}
+
+
 - (void)starSongWithURI:(NSString *) URI {
 
 }

@@ -17,8 +17,12 @@
 @property QSSpotifyPrefPane *prefPane;
 @property NSString *accessToken;
 @property NSString *refreshToken;
+
 @property NSString *userID;
+@property NSString *displayName;
 @property NSMutableArray *playlists;
+
+
 @property NSUInteger totalPlaylistsNumber;
 @property WebView *web;
 @property NSWindow *codeWindow;

@@ -13,8 +13,7 @@
 - (id)init
 {
     if (self = [super init]) {
-        NSLog(@"what?");
-        [[QSSpotifyUtil sharedInstance] requestingAccessTokenFromRefreshToken];
+       // [[QSSpotifyUtil sharedInstance] requestingAccessTokenFromRefreshToken];
     }
     return self;
 }

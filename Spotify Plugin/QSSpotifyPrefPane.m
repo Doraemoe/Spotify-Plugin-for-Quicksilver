@@ -44,30 +44,23 @@
     }
 }
 
-- (void)finishLogin {
+- (void)finishLoginWithUsername:(NSString *)username {
     [_signInOutButton setTitle:@"Sign Out"];
-    [self setWarningMessage:@"Login Successful" withColor:[NSColor greenColor]];
+    [_username setStringValue:[NSString stringWithFormat:@"Signed in as: %@", username]];
     [self endAnimation];
     
 }
 
 - (void)finishLogout {
     [_signInOutButton setTitle:@"Sign In"];
-    [self setWarningMessage:@"Logout Successful" withColor:[NSColor greenColor]];
+    [_username setStringValue:@"Not signed in"];
     [self endAnimation];
-}
-
-- (void)setWarningMessage:(NSString *)msg withColor:(NSColor *)color {
-    [_warning setTextColor:color];
-    [_warning setStringValue:msg];
 }
 
 - (void)updateUI {
     QSSpotifyUtil *su = [QSSpotifyUtil sharedInstance];
     
     [self startAnimation];
-    //[_signInOutButton setEnabled:NO];
-    
     [su requestingAccessTokenFromRefreshToken];
     
     if ([su.refreshToken compare:@"RefreshTokenPlaceholder"] == NSOrderedSame) {
@@ -75,8 +68,7 @@
         NSLog(@"first no data");
     }
     else {
-        NSLog(@"%@", su.refreshToken);
-        [self finishLogin];
+        NSLog(@"refresh token:%@", su.refreshToken);
     }
 }
 
