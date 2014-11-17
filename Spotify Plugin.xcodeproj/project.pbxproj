@@ -10,11 +10,18 @@
 		7D026622190CB7A500953F58 /* QSSpotifyPrefPane.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D026621190CB7A500953F58 /* QSSpotifyPrefPane.xib */; };
 		7D026625190CB7C500953F58 /* QSSpotifyPrefPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D026624190CB7C500953F58 /* QSSpotifyPrefPane.m */; };
 		7D413BC3190E0563008CECFE /* QSSpotifyUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D413BC2190E0563008CECFE /* QSSpotifyUtil.m */; };
+		7D8875621A198AC8008A8F9B /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D8875501A198AC8008A8F9B /* AFHTTPRequestOperation.m */; };
+		7D8875631A198AC8008A8F9B /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D8875521A198AC8008A8F9B /* AFHTTPRequestOperationManager.m */; };
+		7D8875641A198AC8008A8F9B /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D8875541A198AC8008A8F9B /* AFHTTPSessionManager.m */; };
+		7D8875651A198AC8008A8F9B /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D8875571A198AC8008A8F9B /* AFNetworkReachabilityManager.m */; };
+		7D8875661A198AC8008A8F9B /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D8875591A198AC8008A8F9B /* AFSecurityPolicy.m */; };
+		7D8875671A198AC8008A8F9B /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D88755B1A198AC8008A8F9B /* AFURLConnectionOperation.m */; };
+		7D8875681A198AC8008A8F9B /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D88755D1A198AC8008A8F9B /* AFURLRequestSerialization.m */; };
+		7D8875691A198AC8008A8F9B /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D88755F1A198AC8008A8F9B /* AFURLResponseSerialization.m */; };
+		7D88756A1A198AC8008A8F9B /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D8875611A198AC8008A8F9B /* AFURLSessionManager.m */; };
+		7D88756C1A198BC2008A8F9B /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D88756B1A198BC2008A8F9B /* WebKit.framework */; };
+		7D8875701A19B407008A8F9B /* QSInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D88756F1A19B407008A8F9B /* QSInterface.framework */; };
 		7DA9FFC117A4C7F8001742FB /* SpotifyBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DA9FFC017A4C7F8001742FB /* SpotifyBridge.m */; };
-		7DAA9BEC190CF147002652EC /* libspotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DAA9BEB190CF147002652EC /* libspotify.framework */; };
-		7DAA9BEE190CF14D002652EC /* CocoaLibSpotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DAA9BED190CF14D002652EC /* CocoaLibSpotify.framework */; };
-		7DAA9BEF190CF154002652EC /* CocoaLibSpotify.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7DAA9BED190CF14D002652EC /* CocoaLibSpotify.framework */; };
-		7DAA9BF0190CF154002652EC /* libspotify.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7DAA9BEB190CF147002652EC /* libspotify.framework */; };
 		7DAA9BF1190CF182002652EC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB4EB0317A4B81E00520108 /* Cocoa.framework */; };
 		7DB4EB0617A4B81E00520108 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB4EB0517A4B81E00520108 /* ScriptingBridge.framework */; };
 		7DB4EB0C17A4B81E00520108 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7DB4EB0A17A4B81E00520108 /* InfoPlist.strings */; };
@@ -45,8 +52,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				7DAA9BEF190CF154002652EC /* CocoaLibSpotify.framework in CopyFiles */,
-				7DAA9BF0190CF154002652EC /* libspotify.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,11 +65,30 @@
 		7D0910D61824936900991277 /* Spotify.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Spotify.h; sourceTree = "<group>"; };
 		7D413BC1190E0563008CECFE /* QSSpotifyUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSpotifyUtil.h; sourceTree = "<group>"; };
 		7D413BC2190E0563008CECFE /* QSSpotifyUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSpotifyUtil.m; sourceTree = "<group>"; };
+		7D88754F1A198AC8008A8F9B /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
+		7D8875501A198AC8008A8F9B /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
+		7D8875511A198AC8008A8F9B /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
+		7D8875521A198AC8008A8F9B /* AFHTTPRequestOperationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperationManager.m; sourceTree = "<group>"; };
+		7D8875531A198AC8008A8F9B /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
+		7D8875541A198AC8008A8F9B /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
+		7D8875551A198AC8008A8F9B /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
+		7D8875561A198AC8008A8F9B /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
+		7D8875571A198AC8008A8F9B /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
+		7D8875581A198AC8008A8F9B /* AFSecurityPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSecurityPolicy.h; sourceTree = "<group>"; };
+		7D8875591A198AC8008A8F9B /* AFSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFSecurityPolicy.m; sourceTree = "<group>"; };
+		7D88755A1A198AC8008A8F9B /* AFURLConnectionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLConnectionOperation.h; sourceTree = "<group>"; };
+		7D88755B1A198AC8008A8F9B /* AFURLConnectionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLConnectionOperation.m; sourceTree = "<group>"; };
+		7D88755C1A198AC8008A8F9B /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLRequestSerialization.h; sourceTree = "<group>"; };
+		7D88755D1A198AC8008A8F9B /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLRequestSerialization.m; sourceTree = "<group>"; };
+		7D88755E1A198AC8008A8F9B /* AFURLResponseSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLResponseSerialization.h; sourceTree = "<group>"; };
+		7D88755F1A198AC8008A8F9B /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
+		7D8875601A198AC8008A8F9B /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
+		7D8875611A198AC8008A8F9B /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		7D88756B1A198BC2008A8F9B /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		7D88756F1A19B407008A8F9B /* QSInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QSInterface.framework; sourceTree = "<group>"; };
 		7DA9FFBF17A4C7F8001742FB /* SpotifyBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpotifyBridge.h; sourceTree = "<group>"; };
 		7DA9FFC017A4C7F8001742FB /* SpotifyBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotifyBridge.m; sourceTree = "<group>"; };
-		7DAA9BEB190CF147002652EC /* libspotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libspotify.framework; sourceTree = "<group>"; };
-		7DAA9BED190CF14D002652EC /* CocoaLibSpotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CocoaLibSpotify.framework; sourceTree = "<group>"; };
-		7DB4EB0017A4B81E00520108 /* Spotify Plugin.qsplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spotify Plugin.qsplugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7DB4EB0017A4B81E00520108 /* Spotify Plugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "Spotify Plugin.bundle"; path = "Spotify Plugin.qsplugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DB4EB0317A4B81E00520108 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		7DB4EB0517A4B81E00520108 /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		7DB4EB0B17A4B81E00520108 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -86,9 +110,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D88756C1A198BC2008A8F9B /* WebKit.framework in Frameworks */,
 				7DAA9BF1190CF182002652EC /* Cocoa.framework in Frameworks */,
-				7DAA9BEE190CF14D002652EC /* CocoaLibSpotify.framework in Frameworks */,
-				7DAA9BEC190CF147002652EC /* libspotify.framework in Frameworks */,
+				7D8875701A19B407008A8F9B /* QSInterface.framework in Frameworks */,
 				7DB4EB0617A4B81E00520108 /* ScriptingBridge.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -96,6 +120,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7D88754E1A198AC8008A8F9B /* AFNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				7D88754F1A198AC8008A8F9B /* AFHTTPRequestOperation.h */,
+				7D8875501A198AC8008A8F9B /* AFHTTPRequestOperation.m */,
+				7D8875511A198AC8008A8F9B /* AFHTTPRequestOperationManager.h */,
+				7D8875521A198AC8008A8F9B /* AFHTTPRequestOperationManager.m */,
+				7D8875531A198AC8008A8F9B /* AFHTTPSessionManager.h */,
+				7D8875541A198AC8008A8F9B /* AFHTTPSessionManager.m */,
+				7D8875551A198AC8008A8F9B /* AFNetworking.h */,
+				7D8875561A198AC8008A8F9B /* AFNetworkReachabilityManager.h */,
+				7D8875571A198AC8008A8F9B /* AFNetworkReachabilityManager.m */,
+				7D8875581A198AC8008A8F9B /* AFSecurityPolicy.h */,
+				7D8875591A198AC8008A8F9B /* AFSecurityPolicy.m */,
+				7D88755A1A198AC8008A8F9B /* AFURLConnectionOperation.h */,
+				7D88755B1A198AC8008A8F9B /* AFURLConnectionOperation.m */,
+				7D88755C1A198AC8008A8F9B /* AFURLRequestSerialization.h */,
+				7D88755D1A198AC8008A8F9B /* AFURLRequestSerialization.m */,
+				7D88755E1A198AC8008A8F9B /* AFURLResponseSerialization.h */,
+				7D88755F1A198AC8008A8F9B /* AFURLResponseSerialization.m */,
+				7D8875601A198AC8008A8F9B /* AFURLSessionManager.h */,
+				7D8875611A198AC8008A8F9B /* AFURLSessionManager.m */,
+			);
+			path = AFNetworking;
+			sourceTree = "<group>";
+		};
 		7DB4EAF617A4B81E00520108 = {
 			isa = PBXGroup;
 			children = (
@@ -110,7 +160,7 @@
 		7DB4EB0117A4B81E00520108 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7DB4EB0017A4B81E00520108 /* Spotify Plugin.qsplugin */,
+				7DB4EB0017A4B81E00520108 /* Spotify Plugin.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -118,8 +168,8 @@
 		7DB4EB0217A4B81E00520108 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7DAA9BED190CF14D002652EC /* CocoaLibSpotify.framework */,
-				7DAA9BEB190CF147002652EC /* libspotify.framework */,
+				7D88756F1A19B407008A8F9B /* QSInterface.framework */,
+				7D88756B1A198BC2008A8F9B /* WebKit.framework */,
 				7DB4EB0317A4B81E00520108 /* Cocoa.framework */,
 				7DB4EB0517A4B81E00520108 /* ScriptingBridge.framework */,
 			);
@@ -129,6 +179,7 @@
 		7DB4EB0717A4B81E00520108 /* Spotify Plugin */ = {
 			isa = PBXGroup;
 			children = (
+				7DE90C841A173F44005EB1B1 /* OAuth Sources */,
 				7D026623190CB7C500953F58 /* QSSpotifyPrefPane.h */,
 				7D026624190CB7C500953F58 /* QSSpotifyPrefPane.m */,
 				7DA9FFBF17A4C7F8001742FB /* SpotifyBridge.h */,
@@ -169,6 +220,14 @@
 			path = /private/tmp/QS/Configuration;
 			sourceTree = "<absolute>";
 		};
+		7DE90C841A173F44005EB1B1 /* OAuth Sources */ = {
+			isa = PBXGroup;
+			children = (
+				7D88754E1A198AC8008A8F9B /* AFNetworking */,
+			);
+			name = "OAuth Sources";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -189,7 +248,7 @@
 			);
 			name = "Spotify Plugin";
 			productName = "Spotify Plugin";
-			productReference = 7DB4EB0017A4B81E00520108 /* Spotify Plugin.qsplugin */;
+			productReference = 7DB4EB0017A4B81E00520108 /* Spotify Plugin.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -198,7 +257,7 @@
 		7DB4EAF717A4B81E00520108 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Jin Yifan";
 			};
 			buildConfigurationList = 7DB4EAFA17A4B81E00520108 /* Build configuration list for PBXProject "Spotify Plugin" */;
@@ -252,11 +311,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D8875621A198AC8008A8F9B /* AFHTTPRequestOperation.m in Sources */,
 				7DB4EB2617A4BB9C00520108 /* Spotify.app in Sources */,
 				7DB4EB1817A4B81E00520108 /* Spotify_PluginAction.m in Sources */,
+				7D88756A1A198AC8008A8F9B /* AFURLSessionManager.m in Sources */,
+				7D8875641A198AC8008A8F9B /* AFHTTPSessionManager.m in Sources */,
+				7D8875651A198AC8008A8F9B /* AFNetworkReachabilityManager.m in Sources */,
 				7DB4EB1B17A4B81E00520108 /* Spotify_PluginSource.m in Sources */,
+				7D8875691A198AC8008A8F9B /* AFURLResponseSerialization.m in Sources */,
+				7D8875681A198AC8008A8F9B /* AFURLRequestSerialization.m in Sources */,
+				7D8875671A198AC8008A8F9B /* AFURLConnectionOperation.m in Sources */,
+				7D8875631A198AC8008A8F9B /* AFHTTPRequestOperationManager.m in Sources */,
 				7D026625190CB7C500953F58 /* QSSpotifyPrefPane.m in Sources */,
 				7D413BC3190E0563008CECFE /* QSSpotifyUtil.m in Sources */,
+				7D8875661A198AC8008A8F9B /* AFSecurityPolicy.m in Sources */,
 				7DA9FFC117A4C7F8001742FB /* SpotifyBridge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -279,6 +347,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7DB4EB0F17A4B81E00520108 /* Debug.xcconfig */;
 			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};
@@ -286,6 +357,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7DB4EB1317A4B81E00520108 /* Release.xcconfig */;
 			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 			};
 			name = Release;
 		};

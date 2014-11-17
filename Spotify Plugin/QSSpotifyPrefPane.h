@@ -7,17 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <CocoaLibSpotify/CocoaLibSpotify.h>
 
-@interface QSSpotifyPrefPane : QSPreferencePane {
-    IBOutlet NSTextField *usr;
-    IBOutlet NSSecureTextField *pass;
-    IBOutlet NSProgressIndicator *ind;
-    IBOutlet NSTextField *warning;
-    IBOutlet NSButton *signInOutButton;
-}
+@interface QSSpotifyPrefPane : QSPreferencePane
+    
+@property (weak) IBOutlet NSProgressIndicator *ind;
+@property (weak) IBOutlet NSTextField *warning;
+@property (weak) IBOutlet NSButton *signInOutButton;
 
-- (void)setPseudoContext;
 - (IBAction)authenticate:(id)sender;
 - (void)startAnimation;
 - (void)endAnimation;

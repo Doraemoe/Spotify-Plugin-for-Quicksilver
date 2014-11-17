@@ -7,22 +7,29 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CocoaLibSpotify/CocoaLibSpotify.h>
+#import <WebKit/WebKit.h>
+#import "AFNetworking.h"
 
 @class QSSpotifyPrefPane;
 
-@interface QSSpotifyUtil : NSObject <SPSessionDelegate> {
-    QSSpotifyPrefPane *prefPane;
-}
+@interface QSSpotifyUtil : NSObject
 
-@property (retain) QSSpotifyPrefPane *prefPane;
+@property QSSpotifyPrefPane *prefPane;
+@property NSString *accessToken;
+@property NSString *refreshToken;
+@property NSString *userID;
+@property NSMutableArray *playlists;
+@property NSUInteger totalPlaylistsNumber;
+@property WebView *web;
+@property NSWindow *codeWindow;
+
+
 
 + (QSSpotifyUtil *)sharedInstance;
 
-- (void)attemptLoginWithName:(NSString *)name password:(NSString *)pass;
-- (int)getLoginState;
-- (void)attemptLoginWithCredential;
+- (void)attemptLogin;
 - (void)signOut;
 - (void)starSongWithURI:(NSString *) URI;
+- (void)requestingAccessTokenFromRefreshToken;
 
 @end

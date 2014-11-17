@@ -13,7 +13,8 @@
 - (id)init
 {
     if (self = [super init]) {
-        [[QSSpotifyUtil sharedInstance] attemptLoginWithCredential];
+        NSLog(@"what?");
+        [[QSSpotifyUtil sharedInstance] requestingAccessTokenFromRefreshToken];
     }
     return self;
 }

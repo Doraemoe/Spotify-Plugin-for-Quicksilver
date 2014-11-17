@@ -14,97 +14,73 @@
 - (NSView *)loadMainView {
     NSView *view = [super loadMainView];
     [[QSSpotifyUtil sharedInstance] setPrefPane:self];
-    [self startAnimation];
-    [signInOutButton setEnabled:NO];
     [self updateUI];
     return view;
 }
 
 - (void)startAnimation {
-    [ind setHidden:NO];
-    [ind startAnimation:self];
+    [_ind setHidden:NO];
+    [_ind startAnimation:self];
 }
 
 - (void)endAnimation {
-    [ind stopAnimation:self];
-    [ind setHidden:YES];
+    [_ind stopAnimation:self];
+    [_ind setHidden:YES];
 
-}
-
-- (void)setPseudoContext {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *usrName = [defaults valueForKey:@"spotifyUser"];
-    
-    [usr setStringValue:usrName];
-    [pass setStringValue:@"FAKE"];
 }
 
 
 - (IBAction)authenticate:(id)sender {
-    if ([[signInOutButton title]  isEqual: @"Sign In"]) {
-        [signInOutButton setEnabled:NO];
+    if ([[_signInOutButton title]  isEqual: @"Sign In"]) {
+        //[_signInOutButton setEnabled:NO];
         [self startAnimation];
         QSSpotifyUtil *su = [QSSpotifyUtil sharedInstance];
-        [su attemptLoginWithName:[usr stringValue] password:[pass stringValue]];
+        
+        [su attemptLogin];
     }
     else {
-        [signInOutButton setEnabled:NO];
+        //[_signInOutButton setEnabled:NO];
         [self startAnimation];
         [[QSSpotifyUtil sharedInstance] signOut];
         [self finishLogout];
     }
-    
 }
 
 - (void)finishLogin {
-    [usr setEditable:NO];
-    [usr setBackgroundColor:[NSColor secondarySelectedControlColor]];
-    [pass setEditable:NO];
-    [pass setBackgroundColor:[NSColor secondarySelectedControlColor]];
-    [signInOutButton setTitle:@"Sign Out"];
+    [_signInOutButton setTitle:@"Sign Out"];
     [self setWarningMessage:@"Login Successful" withColor:[NSColor greenColor]];
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *usrName = [usr stringValue];
-    [defaults setValue:usrName forKey:@"spotifyUser"];
-    [signInOutButton setEnabled:YES];
+    [_signInOutButton setEnabled:YES];
     [self endAnimation];
     
 }
 
 - (void)finishLogout {
-    [usr setEditable:YES];
-    [usr setBackgroundColor:[NSColor clearColor]];
-    [pass setEditable:YES];
-    [pass setBackgroundColor:[NSColor clearColor]];
-    [pass setStringValue:@""];
-    [signInOutButton setTitle:@"Sign In"];
+    [_signInOutButton setTitle:@"Sign In"];
     [self setWarningMessage:@"Logout Successful" withColor:[NSColor greenColor]];
-    [signInOutButton setEnabled:YES];
+    [_signInOutButton setEnabled:YES];
     [self endAnimation];
 }
 
 - (void)setWarningMessage:(NSString *)msg withColor:(NSColor *)color {
-    [warning setTextColor:color];
-    [warning setStringValue:msg];
+    [_warning setTextColor:color];
+    [_warning setStringValue:msg];
 }
 
 - (void)updateUI {
     QSSpotifyUtil *su = [QSSpotifyUtil sharedInstance];
-    if ([su getLoginState] == SP_CONNECTION_STATE_LOGGED_OUT || [su getLoginState] == SP_CONNECTION_STATE_UNDEFINED) {
-        NSLog(@"logged out");
-        [su attemptLoginWithCredential];
-        [signInOutButton setEnabled:YES];
-        [self endAnimation];
-    }
-    else if([su getLoginState] == SP_CONNECTION_STATE_LOGGED_IN){
-        NSLog(@"already logged in");
-        [self finishLogin];
+    
+    [self startAnimation];
+    //[_signInOutButton setEnabled:NO];
+    
+    [su requestingAccessTokenFromRefreshToken];
+    
+    if ([su.refreshToken compare:@"RefreshTokenPlaceholder"] == NSOrderedSame) {
+        [self finishLogout];
+        NSLog(@"first no data");
     }
     else {
-        NSLog(@"%d", [su getLoginState]);
-        [signInOutButton setEnabled:YES];
-        [self endAnimation];
+        NSLog(@"%@", su.refreshToken);
+        [self finishLogin];
     }
 }
 

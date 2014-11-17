@@ -10,9 +10,15 @@
 #import "QSSpotifyPrefPane.h"
 #include "appkey.c"
 
-@implementation QSSpotifyUtil
+NSString *kClientID = @"eb2dca7a77924a878c2c8cb910bf5713";
+NSString *kClientSecret = @"eb22038e34504b1b99c0abb9246a6170";
+NSString *kRedirect = @"http://tuidao.me/callback";
+NSString *kToken = @"https://accounts.spotify.com/api/token";
+NSString *kAuthorization = @"https://accounts.spotify.com/authorize";
+NSString *kCurrectUserProfile = @"https://api.spotify.com/v1/me";
+NSString *kUserPlaylistsWildcard = @"https://api.spotify.com/v1/users/USERID/playlists";
 
-@synthesize prefPane;
+@implementation QSSpotifyUtil
 
 + (void)initialize {
     [QSSpotifyUtil sharedInstance];
@@ -31,29 +37,142 @@
 - (id)init
 {
     if (self = [super init]) {
-        NSError *error = nil;
-        [SPSession initializeSharedSessionWithApplicationKey:[NSData dataWithBytes:&g_appkey length:g_appkey_size] userAgent:@"com.qsapp.spotify" loadingPolicy:SPAsyncLoadingManual error:&error];
-        if(error != nil) {
-            NSLog(@"CocoaLibSpotify init failed: %@", error);
-            abort();
-        }
+        _accessToken = @"AccessTokenPlaceholder";
+        _refreshToken = @"RefreshTokenPlaceholder";
         
-        [[SPSession sharedSession] setDelegate:self];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(loadStart:)
+                                                     name:WebViewProgressStartedNotification
+                                                   object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(playlistsAdded:)
+                                                     name:@"PlaylistItemsAddedJobFinishedNotification"
+                                                   object:nil];
+
+        
     }
     return self;
 }
 
 #pragma mark -
+#pragma mark notification
+
+- (void)playlistsAdded:(NSNotification *)note {
+    if (_playlists.count == _totalPlaylistsNumber) {
+        NSLog(@"success");
+    }
+}
+
+- (void)loadStart:(NSNotification *)note {
+    NSString *url = _web.mainFrame.provisionalDataSource.request.URL.absoluteString;
+    
+    if ([url length] > 26 && [[url substringToIndex:25] compare:kRedirect] == NSOrderedSame) {
+        [self finishAuthWithCallback:url];
+    }
+}
+
+#pragma mark -
+#pragma mark auth
+
+- (void)attemptLogin {
+    [self createLoginWindow];
+
+    NSDictionary *parameters = @{@"response_type": @"code",
+                                 @"redirect_uri": kRedirect,
+                                 @"client_id": kClientID,};
+    
+    NSURLRequest *urlRequest = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"GET"
+                                                                             URLString:kAuthorization
+                                                                            parameters:parameters
+                                                                                 error:nil];
+    
+    [[_web mainFrame] loadRequest:urlRequest];
+
+}
+
+- (void)finishAuthWithCallback:(NSString *)callback {
+    
+    [_codeWindow close];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    NSString *clientIDandSecretString = [NSString stringWithFormat:@"%@:%@", kClientID, kClientSecret];
+    NSString *encodedIDandSec = [NSString stringWithFormat:@"Basic %@", base64enc(clientIDandSecretString)];
+    
+    [manager.requestSerializer setValue:encodedIDandSec forHTTPHeaderField:@"Authorization"];
+    
+    NSDictionary *parameters = @{@"grant_type": @"authorization_code",
+                                 @"code": [callback substringFromIndex:31],
+                                 @"redirect_uri": kRedirect
+                                 };
+    
+    [manager POST:kToken
+       parameters:parameters
+          success:^(AFHTTPRequestOperation *operation, NSDictionary *tokenData) {
+              
+              _accessToken = [tokenData valueForKey:@"access_token"];
+              _refreshToken = [tokenData valueForKey:@"refresh_token"];
+              [self storeRefreshToken];
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              NSLog(@"Error: %@", error);
+          }];
+}
+
+- (void)requestingAccessTokenFromRefreshToken {
+    
+    if ([_refreshToken compare:@"RefreshTokenPlaceholder"] == NSOrderedSame) {
+        _refreshToken = [self getRefreshToken];
+    }
+    
+    if ([_refreshToken compare:@"RefreshTokenPlaceholder"] == NSOrderedSame) {
+        return;
+    }
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    NSString *clientIDandSecretString = [NSString stringWithFormat:@"%@:%@", kClientID, kClientSecret];
+    NSString *encodedIDandSec = [NSString stringWithFormat:@"Basic %@", base64enc(clientIDandSecretString)];
+    
+    [manager.requestSerializer setValue:encodedIDandSec forHTTPHeaderField:@"Authorization"];
+    
+    NSDictionary *parameters = @{@"grant_type": @"refresh_token",
+                                 @"refresh_token": _refreshToken
+                                 };
+    
+    [manager POST:kToken
+       parameters:parameters
+          success:^(AFHTTPRequestOperation *operation, NSDictionary *tokenData) {
+              _accessToken = [tokenData valueForKey:@"access_token"];
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              NSLog(@"Error: %@", error);
+          }];
+
+}
+
+- (void)createLoginWindow {
+    NSRect frame = NSMakeRect(100, 100, 640, 480);
+    _codeWindow  = [[NSWindow alloc] initWithContentRect:frame
+                                               styleMask: NSTitledWindowMask | NSClosableWindowMask | NSResizableWindowMask
+                                                 backing:NSBackingStoreBuffered
+                                                   defer:NO];
+    [_codeWindow setBackgroundColor:[NSColor blueColor]];
+    [_codeWindow setTitle:@"Authorization"];
+    _web = [WebView new];
+    [_codeWindow setContentView:_web];
+    [_codeWindow makeKeyAndOrderFront:NSApp];
+}
+
+- (void)signOut {
+    
+}
+
+#pragma mark -
 #pragma mark function
 - (void)starSongWithURI:(NSString *) URI {
-    NSLog(@"%@", URI);
-    if ([self getLoginState] == SP_CONNECTION_STATE_LOGGED_IN) {
-        [[SPSession sharedSession] trackForURL:[NSURL URLWithString:URI] callback:^(SPTrack* track) {
-            NSLog(@"%hhd", [track starred]);
-            [track setValue:[NSNumber numberWithBool:YES] forKey:@"starred"];
-            NSLog(@"%@", [track spotifyURL]);
-        }];
-    }
+
 }
 
 #pragma mark -
@@ -118,66 +237,12 @@ OSStatus DelPasswordKeychain (char *acctName) {
     return status;
 }
 
-
-#pragma mark -
-#pragma mark Spotify login
-
-- (void)attemptLoginWithCredential {
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *usrName = [defaults valueForKey:@"spotifyUser"];
-    
-    
-    if (usrName == nil) {
-        
-    }
-    else {
-        OSStatus status;
-        void *passwordData = NULL;
-        SecKeychainItemRef itemRef = NULL;
-        UInt32 passwordDataLength = 0;
-        char *usr = (char *)[usrName UTF8String];
-        
-        status = GetPasswordKeychain(&passwordData, &passwordDataLength, &itemRef, usr);
-        if (status == noErr) {
-            NSString *password = [[NSString alloc] initWithBytes:passwordData length:passwordDataLength encoding:NSUTF8StringEncoding];
-            SecKeychainItemFreeContent(NULL, passwordData);
-            
-            [[SPSession sharedSession] attemptLoginWithUserName:usrName existingCredential:password];
-            if (prefPane != NULL) {
-                [prefPane setPseudoContext];
-            }
-            
-        }
-        else if (status == errSecItemNotFound) {
-            NSLog(@"error not found");
-            SecKeychainItemFreeContent(NULL, passwordData);
-        }
-    }
-    
-}
-
-- (void)attemptLoginWithName:(NSString *)name password:(NSString *)pass {
-    
-    if ([name length] > 0 && [pass length] > 0) {
-        [[SPSession sharedSession] attemptLoginWithUserName:name password:pass];
-        
-    }
-    else {
-        if (prefPane != NULL) {
-            [prefPane setWarningMessage:@"Please enter username and password" withColor:[NSColor redColor]];
-            [prefPane endAnimation];
-        }
-        NSBeep();
-    }
-}
-
--(void)session:(SPSession *)aSession didGenerateLoginCredentials:(NSString *)credential forUserName:(NSString *)userName {
-    NSLog(@"saving Credentials");
+- (void)storeRefreshToken {
+    NSLog(@"saving Token");
     OSStatus status;
     
-    char *usr = (char *)[userName UTF8String];
-    void *password = (char *)[credential UTF8String];
+    char *usr = (char *)[@"Spotify" UTF8String];
+    void *password = (char *)[_refreshToken UTF8String];
     
     size_t passwordLength = strlen(password);
     assert(passwordLength <= 0xffffffff);
@@ -186,11 +251,13 @@ OSStatus DelPasswordKeychain (char *acctName) {
     SecKeychainItemRef itemRef = NULL;
     UInt32 passwordDataLength = 0;
     
+    
     status = GetPasswordKeychain(&passwordData, &passwordDataLength, &itemRef, usr);
     
     if (status == noErr) {
         //already in keychain
-        status = SecKeychainItemFreeContent(NULL, passwordData);
+        status = DelPasswordKeychain(usr);
+        status = StorePasswordKeychain(password, (UInt32)passwordLength, usr);
     }
     else if (status == errSecItemNotFound) {
         status = StorePasswordKeychain(password, (UInt32)passwordLength, usr);
@@ -198,64 +265,61 @@ OSStatus DelPasswordKeychain (char *acctName) {
     
 }
 
--(void)sessionDidLoginSuccessfully:(SPSession *)aSession {
-    if (prefPane != NULL) {
-        [prefPane finishLogin];
-    }
-    NSLog(@"success");
-}
-
--(void)session:(SPSession *)aSession didFailToLoginWithError:(NSError *)error {
-    //delete saved credentials if exists
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *usrName = [defaults valueForKey:@"spotifyUser"];
+- (NSString *)getRefreshToken {
+    NSString *refreshToken = @"RefreshTokenPlaceholder";
+    OSStatus status;
+    void *passwordData = NULL;
+    SecKeychainItemRef itemRef = NULL;
+    UInt32 passwordDataLength = 0;
+    char *usr = (char *)[@"Spotify" UTF8String];
     
-    if (usrName == nil) {
-        
+    status = GetPasswordKeychain(&passwordData, &passwordDataLength, &itemRef, usr);
+    if (status == noErr) {
+        refreshToken = [[NSString alloc] initWithBytes:passwordData
+                                                      length:passwordDataLength
+                                                    encoding:NSUTF8StringEncoding];
+        SecKeychainItemFreeContent(NULL, passwordData);
     }
-    else {
-        OSStatus status;
-        char *usr = (char *)[usrName UTF8String];
-        status = DelPasswordKeychain(usr);
+    else if (status == errSecItemNotFound) {
+        //NSLog(@"error not found");
+        SecKeychainItemFreeContent(NULL, passwordData);
     }
-    if (prefPane != NULL) {
-        [prefPane setWarningMessage:[error localizedDescription] withColor:[NSColor redColor]];
-        [prefPane endAnimation];
-    }
+    return refreshToken;
 }
 
--(void)session:(SPSession *)aSession didEncounterNetworkError:(NSError *)error {
-    if (prefPane != NULL) {
-        [prefPane setWarningMessage:[error localizedDescription] withColor:[NSColor redColor]];
-        [prefPane endAnimation];
-    }
-}
 
--(void)sessionDidLogOut:(SPSession *)aSession {
-    NSLog(@"log out");
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *usrName = [defaults valueForKey:@"spotifyUser"];
+#pragma mark -
+#pragma mark base64encode
+
+static NSData *base64helper(NSData *input, SecTransformRef transform)
+{
+    NSData *output = nil;
     
-    if (usrName == nil) {
-        
-    }
-    else {
-        OSStatus status;
-        char *usr = (char *)[usrName UTF8String];
-        status = DelPasswordKeychain(usr);
-    }
-    if (prefPane != NULL) {
-        [prefPane setWarningMessage:@"Successfully Logged Out" withColor:[NSColor greenColor]];
-        [prefPane finishLogout];
-    }
+    if (!transform)
+        return nil;
+    
+    if (SecTransformSetAttribute(transform, kSecTransformInputAttributeName, (__bridge CFTypeRef)(input), NULL))
+        output = (NSData *)CFBridgingRelease(SecTransformExecute(transform, NULL));
+    
+    CFRelease(transform);
+    
+    return output;
 }
 
--(void)signOut {
-    [[SPSession sharedSession] logout:^{
-    }];
+NSString *base64enc(NSString *originalString)
+{
+    NSData *data = [NSData dataWithBytes:[originalString UTF8String] length:originalString.length];
+    
+    SecTransformRef transform = SecEncodeTransformCreate(kSecBase64Encoding, NULL);
+    
+    return [[NSString alloc] initWithData:base64helper(data, transform) encoding:NSASCIIStringEncoding];
 }
 
--(int)getLoginState {
-    return [[SPSession sharedSession] connectionState];
+NSData *base64dec(NSString *input)
+{
+    SecTransformRef transform = SecDecodeTransformCreate(kSecBase64Encoding, NULL);
+    
+    return base64helper([input dataUsingEncoding:NSASCIIStringEncoding], transform);
 }
+
 @end
