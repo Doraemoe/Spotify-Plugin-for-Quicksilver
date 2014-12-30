@@ -10,7 +10,7 @@
 #define Spotify_Plugin_QSSpotifyDefines_h
 
 #define kClientID @"eb2dca7a77924a878c2c8cb910bf5713"
-#define kClientSecret @"ec335038fc1a4988a315ad6c47506bb1"
+#define kClientSecret @""
 #define kRedirect @"http://tuidao.me/callback"
 #define kToken @"https://accounts.spotify.com/api/token"
 #define kAuthorization @"https://accounts.spotify.com/authorize"
