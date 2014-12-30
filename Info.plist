@@ -69,14 +69,35 @@
 		<dict>
 			<key>ID</key>
 			<string>QSPresetSpotify_PluginGroup</string>
-			<key>enabled</key>
-			<true/>
+			<key>children</key>
+			<array>
+				<dict>
+					<key>ID</key>
+					<string>QSPresetSpotifyControl</string>
+					<key>icon</key>
+					<string>com.spotify.client</string>
+					<key>name</key>
+					<string>Spotify Control</string>
+					<key>source</key>
+					<string>QSSpotifyControlSource</string>
+				</dict>
+				<dict>
+					<key>ID</key>
+					<string>QSPresetSpotifyPlaylists</string>
+					<key>icon</key>
+					<string>com.spotify.client</string>
+					<key>name</key>
+					<string>Spotify Playlists</string>
+					<key>source</key>
+					<string>QSSpotifyObjectSource</string>
+				</dict>
+			</array>
 			<key>icon</key>
 			<string>com.spotify.client</string>
 			<key>name</key>
 			<string>Spotify</string>
 			<key>source</key>
-			<string>QSSpotifyControlSource</string>
+			<string>QSGroupObjectSource</string>
 		</dict>
 	</array>
 	<key>QSRegistration</key>
@@ -89,7 +110,10 @@
 		<key>QSApplicationActions</key>
 		<dict/>
 		<key>QSBundleChildHandlers</key>
-		<dict/>
+		<dict>
+			<key>com.spotify.client</key>
+			<string>QSSpotifyObjectSource</string>
+		</dict>
 		<key>QSCommands</key>
 		<dict>
 			<key>QSSpotifyDecreaseVolume</key>
@@ -365,15 +389,17 @@
 		</dict>
 		<key>QSObjectHandlers</key>
 		<dict>
-			<key>QSSpotify_PluginType</key>
-			<string>QSSpotify_PluginSource</string>
+			<key>QSSpotifyPlaylistType</key>
+			<string>QSSpotifyObjectSource</string>
+			<key>QSSpotifyTrackType</key>
+			<string>QSSpotifyObjectSource</string>
 		</dict>
 		<key>QSObjectSources</key>
 		<dict>
 			<key>QSSpotifyControlSource</key>
 			<string>QSSpotifyControlSource</string>
-			<key>QSSpotify_PluginSource</key>
-			<string>QSSpotify_PluginSource</string>
+			<key>QSSpotifyObjectSource</key>
+			<string>QSSpotifyObjectSource</string>
 		</dict>
 		<key>QSPreferencePanes</key>
 		<dict>

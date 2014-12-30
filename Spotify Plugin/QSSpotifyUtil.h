@@ -21,11 +21,20 @@
 @property NSString *userID;
 @property NSString *displayName;
 @property NSMutableArray *playlists;
+@property NSSet *oldPlaylists;
 
 
 @property NSUInteger totalPlaylistsNumber;
 @property WebView *web;
 @property NSWindow *codeWindow;
+
+@property NSInteger tokenStartTime;
+@property NSInteger tokenExpiresIn;
+
+@property BOOL needUserID;
+@property BOOL needPlaylists;
+
+@property(getter=isPlaylistChanged) BOOL playlistChanged;
 
 
 
@@ -34,6 +43,8 @@
 - (void)attemptLogin;
 - (void)signOut;
 - (void)starSongWithURI:(NSString *) URI;
-- (void)requestingAccessTokenFromRefreshToken;
+- (void)requestAccessTokenFromRefreshToken;
+- (void)getPlaylists;
+- (void)accessUserProfile;
 
 @end

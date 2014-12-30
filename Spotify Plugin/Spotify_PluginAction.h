@@ -8,9 +8,9 @@
 #import "SpotifyBridge.h"
 
 @interface QSSpotify_PluginControlProvider : QSActionProvider <NSApplicationDelegate, NSSharingServiceDelegate, NSSharingServicePickerDelegate, NSTextViewDelegate>
-{
-    SpotifyApplication *Spotify;
-}
+
+@property SpotifyApplication *Spotify;
+
 
 - (void)play;
 - (void)pause;

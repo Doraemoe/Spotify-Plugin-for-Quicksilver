@@ -13,7 +13,7 @@
 - (id)init
 {
     if (self = [super init]) {
-        Spotify = QSSpotify();
+        _Spotify = QSSpotify();
     }
     return self;
 }
@@ -23,51 +23,51 @@
 
 - (void)play
 {
-    if ([Spotify playerState] != SpotifyEPlSPlaying) {
-        [Spotify play];
+    if ([_Spotify playerState] != SpotifyEPlSPlaying) {
+        [_Spotify play];
     }
 }
 
 - (void)pause
 {
-    if ([Spotify playerState] != SpotifyEPlSPaused) {
-        [Spotify pause];
+    if ([_Spotify playerState] != SpotifyEPlSPaused) {
+        [_Spotify pause];
     }
 }
 
 - (void)togglePlayPause
 {
-    [Spotify playpause];
+    [_Spotify playpause];
 }
 
 - (void)next
 {
-    [Spotify nextTrack];
+    [_Spotify nextTrack];
 }
 
 - (void)previous
 {
-    [Spotify previousTrack];
+    [_Spotify previousTrack];
 }
 
 - (void)volumeIncrease
 {
-    [Spotify setSoundVolume:[Spotify soundVolume] + 5];
+    [_Spotify setSoundVolume:[_Spotify soundVolume] + 5];
 }
 
 - (void)volumeDecrease
 {
-    [Spotify setSoundVolume:[Spotify soundVolume] - 5];
+    [_Spotify setSoundVolume:[_Spotify soundVolume] - 5];
 }
 
 - (void)volumeMute
 {
-    [Spotify setSoundVolume:0];
+    [_Spotify setSoundVolume:0];
 }
 
 - (void)star
 {
-    SpotifyTrack *track = [Spotify currentTrack];
+    SpotifyTrack *track = [_Spotify currentTrack];
     NSString *uri = [track spotifyUrl];
     QSSpotifyUtil* ut = [QSSpotifyUtil sharedInstance];
     [ut starSongWithURI:uri];
@@ -76,10 +76,10 @@
 
 - (void)sendTrackToTwitter
 {
-    NSImage *albumImg = [[Spotify currentTrack] artwork];
-    NSString *artist = [[Spotify currentTrack] artist];
-    NSString *album = [[Spotify currentTrack] album];
-    NSString *name = [[Spotify currentTrack] name];
+    NSImage *albumImg = [[_Spotify currentTrack] artwork];
+    NSString *artist = [[_Spotify currentTrack] artist];
+    NSString *album = [[_Spotify currentTrack] album];
+    NSString *name = [[_Spotify currentTrack] name];
     
     NSSharingService * service = [NSSharingService sharingServiceNamed:NSSharingServiceNamePostOnTwitter];
     NSString *shareString = [NSString stringWithFormat:@"#NowPlaying %@ - %@ by %@", name, album, artist];

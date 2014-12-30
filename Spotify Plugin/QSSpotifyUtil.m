@@ -39,6 +39,14 @@ NSString *kUserPlaylistsWildcard = @"https://api.spotify.com/v1/users/USERID/pla
         _accessToken = @"AccessTokenPlaceholder";
         _refreshToken = @"RefreshTokenPlaceholder";
         _displayName = @"NamePlaceholder";
+        _tokenStartTime = 0;
+        _tokenExpiresIn = 0;
+        _needPlaylists = NO;
+        _needUserID = NO;
+        _playlistChanged = NO;
+        _totalPlaylistsNumber = 0;
+        _oldPlaylists = nil;
+        _playlists = nil;
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(loadStart:)
@@ -68,25 +76,37 @@ NSString *kUserPlaylistsWildcard = @"https://api.spotify.com/v1/users/USERID/pla
 
 - (void)playlistsAdded:(NSNotification *)note {
     if (_playlists.count == _totalPlaylistsNumber) {
-        NSLog(@"success");
+        if (_oldPlaylists == nil) {
+            NSLog(@"hard refrsh");
+            _oldPlaylists = [NSSet setWithArray:_playlists];
+            [[NSNotificationCenter defaultCenter] postNotificationName:QSCatalogSourceInvalidated object:@"QSSpotifyObjectSource"];
+        }
+        else {
+            NSSet *newPlaylistSet = [NSSet setWithArray:_playlists];
+            if (![_oldPlaylists isEqual:newPlaylistSet]) {
+                NSLog(@"hard refrsh");
+                _oldPlaylists = [NSSet setWithArray:_playlists];
+                [[NSNotificationCenter defaultCenter] postNotificationName:QSCatalogSourceInvalidated object:@"QSSpotifyObjectSource"];
+            }
+        }
     }
+
 }
 
 - (void)loadStart:(NSNotification *)note {
     NSString *url = _web.mainFrame.provisionalDataSource.request.URL.absoluteString;
     
-    if ([url length] > 26 && [[url substringToIndex:25] compare:kRedirect] == NSOrderedSame) {
+    if ([url length] > 26 && [[url substringToIndex:kRedirect.length] compare:kRedirect] == NSOrderedSame) {
         [self finishAuthWithCallback:url];
     }
 }
 
 - (void)profileGet:(NSNotification *)note {
-    NSLog(@"profile get?");
-    //[_prefPane finishLoginWithUsername:_displayName];
+
 }
 
 - (void)tokenGet:(NSNotification *)note {
-    //[self accessUserProfile];
+
 }
 
 #pragma mark -
@@ -123,6 +143,7 @@ NSString *kUserPlaylistsWildcard = @"https://api.spotify.com/v1/users/USERID/pla
                                  @"code": [callback substringFromIndex:31],
                                  @"redirect_uri": kRedirect
                                  };
+
     
     [manager POST:kToken
        parameters:parameters
@@ -130,16 +151,37 @@ NSString *kUserPlaylistsWildcard = @"https://api.spotify.com/v1/users/USERID/pla
               
               _accessToken = [tokenData valueForKey:@"access_token"];
               _refreshToken = [tokenData valueForKey:@"refresh_token"];
+              _tokenExpiresIn = [[tokenData valueForKey:@"expires_in"] integerValue];
+              _tokenStartTime = [[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]] integerValue];
               [self storeRefreshToken];
-              [self accessUserProfile];
+              
               [[NSNotificationCenter defaultCenter] postNotificationName:@"AccessTokenDidGetNotification" object:nil];
+              
+              if (_needUserID) {
+                  _needUserID = NO;
+                  [self accessUserProfile];
+              }
+              
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               NSLog(@"Error: %@", error);
           }];
 }
 
-- (void)requestingAccessTokenFromRefreshToken {
+- (void)requestAccessTokenFromRefreshToken {
+    
+    NSInteger currentTime = [[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]] integerValue];
+
+    if (currentTime - _tokenStartTime < _tokenExpiresIn - 10) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"AccessTokenDidGetNotification" object:nil];
+        
+        if (_needUserID) {
+            _needUserID = NO;
+            [self accessUserProfile];
+        }
+        
+        return;
+    }
     
     if ([_refreshToken compare:@"RefreshTokenPlaceholder"] == NSOrderedSame) {
         _refreshToken = [self getRefreshToken];
@@ -164,8 +206,16 @@ NSString *kUserPlaylistsWildcard = @"https://api.spotify.com/v1/users/USERID/pla
        parameters:parameters
           success:^(AFHTTPRequestOperation *operation, NSDictionary *tokenData) {
               _accessToken = [tokenData valueForKey:@"access_token"];
-              [self accessUserProfile];
+              _tokenExpiresIn = [[tokenData valueForKey:@"expires_in"] integerValue];
+              _tokenStartTime = [[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]] integerValue];
+              
               [[NSNotificationCenter defaultCenter] postNotificationName:@"AccessTokenDidGetNotification" object:nil];
+              
+              if (_needUserID) {
+                  _needUserID = NO;
+                  [self accessUserProfile];
+              }
+              
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               NSLog(@"Error: %@", error);
@@ -186,7 +236,20 @@ NSString *kUserPlaylistsWildcard = @"https://api.spotify.com/v1/users/USERID/pla
 }
 
 - (void)signOut {
+    _accessToken = @"AccessTokenPlaceholder";
+    _refreshToken = @"RefreshTokenPlaceholder";
+    _displayName = @"NamePlaceholder";
+    _tokenStartTime = 0;
+    _tokenExpiresIn = 0;
+    _needPlaylists = NO;
+    _needUserID = NO;
+    _playlistChanged = NO;
     
+    OSStatus status;
+    char *usr = (char *)[@"Spotify" UTF8String];
+    status = DelPasswordKeychain(usr);
+    
+    [_prefPane finishLogout];
 }
 
 #pragma mark -
@@ -204,15 +267,85 @@ NSString *kUserPlaylistsWildcard = @"https://api.spotify.com/v1/users/USERID/pla
              NSLog(@"access profile");
              _userID = [userProfile valueForKey:@"id"];
              _displayName = [userProfile valueForKey:@"display_name"];
-             if (_prefPane) {
-                 [_prefPane finishLoginWithUsername:_displayName];
-             }
+             
              [[NSNotificationCenter defaultCenter] postNotificationName:@"UserProfileDidGetNotification" object:nil];
+             
+             if (_needPlaylists) {
+                 _needPlaylists = NO;
+                 [self getPlaylists];
+             }
+             
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              NSLog(@"Error: %@", error);
          }];
 }
+
+- (void)getPlaylistsWithOffset:(NSString *)offset limit:(NSString *)limit manager:(AFHTTPRequestOperationManager *)manager {
+    
+    NSString *url = [kUserPlaylistsWildcard stringByReplacingOccurrencesOfString:@"USERID" withString:_userID];
+    
+    NSDictionary *parameters = @{@"offset": offset,
+                                 @"limit": limit,
+                                 };
+    
+    
+    [manager GET:url
+      parameters:parameters
+         success:^(AFHTTPRequestOperation *operation, NSDictionary *playlistData) {
+             NSLog(@"limit: %@, offset: %@", [playlistData valueForKey:@"limit"], [playlistData valueForKey:@"offset"]);
+             
+             [_playlists addObjectsFromArray:[playlistData valueForKey:@"items"]];
+             [[NSNotificationCenter defaultCenter] postNotificationName:@"PlaylistItemsAddedJobFinishedNotification" object:nil];
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             NSLog(@"Error: %@", error);
+         }];
+    
+}
+
+- (void)getPlaylists {
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    NSString *accessHeader = [NSString stringWithFormat:@"Bearer %@", _accessToken];
+    [manager.requestSerializer setValue:accessHeader forHTTPHeaderField:@"Authorization"];
+    
+    NSString *url = [kUserPlaylistsWildcard stringByReplacingOccurrencesOfString:@"USERID" withString:_userID];
+    
+    NSDictionary *parameters = @{@"offset": @"0",
+                                 @"limit": @"50",
+                                 };
+    
+    
+    [manager GET:url
+      parameters:parameters
+         success:^(AFHTTPRequestOperation *operation, NSDictionary *playlistData) {
+             
+             NSLog(@"total: %@", [playlistData valueForKey:@"total"]);
+             NSLog(@"limit: %@, offset: %@", [playlistData valueForKey:@"limit"], [playlistData valueForKey:@"offset"]);
+             
+             _totalPlaylistsNumber = [[playlistData valueForKey:@"total"] integerValue];
+             
+             _playlists = [[NSMutableArray alloc] initWithCapacity:_totalPlaylistsNumber];
+             
+             [_playlists addObjectsFromArray:[playlistData valueForKey:@"items"]];
+             
+             NSInteger totalLeft = _totalPlaylistsNumber - 50;
+             int offset = 50;
+             
+             while (totalLeft > 0) {
+                 [self getPlaylistsWithOffset:[NSString stringWithFormat:@"%d", offset] limit:@"50" manager:manager];
+                 totalLeft -= 50;
+                 offset += 50;
+             }
+             [[NSNotificationCenter defaultCenter] postNotificationName:@"PlaylistItemsAddedJobFinishedNotification" object:nil];
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             NSLog(@"Error: %@", error);
+         }];
+}
+
 
 
 - (void)starSongWithURI:(NSString *) URI {
@@ -330,7 +463,6 @@ OSStatus DelPasswordKeychain (char *acctName) {
     }
     return refreshToken;
 }
-
 
 #pragma mark -
 #pragma mark base64encode

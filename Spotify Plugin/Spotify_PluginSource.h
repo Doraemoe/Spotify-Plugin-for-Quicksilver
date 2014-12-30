@@ -15,3 +15,8 @@
 @interface QSCommand (Spotify)
 - (NSDictionary *)commandDict;
 @end
+
+@interface QSSpotifyObjectSource : QSObjectSource
+
+
+@end

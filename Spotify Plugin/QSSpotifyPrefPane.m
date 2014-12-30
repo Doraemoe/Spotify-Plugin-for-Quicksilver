@@ -11,6 +11,23 @@
 
 @implementation QSSpotifyPrefPane
 
+- (id)init
+{
+    if (self = [super init]) {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(profileGet:)
+                                                     name:@"UserProfileDidGetNotification"
+                                                   object:nil];
+
+    }
+    return self;
+}
+
+- (void)profileGet:(NSNotification *)note {
+    QSSpotifyUtil *su = [QSSpotifyUtil sharedInstance];
+    [self finishLoginWithUsername:su.displayName];
+}
+
 - (NSView *)loadMainView {
     NSView *view = [super loadMainView];
     [[QSSpotifyUtil sharedInstance] setPrefPane:self];
@@ -34,7 +51,8 @@
     if ([[_signInOutButton title]  isEqual: @"Sign In"]) {
         [self startAnimation];
         QSSpotifyUtil *su = [QSSpotifyUtil sharedInstance];
-        
+        su.needUserID = YES;
+        su.needPlaylists = YES;
         [su attemptLogin];
     }
     else {
@@ -61,9 +79,13 @@
     QSSpotifyUtil *su = [QSSpotifyUtil sharedInstance];
     
     [self startAnimation];
-    [su requestingAccessTokenFromRefreshToken];
+    su.needUserID = YES;
+    su.needPlaylists = YES;
+    [su requestAccessTokenFromRefreshToken];
     
     if ([su.refreshToken compare:@"RefreshTokenPlaceholder"] == NSOrderedSame) {
+        su.needUserID = NO;
+        su.needPlaylists = NO;
         [self finishLogout];
         NSLog(@"first no data");
     }
