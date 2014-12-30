@@ -23,7 +23,21 @@
 	<key>CFBundleVersion</key>
 	<string>2</string>
 	<key>QSActions</key>
-	<dict/>
+	<dict>
+		<key>QSSpotifyPlayPlaylistAction</key>
+		<dict>
+			<key>actionClass</key>
+			<string>QSSpotifyActionProvider</string>
+			<key>actionSelector</key>
+			<string>playPlaylist:</string>
+			<key>directTypes</key>
+			<array>
+				<string>com.spotify.playlist</string>
+			</array>
+			<key>name</key>
+			<string>Play Playlist</string>
+		</dict>
+	</dict>
 	<key>QSPlugIn</key>
 	<dict>
 		<key>author</key>
@@ -36,7 +50,7 @@
 		<key>description</key>
 		<string>Allows you to control Spotify</string>
 		<key>extendedDescription</key>
-		<string>&lt;h1 id="spotifyquicksilverplugin"&gt;Spotify Quicksilver Plugin&lt;/h1&gt;
+		<string>&lt;h1 id=&quot;spotifyquicksilverplugin&quot;&gt;Spotify Quicksilver Plugin&lt;/h1&gt;
 
 &lt;p&gt;Support 9 different commands to control Spotify.&lt;/p&gt;
 
@@ -54,9 +68,9 @@
 &lt;li&gt;&lt;p&gt;Share on Twitter (Spotify)*&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;*Share on Twitter function relies on OS X's Twitter integration.&lt;/p&gt;
+&lt;p&gt;*Share on Twitter function relies on OS X&apos;s Twitter integration.&lt;/p&gt;
 
-&lt;p&gt;Added "(Spotify)" suffix to some commands in order to distinguish with iTunes command.&lt;/p&gt;</string>
+&lt;p&gt;Added &quot;(Spotify)&quot; suffix to some commands in order to distinguish with iTunes command.&lt;/p&gt;</string>
 		<key>icon</key>
 		<string>com.spotify.client</string>
 		<key>relatedBundles</key>
@@ -104,8 +118,8 @@
 	<dict>
 		<key>QSActionProviders</key>
 		<dict>
-			<key>QSSpotify_PluginActionProvider</key>
-			<string>QSSpotify_PluginActionProvider</string>
+			<key>QSSpotifyActionProvider</key>
+			<string>QSSpotifyActionProvider</string>
 		</dict>
 		<key>QSApplicationActions</key>
 		<dict/>
@@ -389,9 +403,9 @@
 		</dict>
 		<key>QSObjectHandlers</key>
 		<dict>
-			<key>QSSpotifyPlaylistType</key>
+			<key>com.spotify.playlist</key>
 			<string>QSSpotifyObjectSource</string>
-			<key>QSSpotifyTrackType</key>
+			<key>com.spotify.track</key>
 			<string>QSSpotifyObjectSource</string>
 		</dict>
 		<key>QSObjectSources</key>
@@ -427,12 +441,19 @@
 		</dict>
 		<key>QSTypeDefinitions</key>
 		<dict>
-			<key>QSSpotify_PluginType</key>
+			<key>com.spotify.playlist</key>
 			<dict>
 				<key>icon</key>
-				<string>GenericDocumentIcon</string>
+				<string>com.spotify.client</string>
 				<key>name</key>
-				<string>Spotify_Plugin Object</string>
+				<string>Spotify Playlist</string>
+			</dict>
+			<key>com.spotify.track</key>
+			<dict>
+				<key>icon</key>
+				<string>com.spotify.client</string>
+				<key>name</key>
+				<string>Spotify Music</string>
 			</dict>
 		</dict>
 	</dict>

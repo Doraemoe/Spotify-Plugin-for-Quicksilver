@@ -21,7 +21,7 @@
 @property NSString *userID;
 @property NSString *displayName;
 @property NSMutableArray *playlists;
-@property NSSet *oldPlaylists;
+@property NSSet *oldPlaylistsSet;
 
 
 @property NSUInteger totalPlaylistsNumber;

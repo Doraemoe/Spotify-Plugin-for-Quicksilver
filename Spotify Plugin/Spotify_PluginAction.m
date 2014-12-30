@@ -7,6 +7,7 @@
 
 #import "Spotify_PluginAction.h"
 #import "QSSpotifyUtil.h"
+#import "QSSpotifyDefines.h"
 
 @implementation QSSpotify_PluginControlProvider
 
@@ -91,4 +92,23 @@
         [service performWithItems:shareItems];
     }
 }
+@end
+
+@implementation QSSpotifyActionProvider
+
+- (id)init
+{
+    if (self = [super init]) {
+        _Spotify = QSSpotify();
+    }
+    return self;
+}
+
+- (QSObject *)playPlaylist:(QSObject *)dObject {
+    NSString *uri = [dObject objectForType:QSSpotifyPlaylistType];
+    NSLog(@"%@", uri);
+    return nil;
+}
+
+
 @end

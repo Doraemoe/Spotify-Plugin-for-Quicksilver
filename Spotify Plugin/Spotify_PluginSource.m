@@ -7,6 +7,7 @@
 
 #import "Spotify_PluginSource.h"
 #import "QSSpotifyUtil.h"
+#import "QSSpotifyDefines.h"
 
 @implementation QSSpotifyControlSource
 
@@ -64,16 +65,18 @@
 
 @implementation QSSpotifyObjectSource
 
+- (BOOL)entryCanBeIndexed:(NSDictionary *)theEntry
+{
+    return YES;
+}
+
 - (BOOL)indexIsValidFromDate:(NSDate *)indexDate forEntry:(NSDictionary *)theEntry {
     QSSpotifyUtil *su = [QSSpotifyUtil sharedInstance];
+    su.needPlaylists = YES;
+    su.needUserID = YES;
+    [su requestAccessTokenFromRefreshToken];
     
-    if (su.isPlaylistChanged) {
-        su.playlistChanged = NO;
-        return YES;
-    }
-    else {
-        return NO;
-    }
+    return NO;
 }
 
 - (NSArray *)objectsForEntry:(NSDictionary *)theEntry {
@@ -85,7 +88,7 @@
     NSArray *playlists = [su playlists];
     
     if (playlists != nil) {
-        PlaylistsObjects = [NSMutableArray arrayWithCapacity:20];
+        PlaylistsObjects = [NSMutableArray arrayWithCapacity:su.totalPlaylistsNumber];
         
         for (NSDictionary *playlist in playlists) {
             NSString *name = [playlist valueForKey:@"name"];
@@ -94,20 +97,22 @@
             NSString *url = [[playlist valueForKey:@"external_urls"] valueForKey:@"spotify"];
             NSString *trackNumber = [[[playlist valueForKey:@"tracks"] valueForKey:@"total"] stringValue];
             
-            QSObject *newObject = [QSObject objectWithName:[name stringByAppendingString:@" Playlist"]];
+            QSObject *newObject = [QSObject objectWithString:[name stringByAppendingString:@" Playlist"]];
             [newObject setLabel:name];
-            [newObject setObject:uri forType:@"QSSpotifyPlaylistType"];
-            [newObject setObject:url forType:@"QSURLType"];
+            [newObject setObject:uri forType:QSSpotifyPlaylistType];
+            [newObject setPrimaryType:QSSpotifyPlaylistType];
+            [newObject setObject:url forType:QSURLType];
             [newObject setIdentifier:playlistID];
             [newObject setDetails:[trackNumber stringByAppendingString:@" tracks"]];
-            [newObject setIcon:[QSResourceManager imageNamed:@"￼￼/Applications/Spotify.app/Contents/Resources/local_files.icns"]];
-            [newObject setPrimaryType:@"QSSpotifyPlaylistType"];
             
             [PlaylistsObjects addObject:newObject];
         }
     }
-    
-
+    else {
+        su.needPlaylists = YES;
+        su.needUserID = YES;
+        [su requestAccessTokenFromRefreshToken];
+    }
     
     return PlaylistsObjects;
 }
@@ -115,6 +120,5 @@
 - (void)setQuickIconForObject:(QSObject *)object {
     [object setIcon:[QSResourceManager imageNamed:@"￼￼/Applications/Spotify.app/Contents/Resources/local_files.icns"]];
 }
-
 
 @end

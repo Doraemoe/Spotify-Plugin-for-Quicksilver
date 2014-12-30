@@ -24,3 +24,11 @@
 - (void)sendTrackToTwitter;
 
 @end
+
+@interface QSSpotifyActionProvider : QSActionProvider
+
+@property SpotifyApplication *Spotify;
+
+- (QSObject *)playPlaylist:(QSObject *)dObject;
+
+@end

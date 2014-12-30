@@ -8,14 +8,7 @@
 
 #import "QSSpotifyUtil.h"
 #import "QSSpotifyPrefPane.h"
-
-NSString *kClientID = @"eb2dca7a77924a878c2c8cb910bf5713";
-NSString *kClientSecret = @"";
-NSString *kRedirect = @"http://tuidao.me/callback";
-NSString *kToken = @"https://accounts.spotify.com/api/token";
-NSString *kAuthorization = @"https://accounts.spotify.com/authorize";
-NSString *kCurrectUserProfile = @"https://api.spotify.com/v1/me";
-NSString *kUserPlaylistsWildcard = @"https://api.spotify.com/v1/users/USERID/playlists";
+#import "QSSpotifyDefines.h"
 
 @implementation QSSpotifyUtil
 
@@ -45,7 +38,7 @@ NSString *kUserPlaylistsWildcard = @"https://api.spotify.com/v1/users/USERID/pla
         _needUserID = NO;
         _playlistChanged = NO;
         _totalPlaylistsNumber = 0;
-        _oldPlaylists = nil;
+        _oldPlaylistsSet = nil;
         _playlists = nil;
         
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -76,16 +69,16 @@ NSString *kUserPlaylistsWildcard = @"https://api.spotify.com/v1/users/USERID/pla
 
 - (void)playlistsAdded:(NSNotification *)note {
     if (_playlists.count == _totalPlaylistsNumber) {
-        if (_oldPlaylists == nil) {
-            NSLog(@"hard refrsh");
-            _oldPlaylists = [NSSet setWithArray:_playlists];
+        if (_oldPlaylistsSet == nil) {
+            NSLog(@"hard refresh");
+            _oldPlaylistsSet = [NSSet setWithArray:_playlists];
             [[NSNotificationCenter defaultCenter] postNotificationName:QSCatalogSourceInvalidated object:@"QSSpotifyObjectSource"];
         }
         else {
-            NSSet *newPlaylistSet = [NSSet setWithArray:_playlists];
-            if (![_oldPlaylists isEqual:newPlaylistSet]) {
+            NSSet *newPlaylistsSet = [NSSet setWithArray:_playlists];
+            if (![_oldPlaylistsSet isEqualToSet:newPlaylistsSet]) {
                 NSLog(@"hard refrsh");
-                _oldPlaylists = [NSSet setWithArray:_playlists];
+                _oldPlaylistsSet = [NSSet setWithArray:_playlists];
                 [[NSNotificationCenter defaultCenter] postNotificationName:QSCatalogSourceInvalidated object:@"QSSpotifyObjectSource"];
             }
         }
