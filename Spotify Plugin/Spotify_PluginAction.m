@@ -129,9 +129,9 @@
 }
 
 - (QSObject *)playTrack:(QSObject *)dObject {
-    NSLog(@"a wild track has appeared");
+    //NSLog(@"a wild track has appeared");
     NSString *uri = [dObject objectForType:QSSpotifyTrackType];
-    NSLog(@"%@", uri);
+    //NSLog(@"%@", uri);
     [_Spotify playTrack:uri inContext:nil];
     return nil;
 }

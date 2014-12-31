@@ -88,10 +88,10 @@
         su.needUserID = NO;
         su.needPlaylists = NO;
         [self finishLogout];
-        NSLog(@"first no data");
+        //NSLog(@"first no data");
     }
     else {
-        NSLog(@"refresh token:%@", su.refreshToken);
+        //NSLog(@"refresh token:%@", su.refreshToken);
     }
 }
 

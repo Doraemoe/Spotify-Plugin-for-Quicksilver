@@ -427,7 +427,7 @@
     [manager PUT:url
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, NSDictionary *returnData) {
-             NSLog(@"%@", returnData);
+             //NSLog(@"%@", returnData);
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              NSLog(@"Error: %@", error);
@@ -499,7 +499,7 @@ OSStatus DelPasswordKeychain (char *acctName) {
 }
 
 - (void)storeRefreshToken {
-    NSLog(@"saving Token");
+    //NSLog(@"saving Token");
     OSStatus status;
     
     char *usr = (char *)[@"Spotify" UTF8String];
