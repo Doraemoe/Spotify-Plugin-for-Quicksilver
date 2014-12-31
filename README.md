@@ -25,7 +25,20 @@ Commands include:
 
 * Share on Twitter (Spotify)*
 
+* Save (Spotify)** 
+
+
 *Share on Twitter function relies on OS X's Twitter integration.
+
+**Save command will save current playing track to Your Music Library. You need login to support this function.
+
+After login from preference panel, all your playlists as well as each playlist's first 100 songs will add to your catalog.
+
+Support Actions:
+
+* Play track or playlist
+
+* Open playlist in web Browser
 
 Added "(Spotify)" suffix to some commands in order to distinguish with iTunes command.
 
