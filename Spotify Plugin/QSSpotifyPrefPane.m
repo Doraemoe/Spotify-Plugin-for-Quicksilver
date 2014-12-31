@@ -8,6 +8,7 @@
 
 #import "QSSpotifyPrefPane.h"
 #import "QSSpotifyUtil.h"
+#import "QSSpotifyDefines.h"
 
 @implementation QSSpotifyPrefPane
 
@@ -16,7 +17,7 @@
     if (self = [super init]) {
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(profileGet:)
-                                                     name:@"UserProfileDidGetNotification"
+                                                     name:UserProfileDidGetNotification
                                                    object:nil];
 
     }

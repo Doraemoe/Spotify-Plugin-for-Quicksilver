@@ -20,4 +20,8 @@
 #define QSSpotifyPlaylistType @"com.spotify.playlist"
 #define QSSpotifyTrackType @"com.spotify.track"
 
+#define PlaylistItemsAddedJobFinishedNotification @"PlaylistItemsAddedJobFinishedNotification"
+#define UserProfileDidGetNotification @"UserProfileDidGetNotification"
+#define AccessTokenDidGetNotification @"AccessTokenDidGetNotification"
+
 #endif

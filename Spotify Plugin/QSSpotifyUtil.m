@@ -36,7 +36,6 @@
         _tokenExpiresIn = 0;
         _needPlaylists = NO;
         _needUserID = NO;
-        _playlistChanged = NO;
         _totalPlaylistsNumber = 0;
         _oldPlaylistsSet = nil;
         _playlists = nil;
@@ -45,18 +44,22 @@
                                                  selector:@selector(loadStart:)
                                                      name:WebViewProgressStartedNotification
                                                    object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(loadFinished:)
+                                                     name:WebViewProgressFinishedNotification
+                                                   object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(playlistsAdded:)
-                                                     name:@"PlaylistItemsAddedJobFinishedNotification"
+                                                     name:PlaylistItemsAddedJobFinishedNotification
                                                    object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(profileGet:)
-                                                     name:@"UserProfileDidGetNotification"
+                                                     name:UserProfileDidGetNotification
                                                    object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(tokenGet:)
-                                                     name:@"AccessTokenDidGetNotification"
+                                                     name:AccessTokenDidGetNotification
                                                    object:nil];
 
         
@@ -94,12 +97,26 @@
     }
 }
 
-- (void)profileGet:(NSNotification *)note {
+- (void)loadFinished:(NSNotification *)note {
+    NSString *url = _web.mainFrame.dataSource.request.URL.absoluteString;
 
+    if ([url length] > 26 && [[url substringToIndex:kRedirect.length] compare:kRedirect] == NSOrderedSame) {
+        [self finishAuthWithCallback:url];
+    }
+}
+
+- (void)profileGet:(NSNotification *)note {
+    if (_needPlaylists) {
+        _needPlaylists = NO;
+        [self getPlaylists];
+    }
 }
 
 - (void)tokenGet:(NSNotification *)note {
-
+    if (_needUserID) {
+        _needUserID = NO;
+        [self accessUserProfile];
+    }
 }
 
 #pragma mark -
@@ -110,7 +127,8 @@
 
     NSDictionary *parameters = @{@"response_type": @"code",
                                  @"redirect_uri": kRedirect,
-                                 @"client_id": kClientID,};
+                                 @"client_id": kClientID,
+                                 @"scope": @"playlist-modify-public user-library-read user-library-modify"};
     
     NSURLRequest *urlRequest = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"GET"
                                                                              URLString:kAuthorization
@@ -133,7 +151,7 @@
     [manager.requestSerializer setValue:encodedIDandSec forHTTPHeaderField:@"Authorization"];
     
     NSDictionary *parameters = @{@"grant_type": @"authorization_code",
-                                 @"code": [callback substringFromIndex:31],
+                                 @"code": [callback substringFromIndex:32],
                                  @"redirect_uri": kRedirect
                                  };
 
@@ -148,13 +166,7 @@
               _tokenStartTime = [[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]] integerValue];
               [self storeRefreshToken];
               
-              [[NSNotificationCenter defaultCenter] postNotificationName:@"AccessTokenDidGetNotification" object:nil];
-              
-              if (_needUserID) {
-                  _needUserID = NO;
-                  [self accessUserProfile];
-              }
-              
+              [[NSNotificationCenter defaultCenter] postNotificationName:AccessTokenDidGetNotification object:nil];
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               NSLog(@"Error: %@", error);
@@ -166,12 +178,7 @@
     NSInteger currentTime = [[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]] integerValue];
 
     if (currentTime - _tokenStartTime < _tokenExpiresIn - 10) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"AccessTokenDidGetNotification" object:nil];
-        
-        if (_needUserID) {
-            _needUserID = NO;
-            [self accessUserProfile];
-        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:AccessTokenDidGetNotification object:nil];
         
         return;
     }
@@ -202,13 +209,7 @@
               _tokenExpiresIn = [[tokenData valueForKey:@"expires_in"] integerValue];
               _tokenStartTime = [[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]] integerValue];
               
-              [[NSNotificationCenter defaultCenter] postNotificationName:@"AccessTokenDidGetNotification" object:nil];
-              
-              if (_needUserID) {
-                  _needUserID = NO;
-                  [self accessUserProfile];
-              }
-              
+              [[NSNotificationCenter defaultCenter] postNotificationName:AccessTokenDidGetNotification object:nil];
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               NSLog(@"Error: %@", error);
@@ -236,7 +237,8 @@
     _tokenExpiresIn = 0;
     _needPlaylists = NO;
     _needUserID = NO;
-    _playlistChanged = NO;
+    _oldPlaylistsSet = nil;
+    _playlists = nil;
     
     OSStatus status;
     char *usr = (char *)[@"Spotify" UTF8String];
@@ -261,13 +263,7 @@
              _userID = [userProfile valueForKey:@"id"];
              _displayName = [userProfile valueForKey:@"display_name"];
              
-             [[NSNotificationCenter defaultCenter] postNotificationName:@"UserProfileDidGetNotification" object:nil];
-             
-             if (_needPlaylists) {
-                 _needPlaylists = NO;
-                 [self getPlaylists];
-             }
-             
+             [[NSNotificationCenter defaultCenter] postNotificationName:UserProfileDidGetNotification object:nil];
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              NSLog(@"Error: %@", error);
@@ -289,7 +285,7 @@
              NSLog(@"limit: %@, offset: %@", [playlistData valueForKey:@"limit"], [playlistData valueForKey:@"offset"]);
              
              [_playlists addObjectsFromArray:[playlistData valueForKey:@"items"]];
-             [[NSNotificationCenter defaultCenter] postNotificationName:@"PlaylistItemsAddedJobFinishedNotification" object:nil];
+             [[NSNotificationCenter defaultCenter] postNotificationName:PlaylistItemsAddedJobFinishedNotification object:nil];
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              NSLog(@"Error: %@", error);
@@ -332,7 +328,7 @@
                  totalLeft -= 50;
                  offset += 50;
              }
-             [[NSNotificationCenter defaultCenter] postNotificationName:@"PlaylistItemsAddedJobFinishedNotification" object:nil];
+             [[NSNotificationCenter defaultCenter] postNotificationName:PlaylistItemsAddedJobFinishedNotification object:nil];
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              NSLog(@"Error: %@", error);

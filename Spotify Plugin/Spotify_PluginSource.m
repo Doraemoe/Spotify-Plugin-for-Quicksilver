@@ -101,6 +101,8 @@
             NSString *url = [[playlist valueForKey:@"external_urls"] valueForKey:@"spotify"];
             NSString *trackNumber = [[[playlist valueForKey:@"tracks"] valueForKey:@"total"] stringValue];
             
+            
+            
             QSObject *newObject = [QSObject objectWithString:[name stringByAppendingString:@" Playlist"]];
             [newObject setLabel:name];
             [newObject setObject:uri forType:QSSpotifyPlaylistType];

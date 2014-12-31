@@ -34,9 +34,6 @@
 @property BOOL needUserID;
 @property BOOL needPlaylists;
 
-@property(getter=isPlaylistChanged) BOOL playlistChanged;
-
-
 
 + (QSSpotifyUtil *)sharedInstance;
 
