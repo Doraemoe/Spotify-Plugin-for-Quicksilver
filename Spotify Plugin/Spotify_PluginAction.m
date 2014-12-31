@@ -105,8 +105,9 @@
 }
 
 - (QSObject *)playPlaylist:(QSObject *)dObject {
-    NSString *uri = [dObject objectForType:QSSpotifyPlaylistType];
-    NSLog(@"%@", uri);
+   // NSString *uri = [dObject objectForType:QSSpotifyPlaylistType];
+    NSLog(@"name: %@, label: %@, identifier %@, icon %@, primaryType %@, primaryObject %@", dObject.name, dObject.label, dObject.identifier, dObject.icon, dObject.primaryType, dObject.primaryObject);
+    
     return nil;
 }
 

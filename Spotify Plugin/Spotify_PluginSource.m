@@ -67,7 +67,7 @@
 
 - (BOOL)entryCanBeIndexed:(NSDictionary *)theEntry
 {
-    return YES;
+    return NO;
 }
 
 - (BOOL)indexIsValidFromDate:(NSDate *)indexDate forEntry:(NSDictionary *)theEntry {
@@ -91,8 +91,12 @@
         PlaylistsObjects = [NSMutableArray arrayWithCapacity:su.totalPlaylistsNumber];
         
         for (NSDictionary *playlist in playlists) {
+            
             NSString *name = [playlist valueForKey:@"name"];
             NSString *playlistID = [playlist valueForKey:@"id"];
+            if ([name isEqualToString:@"Starred"]) {
+                playlistID = @"0000000000000000000000";
+            }
             NSString *uri = [playlist valueForKey:@"uri"];
             NSString *url = [[playlist valueForKey:@"external_urls"] valueForKey:@"spotify"];
             NSString *trackNumber = [[[playlist valueForKey:@"tracks"] valueForKey:@"total"] stringValue];
@@ -102,8 +106,9 @@
             [newObject setObject:uri forType:QSSpotifyPlaylistType];
             [newObject setPrimaryType:QSSpotifyPlaylistType];
             [newObject setObject:url forType:QSURLType];
-            [newObject setIdentifier:playlistID];
+            [newObject setIdentifier:[@"SpotifyPlaylist" stringByAppendingString:playlistID]];
             [newObject setDetails:[trackNumber stringByAppendingString:@" tracks"]];
+            
             
             [PlaylistsObjects addObject:newObject];
         }
