@@ -29,7 +29,8 @@ Commands include:
 
 
 *Share on Twitter function relies on OS X's Twitter integration.
-**This command will save current playing track to Your Music Library. You need login to support this function.
+
+**Save command will save current playing track to Your Music Library. You need login to support this function.
 
 After login from preference panel, all your playlists as well as each playlist's first 100 songs will add to your catalog.
 
