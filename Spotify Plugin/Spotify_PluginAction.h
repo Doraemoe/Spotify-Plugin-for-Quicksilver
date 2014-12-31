@@ -20,7 +20,7 @@
 - (void)volumeIncrease;
 - (void)volumeDecrease;
 - (void)volumeMute;
-- (void)star;
+- (void)save;
 - (void)sendTrackToTwitter;
 
 @end

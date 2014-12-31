@@ -46,7 +46,7 @@
                           @"QSSpotifyPause",
                           @"QSSpotifyDecreaseVolume",
                           @"QSSpotifyPlayPause",
-                          @"QSSpotifyStar"];
+                          @"QSSpotifySave"];
 	for (NSString *control in controls) {
 		command = [QSCommand commandWithIdentifier:control];
 		if (command) {

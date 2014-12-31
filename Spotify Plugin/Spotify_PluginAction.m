@@ -66,12 +66,13 @@
     [_Spotify setSoundVolume:0];
 }
 
-- (void)star
+- (void)save
 {
     SpotifyTrack *track = [_Spotify currentTrack];
     NSString *uri = [track spotifyUrl];
+    NSArray *uriArray = [uri componentsSeparatedByString:@":"];
     QSSpotifyUtil* ut = [QSSpotifyUtil sharedInstance];
-    [ut starSongWithURI:uri];
+    [ut saveSongWithID:uriArray[2]];
     
 }
 

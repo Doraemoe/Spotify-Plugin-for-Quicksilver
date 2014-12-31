@@ -32,10 +32,12 @@
         _accessToken = @"AccessTokenPlaceholder";
         _refreshToken = @"RefreshTokenPlaceholder";
         _displayName = @"NamePlaceholder";
+        _trackID = @"trackIDPlaceholder";
         _tokenStartTime = 0;
         _tokenExpiresIn = 0;
         _needPlaylists = NO;
         _needUserID = NO;
+        _needSaveTrack = NO;
         _totalPlaylistsNumber = 0;
         _oldPlaylistsSet = nil;
         _playlists = nil;
@@ -116,6 +118,11 @@
     if (_needUserID) {
         _needUserID = NO;
         [self accessUserProfile];
+    }
+    
+    if (_needSaveTrack) {
+        _needSaveTrack = NO;
+        [self saveTrack];
     }
 }
 
@@ -233,10 +240,12 @@
     _accessToken = @"AccessTokenPlaceholder";
     _refreshToken = @"RefreshTokenPlaceholder";
     _displayName = @"NamePlaceholder";
+    _trackID = @"trackIDPlaceholder";
     _tokenStartTime = 0;
     _tokenExpiresIn = 0;
     _needPlaylists = NO;
     _needUserID = NO;
+    _needSaveTrack = NO;
     _oldPlaylistsSet = nil;
     _playlists = nil;
     
@@ -337,8 +346,30 @@
 
 
 
-- (void)starSongWithURI:(NSString *) URI {
+- (void)saveSongWithID:(NSString *) ID {
+    _needSaveTrack = YES;
+    _trackID = ID;
+    [self requestAccessTokenFromRefreshToken];
+}
 
+- (void)saveTrack {
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
+    NSString *accessHeader = [NSString stringWithFormat:@"Bearer %@", _accessToken];
+    [manager.requestSerializer setValue:accessHeader forHTTPHeaderField:@"Authorization"];
+    
+    NSString *url = [kSaveTrackForMe stringByReplacingOccurrencesOfString:@"TRACKID" withString:_trackID];
+    
+    [manager PUT:url
+      parameters:nil
+         success:^(AFHTTPRequestOperation *operation, NSDictionary *returnData) {
+             NSLog(@"%@", returnData);
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             NSLog(@"Error: %@", error);
+         }];
+    
+    _trackID = @"trackIDPlaceholder";
 }
 
 #pragma mark -

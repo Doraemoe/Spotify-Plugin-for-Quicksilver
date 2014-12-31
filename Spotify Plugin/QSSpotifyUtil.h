@@ -22,6 +22,7 @@
 @property NSString *displayName;
 @property NSMutableArray *playlists;
 @property NSSet *oldPlaylistsSet;
+@property NSString *trackID;
 
 
 @property NSUInteger totalPlaylistsNumber;
@@ -33,13 +34,14 @@
 
 @property BOOL needUserID;
 @property BOOL needPlaylists;
+@property BOOL needSaveTrack;
 
 
 + (QSSpotifyUtil *)sharedInstance;
 
 - (void)attemptLogin;
 - (void)signOut;
-- (void)starSongWithURI:(NSString *) URI;
+- (void)saveSongWithID:(NSString *) ID;
 - (void)requestAccessTokenFromRefreshToken;
 - (void)getPlaylists;
 - (void)accessUserProfile;

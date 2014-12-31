@@ -373,7 +373,7 @@
 					<string>Spotify_PluginSendToTwitter</string>
 				</dict>
 			</dict>
-			<key>QSSpotifyStar</key>
+			<key>QSSpotifySave</key>
 			<dict>
 				<key>command</key>
 				<dict>
@@ -388,16 +388,16 @@
 								<key>actionClass</key>
 								<string>QSSpotify_PluginControlProvider</string>
 								<key>actionSelector</key>
-								<string>star</string>
+								<string>save</string>
 								<key>icon</key>
 								<string>SptifyIcon</string>
 								<key>name</key>
-								<string>Star (Spotify)</string>
+								<string>Save (Spotify)</string>
 							</dict>
 						</dict>
 					</dict>
 					<key>directID</key>
-					<string>Spotify_PluginStar</string>
+					<string>Spotify_PluginSave</string>
 				</dict>
 			</dict>
 		</dict>
@@ -466,16 +466,16 @@
 	<array>
 		<dict>
 			<key>ID</key>
-			<string>Spotify_PluginStar</string>
+			<string>Spotify_PluginSave</string>
 			<key>command</key>
-			<string>QSSpotifyStar</string>
+			<string>QSSpotifySave</string>
 			<key>defaults</key>
 			<dict>
 				<key>type</key>
 				<string>QSHotKeyTrigger</string>
 			</dict>
 			<key>name</key>
-			<string>Star</string>
+			<string>Save</string>
 			<key>set</key>
 			<string>Spotify</string>
 		</dict>
