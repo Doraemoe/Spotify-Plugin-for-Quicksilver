@@ -105,10 +105,34 @@
     return self;
 }
 
+- (QSObject *)playItem:(QSObject *)dObject {
+    if ([dObject containsType:QSSpotifyPlaylistType]) {
+        [self playPlaylist:dObject];
+    }
+    else if ([dObject containsType:QSSpotifyTrackType]) {
+        [self playTrack:dObject];
+    }
+    
+    return nil;
+}
+
 - (QSObject *)playPlaylist:(QSObject *)dObject {
    // NSString *uri = [dObject objectForType:QSSpotifyPlaylistType];
-    NSLog(@"name: %@, label: %@, identifier %@, icon %@, primaryType %@, primaryObject %@", dObject.name, dObject.label, dObject.identifier, dObject.icon, dObject.primaryType, dObject.primaryObject);
+    //NSLog(@"name: %@, label: %@, identifier %@, icon %@, primaryType %@, primaryObject %@", dObject.name, dObject.label, dObject.identifier, dObject.icon, dObject.primaryType, dObject.primaryObject);
+    //NSLog(@"endpoint %@", [dObject objectForMeta:@"tracksEndpoint"]);
+    NSArray *children = [dObject children];
+    NSString *playlistURI = [dObject objectForType:QSSpotifyPlaylistType];
+    NSString *trackURI = [children[0] objectForType:QSSpotifyTrackType];
     
+    [_Spotify playTrack:trackURI inContext:playlistURI];
+    return nil;
+}
+
+- (QSObject *)playTrack:(QSObject *)dObject {
+    NSLog(@"a wild track has appeared");
+    NSString *uri = [dObject objectForType:QSSpotifyTrackType];
+    NSLog(@"%@", uri);
+    [_Spotify playTrack:uri inContext:nil];
     return nil;
 }
 

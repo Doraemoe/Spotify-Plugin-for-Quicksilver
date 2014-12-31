@@ -38,9 +38,11 @@
         _needPlaylists = NO;
         _needUserID = NO;
         _needSaveTrack = NO;
+        _needTrackInPlaylist = NO;
         _totalPlaylistsNumber = 0;
         _oldPlaylistsSet = nil;
         _playlists = nil;
+        _tracksInPlaylist = nil;
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(loadStart:)
@@ -75,14 +77,14 @@
 - (void)playlistsAdded:(NSNotification *)note {
     if (_playlists.count == _totalPlaylistsNumber) {
         if (_oldPlaylistsSet == nil) {
-            NSLog(@"hard refresh");
+            //NSLog(@"hard refresh");
             _oldPlaylistsSet = [NSSet setWithArray:_playlists];
             [[NSNotificationCenter defaultCenter] postNotificationName:QSCatalogSourceInvalidated object:@"QSSpotifyObjectSource"];
         }
         else {
             NSSet *newPlaylistsSet = [NSSet setWithArray:_playlists];
             if (![_oldPlaylistsSet isEqualToSet:newPlaylistsSet]) {
-                NSLog(@"hard refrsh");
+                //NSLog(@"hard refrsh");
                 _oldPlaylistsSet = [NSSet setWithArray:_playlists];
                 [[NSNotificationCenter defaultCenter] postNotificationName:QSCatalogSourceInvalidated object:@"QSSpotifyObjectSource"];
             }
@@ -246,8 +248,10 @@
     _needPlaylists = NO;
     _needUserID = NO;
     _needSaveTrack = NO;
+    _needTrackInPlaylist = NO;
     _oldPlaylistsSet = nil;
     _playlists = nil;
+    _tracksInPlaylist = nil;
     
     OSStatus status;
     char *usr = (char *)[@"Spotify" UTF8String];
@@ -268,7 +272,7 @@
     [manager GET:kCurrectUserProfile
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, NSDictionary *userProfile) {
-             NSLog(@"access profile");
+             //NSLog(@"access profile");
              _userID = [userProfile valueForKey:@"id"];
              _displayName = [userProfile valueForKey:@"display_name"];
              
@@ -291,9 +295,17 @@
     [manager GET:url
       parameters:parameters
          success:^(AFHTTPRequestOperation *operation, NSDictionary *playlistData) {
-             NSLog(@"limit: %@, offset: %@", [playlistData valueForKey:@"limit"], [playlistData valueForKey:@"offset"]);
+             //NSLog(@"limit: %@, offset: %@", [playlistData valueForKey:@"limit"], [playlistData valueForKey:@"offset"]);
              
              [_playlists addObjectsFromArray:[playlistData valueForKey:@"items"]];
+             
+             NSArray *playlists = [playlistData valueForKey:@"items"];
+             for (NSDictionary *playlist in playlists) {
+                 NSString *tracksLocation = [[playlist valueForKey:@"tracks"] valueForKey:@"href"];
+                 NSString *name = [playlist valueForKey:@"name"];
+                 [self getTrackInPlaylistWithEndpoint:tracksLocation name:name];
+             }
+             
              [[NSNotificationCenter defaultCenter] postNotificationName:PlaylistItemsAddedJobFinishedNotification object:nil];
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -320,14 +332,20 @@
       parameters:parameters
          success:^(AFHTTPRequestOperation *operation, NSDictionary *playlistData) {
              
-             NSLog(@"total: %@", [playlistData valueForKey:@"total"]);
-             NSLog(@"limit: %@, offset: %@", [playlistData valueForKey:@"limit"], [playlistData valueForKey:@"offset"]);
+             //NSLog(@"total: %@", [playlistData valueForKey:@"total"]);
+             //NSLog(@"limit: %@, offset: %@", [playlistData valueForKey:@"limit"], [playlistData valueForKey:@"offset"]);
              
              _totalPlaylistsNumber = [[playlistData valueForKey:@"total"] integerValue];
-             
              _playlists = [[NSMutableArray alloc] initWithCapacity:_totalPlaylistsNumber];
-             
+             _tracksInPlaylist = [[NSMutableDictionary alloc] initWithCapacity:_totalPlaylistsNumber];
              [_playlists addObjectsFromArray:[playlistData valueForKey:@"items"]];
+             
+             NSArray *playlists = [playlistData valueForKey:@"items"];
+             for (NSDictionary *playlist in playlists) {
+                 NSString *tracksLocation = [[playlist valueForKey:@"tracks"] valueForKey:@"href"];
+                 NSString *name = [playlist valueForKey:@"name"];
+                 [self getTrackInPlaylistWithEndpoint:tracksLocation name:name];
+             }
              
              NSInteger totalLeft = _totalPlaylistsNumber - 50;
              int offset = 50;
@@ -342,6 +360,52 @@
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              NSLog(@"Error: %@", error);
          }];
+}
+
+- (void)getTrackInPlaylistWithEndpoint:(NSString *)endpoint name:(NSString *)playlistName {
+    //NSLog(@"playlistname %@", playlistName);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    NSString *accessHeader = [NSString stringWithFormat:@"Bearer %@", _accessToken];
+    [manager.requestSerializer setValue:accessHeader forHTTPHeaderField:@"Authorization"];
+    
+    NSDictionary *parameters = @{@"fields": @"total,items(track(name,id,uri,album(images),artists(name)))"};
+    
+    [manager GET:endpoint
+      parameters:parameters
+         success:^(AFHTTPRequestOperation *operation, NSDictionary *tracksData) {
+             NSMutableArray *tracksArray = [[NSMutableArray alloc] initWithCapacity:[[tracksData valueForKey:@"total"] integerValue]];
+             //NSLog(@"%@", tracksData);
+             for (NSDictionary *track in [[tracksData valueForKey:@"items"] valueForKey:@"track"]) {
+                 NSString *name = [track valueForKey:@"name"];
+                 NSString *trackID = [track valueForKey:@"id"];
+                 NSString *uri = [track valueForKey:@"uri"];
+                 NSArray *artistsName = [[track valueForKey:@"artists"] valueForKey:@"name"];
+
+                 NSString *url = [[[track valueForKey:@"album"] valueForKey:@"images"] valueForKey:@"url"];
+                 //NSLog(@"name: %@ trackID: %@ uri: %@ artistName: %@ url: %@", name, trackID, uri, artistsName, url);
+                 
+                 if ((NSNull *)name != [NSNull null] && (NSNull *)uri != [NSNull null] && (NSNull *)artistsName[0] != [NSNull null] && (NSNull *)url != [NSNull null] && (NSNull *)trackID != [NSNull null]) {
+                     QSObject *newObject = [QSObject objectWithString:name];
+                     [newObject setLabel:name];
+                     [newObject setObject:uri forType:QSSpotifyTrackType];
+                     [newObject setPrimaryType:QSSpotifyTrackType];
+                     [newObject setIdentifier:[@"SpotifyTrack" stringByAppendingString:trackID]];
+                     [newObject setDetails:artistsName[0]];
+                     
+                     
+                     [tracksArray addObject:newObject];
+                 }
+             }
+             
+             [_tracksInPlaylist setObject:tracksArray forKey:playlistName];
+             //NSLog(@"%@", [_tracksInPlaylist objectForKey:playlistName]);
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             NSLog(@"Error: %@", error);
+         }];
+    
+
 }
 
 

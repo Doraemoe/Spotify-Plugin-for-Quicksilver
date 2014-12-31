@@ -24,18 +24,21 @@
 	<string>2</string>
 	<key>QSActions</key>
 	<dict>
-		<key>QSSpotifyPlayPlaylistAction</key>
+		<key>QSSpotifyPlayItemAction</key>
 		<dict>
+			<key>precedence</key>
+			<string>3</string>
 			<key>actionClass</key>
 			<string>QSSpotifyActionProvider</string>
 			<key>actionSelector</key>
-			<string>playPlaylist:</string>
+			<string>playItem:</string>
 			<key>directTypes</key>
 			<array>
+				<string>com.spotify.track</string>
 				<string>com.spotify.playlist</string>
 			</array>
 			<key>name</key>
-			<string>Play Playlist</string>
+			<string>Play</string>
 		</dict>
 	</dict>
 	<key>QSPlugIn</key>
@@ -116,6 +119,22 @@
 	</array>
 	<key>QSRegistration</key>
 	<dict>
+		<key>QSProxies</key>
+		<dict>
+			<key>QSSpotifyCurrentTrackProxy</key>
+			<dict>
+				<key>types</key>
+				<array>
+					<string>com.spotify.track</string>
+				</array>
+				<key>providerClass</key>
+				<string>QSSpotifyObjectSource</string>
+				<key>name</key>
+				<string>Currently Playing Track (Spotify)</string>
+				<key>icon</key>
+				<string>ProxyIcon</string>
+			</dict>
+		</dict>
 		<key>QSActionProviders</key>
 		<dict>
 			<key>QSSpotifyActionProvider</key>

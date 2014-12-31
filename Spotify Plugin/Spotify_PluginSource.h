@@ -18,5 +18,7 @@
 
 @interface QSSpotifyObjectSource : QSObjectSource
 
+@property NSMutableArray *PlaylistsObjects;
+
 
 @end

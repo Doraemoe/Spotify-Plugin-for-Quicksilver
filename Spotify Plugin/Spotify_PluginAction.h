@@ -30,5 +30,6 @@
 @property SpotifyApplication *Spotify;
 
 - (QSObject *)playPlaylist:(QSObject *)dObject;
+- (QSObject *)playTrack:(QSObject *)dObject;
 
 @end

@@ -80,15 +80,15 @@
 }
 
 - (NSArray *)objectsForEntry:(NSDictionary *)theEntry {
-    NSLog(@"update");
+    //NSLog(@"update");
     
-    NSMutableArray *PlaylistsObjects = nil;
+    _PlaylistsObjects = nil;
     
     QSSpotifyUtil *su = [QSSpotifyUtil sharedInstance];
     NSArray *playlists = [su playlists];
     
     if (playlists != nil) {
-        PlaylistsObjects = [NSMutableArray arrayWithCapacity:su.totalPlaylistsNumber];
+        _PlaylistsObjects = [NSMutableArray arrayWithCapacity:su.totalPlaylistsNumber];
         
         for (NSDictionary *playlist in playlists) {
             
@@ -99,9 +99,8 @@
             }
             NSString *uri = [playlist valueForKey:@"uri"];
             NSString *url = [[playlist valueForKey:@"external_urls"] valueForKey:@"spotify"];
-            NSString *trackNumber = [[[playlist valueForKey:@"tracks"] valueForKey:@"total"] stringValue];
-            
-            
+            NSString *tracksNumber = [[[playlist valueForKey:@"tracks"] valueForKey:@"total"] stringValue];
+            NSString *tracksLocation = [[playlist valueForKey:@"tracks"] valueForKey:@"href"];
             
             QSObject *newObject = [QSObject objectWithString:[name stringByAppendingString:@" Playlist"]];
             [newObject setLabel:name];
@@ -109,10 +108,11 @@
             [newObject setPrimaryType:QSSpotifyPlaylistType];
             [newObject setObject:url forType:QSURLType];
             [newObject setIdentifier:[@"SpotifyPlaylist" stringByAppendingString:playlistID]];
-            [newObject setDetails:[trackNumber stringByAppendingString:@" tracks"]];
+            [newObject setDetails:[tracksNumber stringByAppendingString:@" tracks"]];
+            [newObject setObject:tracksLocation forMeta:@"tracksEndpoint"];
+            [newObject setObject:tracksNumber forMeta:@"tracksNumber"];
             
-            
-            [PlaylistsObjects addObject:newObject];
+            [_PlaylistsObjects addObject:newObject];
         }
     }
     else {
@@ -121,11 +121,38 @@
         [su requestAccessTokenFromRefreshToken];
     }
     
-    return PlaylistsObjects;
+    return _PlaylistsObjects;
 }
 
 - (void)setQuickIconForObject:(QSObject *)object {
     [object setIcon:[QSResourceManager imageNamed:@"￼￼/Applications/Spotify.app/Contents/Resources/local_files.icns"]];
+}
+
+- (BOOL)loadChildrenForObject:(QSObject *)object {
+    if ([[object primaryType] isEqualToString:QSSpotifyPlaylistType]) {
+        QSSpotifyUtil *su = [QSSpotifyUtil sharedInstance];
+        NSDictionary *tracksInPlaylist = [su tracksInPlaylist];
+        
+        if (tracksInPlaylist != nil) {
+            NSArray *children = [tracksInPlaylist objectForKey:[object label]];
+            [object setChildren:children];
+        }
+        return YES;
+    }
+    else if ([[object primaryType] isEqualToString:QSFilePathType]) {
+        [object setChildren:_PlaylistsObjects];
+        return YES;
+    }
+    return NO;
+}
+
+-(BOOL)objectHasChildren:(QSObject *)object {
+    if ([object containsType:QSSpotifyTrackType]) {
+        return NO;
+    }
+    else {
+        return YES;
+    }
 }
 
 @end

@@ -21,6 +21,7 @@
 @property NSString *userID;
 @property NSString *displayName;
 @property NSMutableArray *playlists;
+@property NSMutableDictionary *tracksInPlaylist;
 @property NSSet *oldPlaylistsSet;
 @property NSString *trackID;
 
@@ -35,6 +36,7 @@
 @property BOOL needUserID;
 @property BOOL needPlaylists;
 @property BOOL needSaveTrack;
+@property BOOL needTrackInPlaylist;
 
 
 + (QSSpotifyUtil *)sharedInstance;
