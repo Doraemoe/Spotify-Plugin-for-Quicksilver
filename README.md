@@ -32,7 +32,7 @@ Commands include:
 
 **Save command will save current playing track to Your Music Library. You need login to support this function.
 
-After login from preference panel, all your playlists as well as each playlist's first 100 songs will add to your catalog.
+After login from preference panel, all your public playlists as well as each playlist's first 100 songs will add to your catalog.
 
 Support Actions:
 
