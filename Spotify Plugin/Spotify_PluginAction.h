@@ -32,5 +32,6 @@
 - (QSObject *)playPlaylist:(QSObject *)dObject;
 - (QSObject *)playTrack:(QSObject *)dObject;
 - (QSObject *)addTrack:(QSObject *)dObject toPlaylist:(QSObject *)iObject;
+- (QSObject *)search:(QSObject *)dObject;
 
 @end

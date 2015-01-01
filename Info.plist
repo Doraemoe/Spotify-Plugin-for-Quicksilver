@@ -24,6 +24,19 @@
 	<string>2</string>
 	<key>QSActions</key>
 	<dict>
+		<key>QSSpotifySearch</key>
+		<dict>
+			<key>directTypes</key>
+			<array>
+				<string>NSStringPboardType</string>
+			</array>
+			<key>actionSelector</key>
+			<string>search:</string>
+			<key>actionClass</key>
+			<string>QSSpotifyActionProvider</string>
+			<key>name</key>
+			<string>Search on Spotify</string>
+		</dict>
 		<key>QSSpotifyAddToPlaylistAction</key>
 		<dict>
 			<key>indirectTypes</key>

@@ -152,4 +152,14 @@
     return nil;
 }
 
+- (QSObject *)search:(QSObject *)dObject {
+    NSMutableString *query = [NSMutableString stringWithString:[dObject stringValue]];
+    [query replaceOccurrencesOfString:@" " withString:@"%20" options:NSLiteralSearch range:NSMakeRange(0, [query length])];
+    NSString *urlString = [@"https://play.spotify.com/search/" stringByAppendingString:query];
+    NSURL *url = [NSURL URLWithString:urlString];
+    [[NSWorkspace sharedWorkspace] openURL:url];
+    
+    return nil;
+}
+
 @end
