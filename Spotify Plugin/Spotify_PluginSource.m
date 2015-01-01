@@ -65,6 +65,14 @@
 
 @implementation QSSpotifyObjectSource
 
+- (id)init
+{
+    if (self = [super init]) {
+        _Spotify = QSSpotify();
+    }
+    return self;
+}
+
 - (BOOL)entryCanBeIndexed:(NSDictionary *)theEntry
 {
     return NO;
@@ -128,6 +136,22 @@
     [object setIcon:[QSResourceManager imageNamed:@"￼￼/Applications/Spotify.app/Contents/Resources/local_files.icns"]];
 }
 
+- (BOOL)loadIconForObject:(QSObject *)object {
+    if ([[object identifier] isEqualToString:@"SpotifyCurrentTrackProxy"]) {
+        [object setIcon:[object objectForMeta:@"coverImage"]];
+        return YES;
+    }
+    
+    if ([[object primaryType] isEqualToString:QSSpotifyTrackType]) {
+        NSURL *coverURL = [NSURL URLWithString:[object objectForMeta:@"coverImage"]];
+        NSImage *cover = [[NSImage alloc] initWithContentsOfURL:coverURL];
+        [object setIcon:cover];
+        return YES;
+    }
+    
+    return NO;
+}
+
 - (BOOL)loadChildrenForObject:(QSObject *)object {
     if ([[object primaryType] isEqualToString:QSSpotifyPlaylistType]) {
         QSSpotifyUtil *su = [QSSpotifyUtil sharedInstance];
@@ -146,13 +170,50 @@
     return NO;
 }
 
--(BOOL)objectHasChildren:(QSObject *)object {
+- (BOOL)objectHasChildren:(QSObject *)object {
     if ([object containsType:QSSpotifyTrackType]) {
         return NO;
     }
     else {
         return YES;
     }
+}
+
+- (QSObject *)resolveProxyObject:(QSProxyObject *)proxy {
+    QSObject *resolved = nil;
+    
+    if ([_Spotify playerState] != SpotifyEPlSPlaying) {
+        return resolved;
+    }
+    
+    //NSLog(@"resolving proxy object");
+    
+    SpotifyTrack *track = [_Spotify currentTrack];
+    NSString *name = [track name];
+    NSString *trackID = [track id];
+    NSString *uri = [track spotifyUrl];
+    NSString *artist = [track artist];
+    NSImage *cover = [track artwork];
+    //NSLog(@"name: %@, trackID: %@, uri %@, artist %@, cover %@", name, trackID, uri, artist, cover);
+    
+    if ((NSNull *)name != [NSNull null] && (NSNull *)trackID != [NSNull null] && (NSNull *)uri != [NSNull null] && (NSNull *)artist != [NSNull null]) {
+        resolved = [QSObject objectWithString:name];
+        [resolved setLabel:name];
+        [resolved setObject:uri forType:QSSpotifyTrackType];
+        [resolved setPrimaryType:QSSpotifyTrackType];
+        [resolved setIdentifier:@"SpotifyCurrentTrackProxy"];
+        [resolved setDetails:artist];
+        [resolved setObject:cover forMeta:@"coverImage"];
+    }
+    return resolved;
+}
+
+- (NSArray *)typesForProxyObject:(QSProxyObject *)proxy {
+    NSString *ident = [proxy identifier];
+    if ([ident isEqualToString:@"SpotifyCurrentTrackProxy"]) {
+        return [NSArray arrayWithObject:QSSpotifyTrackType];
+    }
+    return nil;
 }
 
 @end

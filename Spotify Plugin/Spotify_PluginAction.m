@@ -106,10 +106,10 @@
 }
 
 - (QSObject *)playItem:(QSObject *)dObject {
-    if ([dObject containsType:QSSpotifyPlaylistType]) {
+    if ([[dObject primaryType] isEqualToString:QSSpotifyPlaylistType]) {
         [self playPlaylist:dObject];
     }
-    else if ([dObject containsType:QSSpotifyTrackType]) {
+    else if ([[dObject primaryType] isEqualToString:QSSpotifyTrackType]) {
         [self playTrack:dObject];
     }
     

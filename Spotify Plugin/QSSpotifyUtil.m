@@ -381,17 +381,24 @@
                  NSString *trackID = [track valueForKey:@"id"];
                  NSString *uri = [track valueForKey:@"uri"];
                  NSArray *artistsName = [[track valueForKey:@"artists"] valueForKey:@"name"];
-
-                 NSString *url = [[[track valueForKey:@"album"] valueForKey:@"images"] valueForKey:@"url"];
+                 NSArray *url = [[[track valueForKey:@"album"] valueForKey:@"images"] valueForKey:@"url"];
+            
                  //NSLog(@"name: %@ trackID: %@ uri: %@ artistName: %@ url: %@", name, trackID, uri, artistsName, url);
                  
-                 if ((NSNull *)name != [NSNull null] && (NSNull *)uri != [NSNull null] && (NSNull *)artistsName[0] != [NSNull null] && (NSNull *)url != [NSNull null] && (NSNull *)trackID != [NSNull null]) {
+                 if ((NSNull *)name != [NSNull null] &&
+                     (NSNull *)uri != [NSNull null] &&
+                     (NSNull *)artistsName[0] != [NSNull null] &&
+                     (NSNull *)url != [NSNull null] &&
+                     (NSNull *)trackID != [NSNull null] &&
+                     (NSNull *)url[1] != [NSNull null]) {
+                     
                      QSObject *newObject = [QSObject objectWithString:name];
                      [newObject setLabel:name];
                      [newObject setObject:uri forType:QSSpotifyTrackType];
                      [newObject setPrimaryType:QSSpotifyTrackType];
                      [newObject setIdentifier:[@"SpotifyTrack" stringByAppendingString:trackID]];
                      [newObject setDetails:artistsName[0]];
+                     [newObject setObject:url[1] forMeta:@"coverImage"];
                      
                      
                      [tracksArray addObject:newObject];

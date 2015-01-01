@@ -19,6 +19,7 @@
 @interface QSSpotifyObjectSource : QSObjectSource
 
 @property NSMutableArray *PlaylistsObjects;
+@property SpotifyApplication *Spotify;
 
 
 @end
