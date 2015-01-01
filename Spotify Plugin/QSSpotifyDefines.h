@@ -17,6 +17,7 @@
 #define kCurrectUserProfile @"https://api.spotify.com/v1/me"
 #define kUserPlaylistsWildcard @"https://api.spotify.com/v1/users/USERID/playlists"
 #define kSaveTrackForMe @"https://api.spotify.com/v1/me/tracks?ids=TRACKID"
+#define kSaveTrackForPlaylist @"https://api.spotify.com/v1/users/USERID/playlists/PLAYLISTID/tracks?uris=URI"
 
 #define QSSpotifyPlaylistType @"com.spotify.playlist"
 #define QSSpotifyTrackType @"com.spotify.track"

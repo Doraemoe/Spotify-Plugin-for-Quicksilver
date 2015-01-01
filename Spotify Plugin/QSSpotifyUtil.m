@@ -43,11 +43,15 @@
         _oldPlaylistsSet = nil;
         _playlists = nil;
         _tracksInPlaylist = nil;
+        _trackURI = @"trackURIPlaceholder";
+        _playlistID = @"playlistIDPlaceholder";
         
+        /*
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(loadStart:)
                                                      name:WebViewProgressStartedNotification
                                                    object:nil];
+         */
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(loadFinished:)
                                                      name:WebViewProgressFinishedNotification
@@ -92,7 +96,7 @@
     }
 
 }
-
+/*
 - (void)loadStart:(NSNotification *)note {
     NSString *url = _web.mainFrame.provisionalDataSource.request.URL.absoluteString;
     
@@ -100,7 +104,7 @@
         [self finishAuthWithCallback:url];
     }
 }
-
+*/
 - (void)loadFinished:(NSNotification *)note {
     NSString *url = _web.mainFrame.dataSource.request.URL.absoluteString;
 
@@ -125,6 +129,11 @@
     if (_needSaveTrack) {
         _needSaveTrack = NO;
         [self saveTrack];
+    }
+    
+    if (_needSaveTrackToPlaylist) {
+        _needSaveTrackToPlaylist = NO;
+        [self saveToPlaylist];
     }
 }
 
@@ -243,6 +252,8 @@
     _refreshToken = @"RefreshTokenPlaceholder";
     _displayName = @"NamePlaceholder";
     _trackID = @"trackIDPlaceholder";
+    _trackURI = @"trackURIPlaceholder";
+    _playlistID = @"playlistIDPlaceholder";
     _tokenStartTime = 0;
     _tokenExpiresIn = 0;
     _needPlaylists = NO;
@@ -441,6 +452,38 @@
          }];
     
     _trackID = @"trackIDPlaceholder";
+}
+
+- (void)addTrack:(NSString *)uri toPlaylist:(NSString *)playlistID {
+    _needSaveTrackToPlaylist = YES;
+    _trackURI = uri;
+    _playlistID = playlistID;
+    
+    [self requestAccessTokenFromRefreshToken];
+}
+
+- (void)saveToPlaylist {
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    NSString *accessHeader = [NSString stringWithFormat:@"Bearer %@", _accessToken];
+    [manager.requestSerializer setValue:accessHeader forHTTPHeaderField:@"Authorization"];
+    
+    NSString *url = [kSaveTrackForPlaylist stringByReplacingOccurrencesOfString:@"USERID" withString:_userID];
+    url = [url stringByReplacingOccurrencesOfString:@"PLAYLISTID" withString:_playlistID];
+    url = [url stringByReplacingOccurrencesOfString:@"URI" withString:_trackURI];
+    
+    //NSLog(@"%@",url);
+    
+    [manager POST:url
+      parameters:nil
+         success:^(AFHTTPRequestOperation *operation, NSDictionary *returnData) {
+             //NSLog(@"%@", returnData);
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             NSLog(@"Error: %@", error);
+         }];
+
+    _trackURI = @"trackURIPlaceholder";
+    _playlistID = @"playlistIDPlaceholder";
 }
 
 #pragma mark -

@@ -136,5 +136,20 @@
     return nil;
 }
 
+- (QSObject *)addTrack:(QSObject *)dObject toPlaylist:(QSObject *)iObject {
+    if ([[iObject label] caseInsensitiveCompare:@"starred"] == NSOrderedSame) {
+        return nil;
+    }
+    NSArray *uri = [[iObject objectForType:QSSpotifyPlaylistType] componentsSeparatedByString:@":"];
+    NSString *playlistID = uri[4];
+    
+    NSString *trackURI = [dObject objectForType:QSSpotifyTrackType];
+    //NSLog(@"id %@, uri %@", playlistID, trackURI);
+    
+    QSSpotifyUtil *su = [QSSpotifyUtil sharedInstance];
+    [su addTrack:trackURI toPlaylist:playlistID];
+    
+    return nil;
+}
 
 @end

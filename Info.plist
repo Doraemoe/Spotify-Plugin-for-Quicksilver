@@ -24,6 +24,23 @@
 	<string>2</string>
 	<key>QSActions</key>
 	<dict>
+		<key>QSSpotifyAddToPlaylistAction</key>
+		<dict>
+			<key>indirectTypes</key>
+			<array>
+				<string>com.spotify.playlist</string>
+			</array>
+			<key>directTypes</key>
+			<array>
+				<string>com.spotify.track</string>
+			</array>
+			<key>name</key>
+			<string>Add to playlist...</string>
+			<key>actionSelector</key>
+			<string>addTrack:toPlaylist:</string>
+			<key>actionClass</key>
+			<string>QSSpotifyActionProvider</string>
+		</dict>
 		<key>QSSpotifyPlayItemAction</key>
 		<dict>
 			<key>precedence</key>

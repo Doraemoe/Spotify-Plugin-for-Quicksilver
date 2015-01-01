@@ -24,6 +24,8 @@
 @property NSMutableDictionary *tracksInPlaylist;
 @property NSSet *oldPlaylistsSet;
 @property NSString *trackID;
+@property NSString *trackURI;
+@property NSString *playlistID;
 
 
 @property NSUInteger totalPlaylistsNumber;
@@ -37,6 +39,7 @@
 @property BOOL needPlaylists;
 @property BOOL needSaveTrack;
 @property BOOL needTrackInPlaylist;
+@property BOOL needSaveTrackToPlaylist;
 
 
 + (QSSpotifyUtil *)sharedInstance;
@@ -47,5 +50,6 @@
 - (void)requestAccessTokenFromRefreshToken;
 - (void)getPlaylists;
 - (void)accessUserProfile;
+- (void)addTrack:(NSString *)uri toPlaylist:(NSString *)playlistID;
 
 @end
