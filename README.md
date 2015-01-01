@@ -32,13 +32,15 @@ Commands include:
 
 **Save command will save current playing track to Your Music Library. You need login to support this function.
 
-After login from preference panel, all your public playlists as well as each playlist's first 100 songs will add to your catalog.
+Now also support "Current playing" proxy. After login from preference panel, all your public playlists as well as each playlist's first 100 songs will add to your catalog.
 
 Support Actions:
 
 * Play track or playlist
 
 * Open playlist in web Browser
+
+* Add track to a playlist (dose not support legacy starred playlist)
 
 Added "(Spotify)" suffix to some commands in order to distinguish with iTunes command.
 
