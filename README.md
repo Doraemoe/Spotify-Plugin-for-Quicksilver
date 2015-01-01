@@ -42,6 +42,8 @@ Support Actions:
 
 * Add track to a playlist (dose not support legacy starred playlist)
 
+* Search on Spotify (will open your default browser to show search results)
+
 Added "(Spotify)" suffix to some commands in order to distinguish with iTunes command.
 
 Thanks for Rob McBroom at Quicksilver Development Google group for all those suggestions.
