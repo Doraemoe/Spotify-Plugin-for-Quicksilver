@@ -182,28 +182,25 @@
 - (QSObject *)resolveProxyObject:(QSProxyObject *)proxy {
     QSObject *resolved = nil;
     
-    if ([_Spotify playerState] != SpotifyEPlSPlaying) {
-        return resolved;
-    }
-    
     //NSLog(@"resolving proxy object");
-    
-    SpotifyTrack *track = [_Spotify currentTrack];
-    NSString *name = [track name];
-    NSString *trackID = [track id];
-    NSString *uri = [track spotifyUrl];
-    NSString *artist = [track artist];
-    NSImage *cover = [track artwork];
-    //NSLog(@"name: %@, trackID: %@, uri %@, artist %@, cover %@", name, trackID, uri, artist, cover);
-    
-    if ((NSNull *)name != [NSNull null] && (NSNull *)trackID != [NSNull null] && (NSNull *)uri != [NSNull null] && (NSNull *)artist != [NSNull null]) {
-        resolved = [QSObject objectWithString:name];
-        [resolved setLabel:name];
-        [resolved setObject:uri forType:QSSpotifyTrackType];
-        [resolved setPrimaryType:QSSpotifyTrackType];
-        [resolved setIdentifier:@"SpotifyCurrentTrackProxy"];
-        [resolved setDetails:artist];
-        [resolved setObject:cover forMeta:@"coverImage"];
+    if ([_Spotify playerState] == SpotifyEPlSPlaying || [_Spotify playerState] == SpotifyEPlSPaused) {
+        SpotifyTrack *track = [_Spotify currentTrack];
+        NSString *name = [track name];
+        NSString *trackID = [track id];
+        NSString *uri = [track spotifyUrl];
+        NSString *artist = [track artist];
+        NSImage *cover = [track artwork];
+        //NSLog(@"name: %@, trackID: %@, uri %@, artist %@, cover %@", name, trackID, uri, artist, cover);
+        
+        if ((NSNull *)name != [NSNull null] && (NSNull *)trackID != [NSNull null] && (NSNull *)uri != [NSNull null] && (NSNull *)artist != [NSNull null]) {
+            resolved = [QSObject objectWithString:name];
+            [resolved setLabel:name];
+            [resolved setObject:uri forType:QSSpotifyTrackType];
+            [resolved setPrimaryType:QSSpotifyTrackType];
+            [resolved setIdentifier:@"SpotifyCurrentTrackProxy"];
+            [resolved setDetails:artist];
+            [resolved setObject:cover forMeta:@"coverImage"];
+        }
     }
     return resolved;
 }
