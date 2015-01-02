@@ -235,7 +235,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7DB4EB1E17A4B81E00520108 /* Build configuration list for PBXNativeTarget "Spotify Plugin" */;
 			buildPhases = (
-				7DB4EAFB17A4B81E00520108 /* ShellScript */,
+				7DB4EAFB17A4B81E00520108 /* Run Script */,
 				7DB4EAFC17A4B81E00520108 /* Sources */,
 				7DB4EAFD17A4B81E00520108 /* Frameworks */,
 				7DB4EAFE17A4B81E00520108 /* Resources */,
@@ -291,13 +291,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		7DB4EAFB17A4B81E00520108 /* ShellScript */ = {
+		7DB4EAFB17A4B81E00520108 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Run Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 1;

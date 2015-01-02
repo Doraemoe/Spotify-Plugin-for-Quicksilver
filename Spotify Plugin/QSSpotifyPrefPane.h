@@ -6,7 +6,6 @@
 //  Copyright (c) 2014年 Jin Yifan. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
 
 @interface QSSpotifyPrefPane : QSPreferencePane
     

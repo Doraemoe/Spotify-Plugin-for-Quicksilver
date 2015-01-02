@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
+	<key>CFBundleDisplayName</key>
+	<string>Spotify Plugin</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
@@ -24,40 +26,25 @@
 	<string>2</string>
 	<key>QSActions</key>
 	<dict>
-		<key>QSSpotifySearch</key>
-		<dict>
-			<key>directTypes</key>
-			<array>
-				<string>NSStringPboardType</string>
-			</array>
-			<key>actionSelector</key>
-			<string>search:</string>
-			<key>actionClass</key>
-			<string>QSSpotifyActionProvider</string>
-			<key>name</key>
-			<string>Search on Spotify</string>
-		</dict>
 		<key>QSSpotifyAddToPlaylistAction</key>
 		<dict>
-			<key>indirectTypes</key>
-			<array>
-				<string>com.spotify.playlist</string>
-			</array>
+			<key>actionClass</key>
+			<string>QSSpotifyActionProvider</string>
+			<key>actionSelector</key>
+			<string>addTrack:toPlaylist:</string>
 			<key>directTypes</key>
 			<array>
 				<string>com.spotify.track</string>
 			</array>
+			<key>indirectTypes</key>
+			<array>
+				<string>com.spotify.playlist</string>
+			</array>
 			<key>name</key>
 			<string>Add to playlist...</string>
-			<key>actionSelector</key>
-			<string>addTrack:toPlaylist:</string>
-			<key>actionClass</key>
-			<string>QSSpotifyActionProvider</string>
 		</dict>
 		<key>QSSpotifyPlayItemAction</key>
 		<dict>
-			<key>precedence</key>
-			<string>3</string>
 			<key>actionClass</key>
 			<string>QSSpotifyActionProvider</string>
 			<key>actionSelector</key>
@@ -69,6 +56,21 @@
 			</array>
 			<key>name</key>
 			<string>Play</string>
+			<key>precedence</key>
+			<string>3</string>
+		</dict>
+		<key>QSSpotifySearch</key>
+		<dict>
+			<key>actionClass</key>
+			<string>QSSpotifyActionProvider</string>
+			<key>actionSelector</key>
+			<string>search:</string>
+			<key>directTypes</key>
+			<array>
+				<string>NSStringPboardType</string>
+			</array>
+			<key>name</key>
+			<string>Search on Spotify</string>
 		</dict>
 	</dict>
 	<key>QSPlugIn</key>
@@ -83,27 +85,31 @@
 		<key>description</key>
 		<string>Allows you to control Spotify</string>
 		<key>extendedDescription</key>
-		<string>&lt;h1 id=&quot;spotifyquicksilverplugin&quot;&gt;Spotify Quicksilver Plugin&lt;/h1&gt;
-
+		<string>&lt;h1 id="spotify-quicksilver-plugin"&gt;Spotify Quicksilver Plugin&lt;/h1&gt;
 &lt;p&gt;Support 9 different commands to control Spotify.&lt;/p&gt;
-
 &lt;p&gt;Commands include:&lt;/p&gt;
-
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Dcrease Volume (Spotify)&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Increase Volume (Spotify)&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Mute (Spotify)&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Next Song (Spotify)&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Previous Song (Spotify)&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Play (Spotify)&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Pause (Spotify)&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Play/Pause (Spotify)&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Share on Twitter (Spotify)*&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;Decrease Volume (Spotify)&lt;/li&gt;
+&lt;li&gt;Increase Volume (Spotify)&lt;/li&gt;
+&lt;li&gt;Mute (Spotify)&lt;/li&gt;
+&lt;li&gt;Next Song (Spotify)&lt;/li&gt;
+&lt;li&gt;Previous Song (Spotify)&lt;/li&gt;
+&lt;li&gt;Play (Spotify)&lt;/li&gt;
+&lt;li&gt;Pause (Spotify)&lt;/li&gt;
+&lt;li&gt;Play/Pause (Spotify)&lt;/li&gt;
+&lt;li&gt;Share on Twitter (Spotify)*&lt;/li&gt;
+&lt;li&gt;Save (Spotify)** &lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;p&gt;*Share on Twitter function relies on OS X&apos;s Twitter integration.&lt;/p&gt;
-
-&lt;p&gt;Added &quot;(Spotify)&quot; suffix to some commands in order to distinguish with iTunes command.&lt;/p&gt;</string>
+&lt;p&gt;*Share on Twitter function relies on OS X&amp;#39;s Twitter integration.&lt;br&gt;**Save command will save current playing track to Your Music Library. You need login to support this function.&lt;/p&gt;
+&lt;p&gt;Now also support &amp;quot;Current playing&amp;quot; proxy. After login from preference panel, all your public playlists as well as each playlist&amp;#39;s first 100 songs will add to your catalog. You can also &amp;quot;right arrow&amp;quot; into Spotify to see all the playlists.&lt;/p&gt;
+&lt;p&gt;Support Actions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Play track or playlist&lt;/li&gt;
+&lt;li&gt;Open playlist in web Browser&lt;/li&gt;
+&lt;li&gt;Add track to a playlist (dose not support legacy starred playlist)&lt;/li&gt;
+&lt;li&gt;Search on Spotify (will open your default browser to show search results)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Added &amp;quot;(Spotify)&amp;quot; suffix to some commands in order to distinguish with iTunes command.&lt;/p&gt;</string>
 		<key>icon</key>
 		<string>com.spotify.client</string>
 		<key>relatedBundles</key>
@@ -149,22 +155,6 @@
 	</array>
 	<key>QSRegistration</key>
 	<dict>
-		<key>QSProxies</key>
-		<dict>
-			<key>QSSpotifyCurrentTrackProxy</key>
-			<dict>
-				<key>types</key>
-				<array>
-					<string>com.spotify.track</string>
-				</array>
-				<key>providerClass</key>
-				<string>QSSpotifyObjectSource</string>
-				<key>name</key>
-				<string>Currently Playing Track (Spotify)</string>
-				<key>icon</key>
-				<string>ProxyIcon</string>
-			</dict>
-		</dict>
 		<key>QSActionProviders</key>
 		<dict>
 			<key>QSSpotifyActionProvider</key>
@@ -395,33 +385,6 @@
 					<string>Spotify_PluginPrevious</string>
 				</dict>
 			</dict>
-			<key>QSSpotifySendToTwitter</key>
-			<dict>
-				<key>command</key>
-				<dict>
-					<key>actionID</key>
-					<string>QSObjCSendMessageAction</string>
-					<key>directArchive</key>
-					<dict>
-						<key>data</key>
-						<dict>
-							<key>qs.action</key>
-							<dict>
-								<key>actionClass</key>
-								<string>QSSpotify_PluginControlProvider</string>
-								<key>actionSelector</key>
-								<string>sendTrackToTwitter</string>
-								<key>icon</key>
-								<string>SpotifyIcon</string>
-								<key>name</key>
-								<string>Share on Twitter (Spotify)</string>
-							</dict>
-						</dict>
-					</dict>
-					<key>directID</key>
-					<string>Spotify_PluginSendToTwitter</string>
-				</dict>
-			</dict>
 			<key>QSSpotifySave</key>
 			<dict>
 				<key>command</key>
@@ -447,6 +410,33 @@
 					</dict>
 					<key>directID</key>
 					<string>Spotify_PluginSave</string>
+				</dict>
+			</dict>
+			<key>QSSpotifySendToTwitter</key>
+			<dict>
+				<key>command</key>
+				<dict>
+					<key>actionID</key>
+					<string>QSObjCSendMessageAction</string>
+					<key>directArchive</key>
+					<dict>
+						<key>data</key>
+						<dict>
+							<key>qs.action</key>
+							<dict>
+								<key>actionClass</key>
+								<string>QSSpotify_PluginControlProvider</string>
+								<key>actionSelector</key>
+								<string>sendTrackToTwitter</string>
+								<key>icon</key>
+								<string>SpotifyIcon</string>
+								<key>name</key>
+								<string>Share on Twitter (Spotify)</string>
+							</dict>
+						</dict>
+					</dict>
+					<key>directID</key>
+					<string>Spotify_PluginSendToTwitter</string>
 				</dict>
 			</dict>
 		</dict>
@@ -476,6 +466,22 @@
 				<string>com.spotify.client</string>
 				<key>name</key>
 				<string>Spotify</string>
+			</dict>
+		</dict>
+		<key>QSProxies</key>
+		<dict>
+			<key>QSSpotifyCurrentTrackProxy</key>
+			<dict>
+				<key>icon</key>
+				<string>ProxyIcon</string>
+				<key>name</key>
+				<string>Currently Playing Track (Spotify)</string>
+				<key>providerClass</key>
+				<string>QSSpotifyObjectSource</string>
+				<key>types</key>
+				<array>
+					<string>com.spotify.track</string>
+				</array>
 			</dict>
 		</dict>
 		<key>QSTriggerSets</key>

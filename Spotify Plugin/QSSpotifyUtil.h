@@ -6,7 +6,6 @@
 //  Copyright (c) 2014年 Jin Yifan. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import <WebKit/WebKit.h>
 #import "AFNetworking.h"
 
