@@ -183,6 +183,12 @@
     QSObject *resolved = nil;
     
     //NSLog(@"resolving proxy object");
+    //NSLog(@"%@", [NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.spotify.client"]);
+    if ([[NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.spotify.client"] count] == 0) {
+        return nil;
+    }
+    
+    
     if ([_Spotify playerState] == SpotifyEPlSPlaying || [_Spotify playerState] == SpotifyEPlSPaused) {
         SpotifyTrack *track = [_Spotify currentTrack];
         NSString *name = [track name];

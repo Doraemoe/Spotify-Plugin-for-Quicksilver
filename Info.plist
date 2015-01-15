@@ -28,6 +28,8 @@
 	<dict>
 		<key>QSSpotifyAddToPlaylistAction</key>
 		<dict>
+			<key>precedence</key>
+			<string>1</string>
 			<key>actionClass</key>
 			<string>QSSpotifyActionProvider</string>
 			<key>actionSelector</key>
@@ -57,7 +59,7 @@
 			<key>name</key>
 			<string>Play</string>
 			<key>precedence</key>
-			<string>3</string>
+			<string>0</string>
 		</dict>
 		<key>QSSpotifySearch</key>
 		<dict>
@@ -85,7 +87,7 @@
 		<key>description</key>
 		<string>Allows you to control Spotify</string>
 		<key>extendedDescription</key>
-		<string>&lt;h1 id="spotify-quicksilver-plugin"&gt;Spotify Quicksilver Plugin&lt;/h1&gt;
+		<string>&lt;h1 id=&quot;spotify-quicksilver-plugin&quot;&gt;Spotify Quicksilver Plugin&lt;/h1&gt;
 &lt;p&gt;Support 9 different commands to control Spotify.&lt;/p&gt;
 &lt;p&gt;Commands include:&lt;/p&gt;
 &lt;ul&gt;
