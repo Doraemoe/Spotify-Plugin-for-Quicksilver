@@ -24,6 +24,8 @@ Commands include:
 
 Now also support "Current playing" proxy. After login from preference panel, all your public playlists as well as each playlist's first 100 songs will add to your catalog. You can also "right arrow" into Spotify to see all the playlists.
 
+If you want to have your private playlists into your catalog, be sure to check the check box in preference panel.
+
 Support Actions:
 
 - Play track or playlist
