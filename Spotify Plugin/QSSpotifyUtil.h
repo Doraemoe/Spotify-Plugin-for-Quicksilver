@@ -43,7 +43,7 @@
 
 + (QSSpotifyUtil *)sharedInstance;
 
-- (void)attemptLogin;
+- (void)attemptLoginWithPrivate:(NSInteger)allowPrivate;
 - (void)signOut;
 - (void)saveSongWithID:(NSString *) ID;
 - (void)requestAccessTokenFromRefreshToken;

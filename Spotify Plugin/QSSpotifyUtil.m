@@ -140,13 +140,21 @@
 #pragma mark -
 #pragma mark auth
 
-- (void)attemptLogin {
+- (void)attemptLoginWithPrivate:(NSInteger)allowPrivate {
+    NSString *scope;
+    if (allowPrivate == NSOnState) {
+        scope = @"playlist-modify-public user-library-read user-library-modify playlist-read-private playlist-modify-private";
+    }
+    else {
+        scope = @"playlist-modify-public user-library-read user-library-modify";
+    }
+    
     [self createLoginWindow];
 
     NSDictionary *parameters = @{@"response_type": @"code",
                                  @"redirect_uri": kRedirect,
                                  @"client_id": kClientID,
-                                 @"scope": @"playlist-modify-public user-library-read user-library-modify"};
+                                 @"scope": scope};
     
     NSURLRequest *urlRequest = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"GET"
                                                                              URLString:kAuthorization

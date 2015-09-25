@@ -62,6 +62,7 @@
 		7D026624190CB7C500953F58 /* QSSpotifyPrefPane.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSpotifyPrefPane.m; sourceTree = "<group>"; };
 		7D0910D4182491D300991277 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		7D0910D61824936900991277 /* Spotify.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Spotify.h; sourceTree = "<group>"; };
+		7D1B439D1BB4CA3700A932B3 /* QSSpotifySecret.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QSSpotifySecret.h; sourceTree = "<group>"; };
 		7D413BC1190E0563008CECFE /* QSSpotifyUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSpotifyUtil.h; sourceTree = "<group>"; };
 		7D413BC2190E0563008CECFE /* QSSpotifyUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSpotifyUtil.m; sourceTree = "<group>"; };
 		7D88754F1A198AC8008A8F9B /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
@@ -87,7 +88,7 @@
 		7D88756F1A19B407008A8F9B /* QSInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QSInterface.framework; sourceTree = "<group>"; };
 		7DA9FFBF17A4C7F8001742FB /* SpotifyBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpotifyBridge.h; sourceTree = "<group>"; };
 		7DA9FFC017A4C7F8001742FB /* SpotifyBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotifyBridge.m; sourceTree = "<group>"; };
-		7DB4EB0017A4B81E00520108 /* Spotify Plugin.qsplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spotify Plugin.qsplugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7DB4EB0017A4B81E00520108 /* Spotify Plugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "Spotify Plugin.bundle"; path = "Spotify Plugin.qsplugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DB4EB0317A4B81E00520108 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		7DB4EB0517A4B81E00520108 /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		7DB4EB0B17A4B81E00520108 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -150,6 +151,7 @@
 			children = (
 				7D026621190CB7A500953F58 /* QSSpotifyPrefPane.xib */,
 				7DC3ADF91A5250710043B6E3 /* QSSpotifyDefines.h */,
+				7D1B439D1BB4CA3700A932B3 /* QSSpotifySecret.h */,
 				7DB4EB2117A4B8A000520108 /* Spotify.app */,
 				7DB4EB0717A4B81E00520108 /* Spotify Plugin */,
 				7DB4EB0217A4B81E00520108 /* Frameworks */,
@@ -160,7 +162,7 @@
 		7DB4EB0117A4B81E00520108 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7DB4EB0017A4B81E00520108 /* Spotify Plugin.qsplugin */,
+				7DB4EB0017A4B81E00520108 /* Spotify Plugin.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -248,7 +250,7 @@
 			);
 			name = "Spotify Plugin";
 			productName = "Spotify Plugin";
-			productReference = 7DB4EB0017A4B81E00520108 /* Spotify Plugin.qsplugin */;
+			productReference = 7DB4EB0017A4B81E00520108 /* Spotify Plugin.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -257,7 +259,7 @@
 		7DB4EAF717A4B81E00520108 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = "Jin Yifan";
 			};
 			buildConfigurationList = 7DB4EAFA17A4B81E00520108 /* Build configuration list for PBXProject "Spotify Plugin" */;
@@ -350,6 +352,7 @@
 			buildSettings = {
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
@@ -360,6 +363,7 @@
 			buildSettings = {
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 			};
 			name = Release;
 		};

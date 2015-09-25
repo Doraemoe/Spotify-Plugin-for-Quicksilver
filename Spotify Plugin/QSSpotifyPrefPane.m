@@ -54,7 +54,7 @@
         QSSpotifyUtil *su = [QSSpotifyUtil sharedInstance];
         su.needUserID = YES;
         su.needPlaylists = YES;
-        [su attemptLogin];
+        [su attemptLoginWithPrivate:[_privateCheckBox state]];
     }
     else {
         [self startAnimation];

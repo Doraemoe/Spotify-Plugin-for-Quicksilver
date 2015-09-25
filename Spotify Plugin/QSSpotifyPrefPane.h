@@ -12,6 +12,7 @@
 @property (weak) IBOutlet NSProgressIndicator *ind;
 @property (weak) IBOutlet NSButton *signInOutButton;
 @property (weak) IBOutlet NSTextField *username;
+@property (weak) IBOutlet NSButton *privateCheckBox;
 
 - (IBAction)authenticate:(id)sender;
 - (void)startAnimation;
