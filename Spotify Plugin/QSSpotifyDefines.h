@@ -19,6 +19,8 @@
 #define kUserPlaylistsWildcard @"https://api.spotify.com/v1/users/USERID/playlists"
 #define kSaveTrackForMe @"https://api.spotify.com/v1/me/tracks?ids=TRACKID"
 #define kSaveTrackForPlaylist @"https://api.spotify.com/v1/users/USERID/playlists/PLAYLISTID/tracks?uris=URI"
+#define kTrackInfo @"https://api.spotify.com/v1/tracks/TRACKID"
+#define kFollowArtist @"https://api.spotify.com/v1/me/following"
 
 #define QSSpotifyPlaylistType @"com.spotify.playlist"
 #define QSSpotifyTrackType @"com.spotify.track"
@@ -26,5 +28,13 @@
 #define PlaylistItemsAddedJobFinishedNotification @"PlaylistItemsAddedJobFinishedNotification"
 #define UserProfileDidGetNotification @"UserProfileDidGetNotification"
 #define AccessTokenDidGetNotification @"AccessTokenDidGetNotification"
+
+#define kAccessTokenPlaceholder @"AccessTokenPlaceholder"
+#define kRefreshTokenPlaceholder @"RefreshTokenPlaceholder"
+#define kDisplayNamePlaceholder @"NamePlaceholder"
+#define kTrackIDPlaceholder @"trackIDPlaceholder"
+
+#define kTrackURIPlaceholder @"trackURIPlaceholder"
+#define kPlaylistIDPlaceholder @"playlistIDPlaceholder"
 
 #endif

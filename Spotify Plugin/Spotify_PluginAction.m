@@ -76,6 +76,16 @@
     
 }
 
+- (void)followArtist
+{
+    SpotifyTrack *track = [_Spotify currentTrack];
+    NSString *uri = [track spotifyUrl];
+    NSArray *uriArray = [uri componentsSeparatedByString:@":"];
+    QSSpotifyUtil* ut = [QSSpotifyUtil sharedInstance];
+    [ut followArtistWithID:uriArray[2]];
+    
+}
+
 - (void)sendTrackToTwitter
 {
     NSImage *albumImg = [[_Spotify currentTrack] artwork];

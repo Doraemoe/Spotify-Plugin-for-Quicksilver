@@ -19,7 +19,7 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.2</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
@@ -414,6 +414,33 @@
 					<string>Spotify_PluginSave</string>
 				</dict>
 			</dict>
+			<key>QSSpotifyFollowArtist</key>
+			<dict>
+				<key>command</key>
+				<dict>
+					<key>actionID</key>
+					<string>QSObjCSendMessageAction</string>
+					<key>directArchive</key>
+					<dict>
+						<key>data</key>
+						<dict>
+							<key>qs.action</key>
+							<dict>
+								<key>actionClass</key>
+								<string>QSSpotify_PluginControlProvider</string>
+								<key>actionSelector</key>
+								<string>followArtist</string>
+								<key>icon</key>
+								<string>SptifyIcon</string>
+								<key>name</key>
+								<string>Follow Artist</string>
+							</dict>
+						</dict>
+					</dict>
+					<key>directID</key>
+					<string>Spotify_PluginFollowArtist</string>
+				</dict>
+			</dict>
 			<key>QSSpotifySendToTwitter</key>
 			<dict>
 				<key>command</key>
@@ -521,6 +548,21 @@
 	</dict>
 	<key>QSTriggerAdditions</key>
 	<array>
+		<dict>
+			<key>defaults</key>
+			<dict>
+				<key>type</key>
+				<string>QSHotKeyTrigger</string>
+			</dict>
+			<key>set</key>
+			<string>Spotify</string>
+			<key>name</key>
+			<string>Follow Artist</string>
+			<key>command</key>
+			<string>QSSpotifyFollowArtist</string>
+			<key>ID</key>
+			<string>Spotify_PluginFollowArtist</string>
+		</dict>
 		<dict>
 			<key>ID</key>
 			<string>Spotify_PluginSave</string>

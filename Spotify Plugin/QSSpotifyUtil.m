@@ -29,22 +29,27 @@
 - (id)init
 {
     if (self = [super init]) {
-        _accessToken = @"AccessTokenPlaceholder";
-        _refreshToken = @"RefreshTokenPlaceholder";
-        _displayName = @"NamePlaceholder";
-        _trackID = @"trackIDPlaceholder";
+        _accessToken = kAccessTokenPlaceholder;
+        _refreshToken = kRefreshTokenPlaceholder;
+        _displayName = kDisplayNamePlaceholder;
+        _trackID = kTrackIDPlaceholder;
+        _trackURI = kTrackURIPlaceholder;
+        _playlistID = kPlaylistIDPlaceholder;
+        
         _tokenStartTime = 0;
         _tokenExpiresIn = 0;
+        
         _needPlaylists = NO;
         _needUserID = NO;
         _needSaveTrack = NO;
         _needTrackInPlaylist = NO;
+        _needFollowArtist = NO;
+        
         _totalPlaylistsNumber = 0;
         _oldPlaylistsSet = nil;
         _playlists = nil;
         _tracksInPlaylist = nil;
-        _trackURI = @"trackURIPlaceholder";
-        _playlistID = @"playlistIDPlaceholder";
+
         
         /*
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -131,6 +136,11 @@
         [self saveTrack];
     }
     
+    if (_needFollowArtist) {
+        _needFollowArtist = NO;
+        [self getArtistID];
+    }
+    
     if (_needSaveTrackToPlaylist) {
         _needSaveTrackToPlaylist = NO;
         [self saveToPlaylist];
@@ -143,10 +153,10 @@
 - (void)attemptLoginWithPrivate:(NSInteger)allowPrivate {
     NSString *scope;
     if (allowPrivate == NSOnState) {
-        scope = @"playlist-modify-public user-library-read user-library-modify playlist-read-private playlist-modify-private";
+        scope = @"playlist-modify-public user-library-read user-library-modify user-follow-modify playlist-read-private playlist-modify-private";
     }
     else {
-        scope = @"playlist-modify-public user-library-read user-library-modify";
+        scope = @"playlist-modify-public user-library-read user-library-modify user-follow-modify";
     }
     
     [self createLoginWindow];
@@ -209,11 +219,11 @@
         return;
     }
     
-    if ([_refreshToken compare:@"RefreshTokenPlaceholder"] == NSOrderedSame) {
+    if ([_refreshToken compare:kRefreshTokenPlaceholder] == NSOrderedSame) {
         _refreshToken = [self getRefreshToken];
     }
     
-    if ([_refreshToken compare:@"RefreshTokenPlaceholder"] == NSOrderedSame) {
+    if ([_refreshToken compare:kRefreshTokenPlaceholder] == NSOrderedSame) {
         return;
     }
     
@@ -243,7 +253,7 @@
 }
 
 - (void)createLoginWindow {
-    NSRect frame = NSMakeRect(100, 100, 640, 480);
+    NSRect frame = NSMakeRect(100, 100, 1024, 768);
     _codeWindow  = [[NSWindow alloc] initWithContentRect:frame
                                                styleMask: NSTitledWindowMask | NSClosableWindowMask | NSResizableWindowMask
                                                  backing:NSBackingStoreBuffered
@@ -460,6 +470,52 @@
          }];
     
     _trackID = @"trackIDPlaceholder";
+}
+
+- (void)followArtistWithID:(NSString *)ID {
+    _needFollowArtist = YES;
+    _trackID = ID;
+    [self requestAccessTokenFromRefreshToken];
+}
+
+- (void)getArtistID {
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    NSString *url = [kTrackInfo stringByReplacingOccurrencesOfString:@"TRACKID" withString:_trackID];
+    
+    [manager GET:url
+      parameters:nil
+         success:^(AFHTTPRequestOperation *operation, NSDictionary *returnData) {
+             //NSLog(@"%@", returnData);
+             NSArray *artistID = [[returnData valueForKey:@"artists"] valueForKey:@"id"];
+             [self followArtist:artistID];
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             NSLog(@"Error: %@", error);
+         }];
+}
+
+
+     
+- (void)followArtist:(NSArray *)artistID {
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    NSString *accessHeader = [NSString stringWithFormat:@"Bearer %@", _accessToken];
+    [manager.requestSerializer setValue:accessHeader forHTTPHeaderField:@"Authorization"];
+
+    manager.requestSerializer.HTTPMethodsEncodingParametersInURI = [NSSet setWithObjects:@"GET", @"HEAD", @"DELETE", @"PUT", nil];
+    
+    NSDictionary *parameters = @{@"type": @"artist",
+                                 @"ids": artistID[0],
+                                 };
+    
+    [manager PUT:kFollowArtist
+      parameters:parameters
+         success:^(AFHTTPRequestOperation *operation, NSDictionary *returnData) {
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             NSLog(@"Error: %@", error);
+         }];
+
 }
 
 - (void)addTrack:(NSString *)uri toPlaylist:(NSString *)playlistID {

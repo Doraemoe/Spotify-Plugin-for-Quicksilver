@@ -68,6 +68,10 @@
     [_username setStringValue:[NSString stringWithFormat:@"Signed in as: %@", username]];
     [self endAnimation];
     
+    NSInteger checkbox = [_privateCheckBox state];
+    [[NSUserDefaults standardUserDefaults] setInteger:checkbox forKey:@"allowPrivate"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
 }
 
 - (void)finishLogout {
@@ -77,6 +81,9 @@
 }
 
 - (void)updateUI {
+    NSInteger checkbox = [[NSUserDefaults standardUserDefaults] integerForKey:@"allowPrivate"];
+    [_privateCheckBox setState:checkbox];
+    
     QSSpotifyUtil *su = [QSSpotifyUtil sharedInstance];
     
     [self startAnimation];
@@ -88,11 +95,10 @@
         su.needUserID = NO;
         su.needPlaylists = NO;
         [self finishLogout];
-        //NSLog(@"first no data");
     }
-    else {
+    //else {
         //NSLog(@"refresh token:%@", su.refreshToken);
-    }
+    //}
 }
 
 @end

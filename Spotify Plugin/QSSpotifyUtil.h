@@ -39,13 +39,15 @@
 @property BOOL needSaveTrack;
 @property BOOL needTrackInPlaylist;
 @property BOOL needSaveTrackToPlaylist;
+@property BOOL needFollowArtist;
 
 
 + (QSSpotifyUtil *)sharedInstance;
 
 - (void)attemptLoginWithPrivate:(NSInteger)allowPrivate;
 - (void)signOut;
-- (void)saveSongWithID:(NSString *) ID;
+- (void)saveSongWithID:(NSString *)ID;
+- (void)followArtistWithID:(NSString *)ID;
 - (void)requestAccessTokenFromRefreshToken;
 - (void)getPlaylists;
 - (void)accessUserProfile;

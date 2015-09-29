@@ -22,6 +22,7 @@
 - (void)volumeMute;
 - (void)save;
 - (void)sendTrackToTwitter;
+- (void)followArtist;
 
 @end
 
