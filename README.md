@@ -21,8 +21,8 @@ Commands include:
 
 
 \*Share on Twitter function relies on OS X's Twitter integration.  
-**Save command will save current playing track to Your Music Library. You need login to support this function.  
-***This function will let you follow the artist of the current playing track. You need login to support this function.
+\*\*Save command will save current playing track to Your Music Library. You need login to support this function.  
+\*\*\*This function will let you follow the artist of the current playing track. You need login to support this function.
 
 Now also support "Current playing" proxy. After login from preference panel, all your public playlists as well as each playlist's first 100 songs will add to your catalog. You can also "right arrow" into Spotify to see all the playlists.
 
