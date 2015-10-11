@@ -11,7 +11,7 @@
 
 @class QSSpotifyPrefPane;
 
-@interface QSSpotifyUtil : NSObject
+@interface QSSpotifyUtil : NSObject <NSWindowDelegate>
 
 @property QSSpotifyPrefPane *prefPane;
 @property NSString *accessToken;

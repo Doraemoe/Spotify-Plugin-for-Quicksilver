@@ -170,9 +170,15 @@
                                                                              URLString:kAuthorization
                                                                             parameters:parameters
                                                                                  error:nil];
-    
     [[_web mainFrame] loadRequest:urlRequest];
 
+}
+
+-(BOOL)windowShouldClose:(id)sender {
+    //NSString *url = _web.mainFrame.dataSource.request.URL.absoluteString;
+    //NSLog(@"url is: %@", url);
+    [self signOut];
+    return YES;
 }
 
 - (void)finishAuthWithCallback:(NSString *)callback {
@@ -258,6 +264,8 @@
                                                styleMask: NSTitledWindowMask | NSClosableWindowMask | NSResizableWindowMask
                                                  backing:NSBackingStoreBuffered
                                                    defer:NO];
+    [_codeWindow setReleasedWhenClosed:NO];
+    [_codeWindow setDelegate:self];
     [_codeWindow setBackgroundColor:[NSColor blueColor]];
     [_codeWindow setTitle:@"Authorization"];
     _web = [WebView new];
@@ -400,9 +408,18 @@
     
     NSDictionary *parameters = @{@"fields": @"total,items(track(name,id,uri,album(images),artists(name)))"};
     
+    //NSLog(@"track endpoint: %@", endpoint);
+    
     [manager GET:endpoint
       parameters:parameters
          success:^(AFHTTPRequestOperation *operation, NSDictionary *tracksData) {
+             /*
+             NSLog(@"list number: %@",[tracksData valueForKey:@"total"]);
+             if ([[tracksData valueForKey:@"total"]  isEqualToNumber:[NSNumber numberWithInt:0]]) {
+                 NSLog(@"empty playlist");
+                 return ;
+             }
+              */
              NSMutableArray *tracksArray = [[NSMutableArray alloc] initWithCapacity:[[tracksData valueForKey:@"total"] integerValue]];
              //NSLog(@"%@", tracksData);
              for (NSDictionary *track in [[tracksData valueForKey:@"items"] valueForKey:@"track"]) {
@@ -413,6 +430,10 @@
                  NSArray *url = [[[track valueForKey:@"album"] valueForKey:@"images"] valueForKey:@"url"];
             
                  //NSLog(@"name: %@ trackID: %@ uri: %@ artistName: %@ url: %@", name, trackID, uri, artistsName, url);
+                 
+                 if ((NSNull *)artistsName == [NSNull null] || artistsName == nil || [artistsName count] == 0 ) {
+                     return;
+                 }
                  
                  if ((NSNull *)name != [NSNull null] &&
                      (NSNull *)uri != [NSNull null] &&
@@ -436,6 +457,7 @@
              
              [_tracksInPlaylist setObject:tracksArray forKey:playlistName];
              //NSLog(@"%@", [_tracksInPlaylist objectForKey:playlistName]);
+            
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              NSLog(@"Error: %@", error);
