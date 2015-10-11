@@ -2,12 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-<key>NSAppTransportSecurity</key>
-<dict>
-  <!--Include to allow all connections (DANGER)-->
-  <key>NSAllowsArbitraryLoads</key>
-      <true/>
-</dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleDisplayName</key>
@@ -17,7 +11,7 @@
 	<key>CFBundleIconFile</key>
 	<string>Spotify</string>
 	<key>CFBundleIdentifier</key>
-	<string>Yifan.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -30,12 +24,15 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>2</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>QSActions</key>
 	<dict>
 		<key>QSSpotifyAddToPlaylistAction</key>
 		<dict>
-			<key>precedence</key>
-			<string>1</string>
 			<key>actionClass</key>
 			<string>QSSpotifyActionProvider</string>
 			<key>actionSelector</key>
@@ -50,6 +47,8 @@
 			</array>
 			<key>name</key>
 			<string>Add to playlist...</string>
+			<key>precedence</key>
+			<string>1</string>
 		</dict>
 		<key>QSSpotifyPlayItemAction</key>
 		<dict>
@@ -93,8 +92,8 @@
 		<key>description</key>
 		<string>Allows you to control Spotify</string>
 		<key>extendedDescription</key>
-		<string>&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;title&gt;Help.md&lt;/title&gt;&lt;style&gt;&lt;/style&gt;&lt;/head&gt;&lt;body id=&quot;preview&quot;&gt;
-&lt;h1&gt;&lt;a id=&quot;Spotify_Quicksilver_Plugin_0&quot;&gt;&lt;/a&gt;Spotify Quicksilver Plugin&lt;/h1&gt;
+		<string>&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;meta charset="utf-8"&gt;&lt;title&gt;Help.md&lt;/title&gt;&lt;style&gt;&lt;/style&gt;&lt;/head&gt;&lt;body id="preview"&gt;
+&lt;h1&gt;&lt;a id="Spotify_Quicksilver_Plugin_0"&gt;&lt;/a&gt;Spotify Quicksilver Plugin&lt;/h1&gt;
 &lt;p&gt;Support 11 different commands to control Spotify.&lt;/p&gt;
 &lt;p&gt;Commands include:&lt;/p&gt;
 &lt;ul&gt;
@@ -210,6 +209,33 @@
 					</dict>
 					<key>directID</key>
 					<string>Spotify_PluginDecreaseVolume</string>
+				</dict>
+			</dict>
+			<key>QSSpotifyFollowArtist</key>
+			<dict>
+				<key>command</key>
+				<dict>
+					<key>actionID</key>
+					<string>QSObjCSendMessageAction</string>
+					<key>directArchive</key>
+					<dict>
+						<key>data</key>
+						<dict>
+							<key>qs.action</key>
+							<dict>
+								<key>actionClass</key>
+								<string>QSSpotify_PluginControlProvider</string>
+								<key>actionSelector</key>
+								<string>followArtist</string>
+								<key>icon</key>
+								<string>SptifyIcon</string>
+								<key>name</key>
+								<string>Follow Artist</string>
+							</dict>
+						</dict>
+					</dict>
+					<key>directID</key>
+					<string>Spotify_PluginFollowArtist</string>
 				</dict>
 			</dict>
 			<key>QSSpotifyIncreaseVolume</key>
@@ -428,33 +454,6 @@
 					<string>Spotify_PluginSave</string>
 				</dict>
 			</dict>
-			<key>QSSpotifyFollowArtist</key>
-			<dict>
-				<key>command</key>
-				<dict>
-					<key>actionID</key>
-					<string>QSObjCSendMessageAction</string>
-					<key>directArchive</key>
-					<dict>
-						<key>data</key>
-						<dict>
-							<key>qs.action</key>
-							<dict>
-								<key>actionClass</key>
-								<string>QSSpotify_PluginControlProvider</string>
-								<key>actionSelector</key>
-								<string>followArtist</string>
-								<key>icon</key>
-								<string>SptifyIcon</string>
-								<key>name</key>
-								<string>Follow Artist</string>
-							</dict>
-						</dict>
-					</dict>
-					<key>directID</key>
-					<string>Spotify_PluginFollowArtist</string>
-				</dict>
-			</dict>
 			<key>QSSpotifySendToTwitter</key>
 			<dict>
 				<key>command</key>
@@ -563,19 +562,19 @@
 	<key>QSTriggerAdditions</key>
 	<array>
 		<dict>
+			<key>ID</key>
+			<string>Spotify_PluginFollowArtist</string>
+			<key>command</key>
+			<string>QSSpotifyFollowArtist</string>
 			<key>defaults</key>
 			<dict>
 				<key>type</key>
 				<string>QSHotKeyTrigger</string>
 			</dict>
-			<key>set</key>
-			<string>Spotify</string>
 			<key>name</key>
 			<string>Follow Artist</string>
-			<key>command</key>
-			<string>QSSpotifyFollowArtist</string>
-			<key>ID</key>
-			<string>Spotify_PluginFollowArtist</string>
+			<key>set</key>
+			<string>Spotify</string>
 		</dict>
 		<dict>
 			<key>ID</key>
