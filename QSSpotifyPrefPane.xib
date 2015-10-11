@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8191"/>
+        <capability name="box content view" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="QSSpotifyPrefPane">
@@ -28,15 +29,17 @@
                 <subviews>
                     <box autoresizesSubviews="NO" fixedFrame="YES" title="Authenticate Spotify" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="Onk-dE-YNP">
                         <rect key="frame" x="17" y="73" width="357" height="140"/>
-                        <view key="contentView">
+                        <view key="contentView" id="3wS-yK-ztg">
                             <rect key="frame" x="1" y="1" width="355" height="124"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="KDw-Bf-Sw2">
+                                <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="KDw-Bf-Sw2">
                                     <rect key="frame" x="218" y="14" width="16" height="16"/>
+                                    <animations/>
                                 </progressIndicator>
                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="56a-HQ-gbx">
                                     <rect key="frame" x="111" y="18" width="122" height="25"/>
+                                    <animations/>
                                     <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" id="Dk0-Xk-ZPk">
                                         <font key="font" metaFont="miniSystem"/>
                                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -45,6 +48,7 @@
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ABG-eY-pJI">
                                     <rect key="frame" x="18" y="55" width="140" height="14"/>
+                                    <animations/>
                                     <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Not signed in" id="DDs-IS-TjP">
                                         <font key="font" metaFont="smallSystem"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -53,6 +57,7 @@
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QUW-Sx-z71">
                                     <rect key="frame" x="17" y="79" width="301" height="35"/>
+                                    <animations/>
                                     <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" title="Click the button below to authenticate/deauthenticate Quicksilver with your Spotify account" id="e96-Rg-Lvc">
                                         <font key="font" metaFont="smallSystem"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -61,6 +66,7 @@
                                 </textField>
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bSx-Fo-TOZ">
                                     <rect key="frame" x="34" y="15" width="165" height="22"/>
+                                    <animations/>
                                     <buttonCell key="cell" type="check" title="Allow access to private playlists" bezelStyle="regularSquare" imagePosition="left" controlSize="mini" inset="2" id="ddz-5F-Ph1">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="miniSystem"/>
@@ -68,6 +74,7 @@
                                 </button>
                                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zBc-Oz-Cge">
                                     <rect key="frame" x="242" y="13" width="96" height="16"/>
+                                    <animations/>
                                     <buttonCell key="cell" type="push" title="Sign In" bezelStyle="rounded" alignment="center" controlSize="mini" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="R5m-0a-AQI">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="miniSystem"/>
@@ -77,17 +84,21 @@
                                     </connections>
                                 </button>
                             </subviews>
+                            <animations/>
                         </view>
+                        <animations/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </box>
                 </subviews>
+                <animations/>
             </view>
             <point key="canvasLocation" x="341" y="274.5"/>
         </window>
         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="fdx-4g-WWu">
             <rect key="frame" x="0.0" y="0.0" width="38" height="17"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <animations/>
             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="nG7-AR-GUZ">
                 <font key="font" metaFont="system"/>
                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
