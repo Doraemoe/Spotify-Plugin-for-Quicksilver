@@ -38,3 +38,5 @@ Support Actions:
 Added "(Spotify)" suffix to some commands in order to distinguish with iTunes command.
 
 Thanks for Rob McBroom at Quicksilver Development Google group for all those suggestions.
+
+*Note: If the login page does not work, please see [this page](https://github.com/Doraemoe/Spotify-Plugin-for-Quicksilver/wiki/Login-page-does-not-load)
