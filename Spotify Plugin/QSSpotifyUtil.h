@@ -8,6 +8,8 @@
 
 #import <WebKit/WebKit.h>
 #import "AFNetworking.h"
+#import "SpotifyBridge.h"
+
 
 @class QSSpotifyPrefPane;
 
@@ -41,8 +43,11 @@
 @property BOOL needSaveTrackToPlaylist;
 @property BOOL needFollowArtist;
 
+@property SpotifyApplication *Spotify;
+
 
 + (QSSpotifyUtil *)sharedInstance;
+
 
 - (void)attemptLoginWithPrivate:(NSInteger)allowPrivate;
 - (void)signOut;
@@ -52,5 +57,7 @@
 - (void)getPlaylists;
 - (void)accessUserProfile;
 - (void)addTrack:(NSString *)uri toPlaylist:(NSString *)playlistID;
+- (void)showCurrentTrackNotification;
+
 
 @end

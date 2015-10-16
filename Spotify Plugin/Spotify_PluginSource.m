@@ -47,7 +47,8 @@
                           @"QSSpotifyDecreaseVolume",
                           @"QSSpotifyPlayPause",
                           @"QSSpotifySave",
-                          @"QSSpotifyFollowArtist"];
+                          @"QSSpotifyFollowArtist",
+                          @"QSSpotifyShowCurrentTrack"];
 	for (NSString *control in controls) {
 		command = [QSCommand commandWithIdentifier:control];
 		if (command) {
@@ -134,7 +135,7 @@
 }
 
 - (void)setQuickIconForObject:(QSObject *)object {
-    [object setIcon:[QSResourceManager imageNamed:@"￼￼/Applications/Spotify.app/Contents/Resources/local_files.icns"]];
+    [object setIcon:[QSResourceManager imageNamed:@"￼￼/Applications/Spotify.app/Contents/Resources/Icon.icns"]];
 }
 
 - (BOOL)loadIconForObject:(QSObject *)object {

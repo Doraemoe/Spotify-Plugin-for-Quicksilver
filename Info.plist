@@ -24,14 +24,25 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>2</string>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
 	<key>QSActions</key>
 	<dict>
-		<key>QSSpotifyDirectAddToPlaylistAction - 2</key>
+		<key>QSSpotifyPlayItemAction</key>
+		<dict>
+			<key>actionClass</key>
+			<string>QSSpotifyActionProvider</string>
+			<key>actionSelector</key>
+			<string>playItem:</string>
+			<key>directTypes</key>
+			<array>
+				<string>com.spotify.track</string>
+				<string>com.spotify.playlist</string>
+			</array>
+			<key>name</key>
+			<string>Play</string>
+			<key>precedence</key>
+			<string>0</string>
+		</dict>
+		<key>QSSpotifyDirectAddToPlaylistAction</key>
 		<dict>
 			<key>actionClass</key>
 			<string>QSSpotifyActionProvider</string>
@@ -42,7 +53,7 @@
 				<string>com.spotify.playlist</string>
 			</array>
 			<key>name</key>
-			<string>Add playing track to this playlist</string>
+			<string>Add Playing track to This Playlist</string>
 			<key>precedence</key>
 			<string>2</string>
 		</dict>
@@ -64,22 +75,6 @@
 			<string>Add to playlist...</string>
 			<key>precedence</key>
 			<string>1</string>
-		</dict>
-		<key>QSSpotifyPlayItemAction</key>
-		<dict>
-			<key>actionClass</key>
-			<string>QSSpotifyActionProvider</string>
-			<key>actionSelector</key>
-			<string>playItem:</string>
-			<key>directTypes</key>
-			<array>
-				<string>com.spotify.track</string>
-				<string>com.spotify.playlist</string>
-			</array>
-			<key>name</key>
-			<string>Play</string>
-			<key>precedence</key>
-			<string>0</string>
 		</dict>
 		<key>QSSpotifySearch</key>
 		<dict>
@@ -185,6 +180,22 @@
 	</array>
 	<key>QSRegistration</key>
 	<dict>
+		<key>QSTriggerEvents</key>
+		<dict>
+			<key>QSSpotifyTrackChangedEvent</key>
+			<dict>
+				<key>allowMatching</key>
+				<true/>
+				<key>icon</key>
+				<string>com.spotify.client</string>
+				<key>name</key>
+				<string>Spotify Track Changed</string>
+				<key>provider</key>
+				<string>QSSpotify_PluginControlProvider</string>
+				<key>type</key>
+				<string>Music</string>
+			</dict>
+		</dict>
 		<key>QSActionProviders</key>
 		<dict>
 			<key>QSSpotifyActionProvider</key>
@@ -224,6 +235,33 @@
 					</dict>
 					<key>directID</key>
 					<string>Spotify_PluginDecreaseVolume</string>
+				</dict>
+			</dict>
+			<key>QSSpotifyShowCurrentTrack</key>
+			<dict>
+				<key>command</key>
+				<dict>
+					<key>actionID</key>
+					<string>QSObjCSendMessageAction</string>
+					<key>directArchive</key>
+					<dict>
+						<key>data</key>
+						<dict>
+							<key>qs.action</key>
+							<dict>
+								<key>actionClass</key>
+								<string>QSSpotifyUtil</string>
+								<key>actionSelector</key>
+								<string>showCurrentTrackNotification</string>
+								<key>icon</key>
+								<string>com.spotify.client</string>
+								<key>name</key>
+								<string>Show Playing Track (Spotify)</string>
+							</dict>
+						</dict>
+					</dict>
+					<key>directID</key>
+					<string>Spotify_PluginShowCurrentTrack</string>
 				</dict>
 			</dict>
 			<key>QSSpotifyFollowArtist</key>
@@ -576,6 +614,21 @@
 	</dict>
 	<key>QSTriggerAdditions</key>
 	<array>
+		<dict>
+			<key>ID</key>
+			<string>Spotify_PluginShowCurrentTrack</string>
+			<key>command</key>
+			<string>QSSpotifyShowCurrentTrack</string>
+			<key>defaults</key>
+			<dict>
+				<key>type</key>
+				<string>QSHotKeyTrigger</string>
+			</dict>
+			<key>name</key>
+			<string>Show Playing Track (Spotify)</string>
+			<key>set</key>
+			<string>Spotify</string>
+		</dict>
 		<dict>
 			<key>ID</key>
 			<string>Spotify_PluginFollowArtist</string>

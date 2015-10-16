@@ -50,7 +50,7 @@
         _playlists = nil;
         _tracksInPlaylist = nil;
 
-        
+        _Spotify = QSSpotify();
         /*
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(loadStart:)
@@ -579,6 +579,54 @@
 
     _trackURI = kTrackIDPlaceholder;
     _playlistID = kPlaylistIDPlaceholder;
+}
+
+- (void)showCurrentTrackNotification {
+    QSObject *playingTrack = nil;
+    
+    if ([[NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.spotify.client"] count] == 0) {
+        return;
+    }
+    if ([_Spotify playerState] == SpotifyEPlSPlaying || [_Spotify playerState] == SpotifyEPlSPaused) {
+        SpotifyTrack *track = [_Spotify currentTrack];
+        NSString *name = [track name];
+        NSString *trackID = [track id];
+        NSString *uri = [track spotifyUrl];
+        NSString *artist = [track artist];
+        NSString *album = [track album];
+        NSImage *cover = [track artwork];
+        
+        if ((NSNull *)name != [NSNull null] && (NSNull *)trackID != [NSNull null] && (NSNull *)uri != [NSNull null] && (NSNull *)artist != [NSNull null]) {
+            playingTrack = [QSObject objectWithString:name];
+            [playingTrack setLabel:name];
+            [playingTrack setObject:uri forType:QSSpotifyTrackType];
+            [playingTrack setPrimaryType:QSSpotifyTrackType];
+            [playingTrack setIdentifier:@"SpotifyCurrentTrackProxy"];
+            [playingTrack setDetails:artist];
+            [playingTrack setObject:cover forMeta:@"coverImage"];
+            
+            
+            if (!cover) {
+                cover = [QSResourceManager imageNamed:@"￼￼/Applications/Spotify.app/Contents/Resources/Icon.icns"];
+            }
+            
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"QSEventNotification" object:TrackChangeNotification userInfo:[NSDictionary dictionaryWithObject:playingTrack forKey:@"object"]];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"QSSpotifyTrackChangeEvent" object:self userInfo:[playingTrack dictionaryRepresentation]];
+            
+            QSShowNotifierWithAttributes([NSDictionary dictionaryWithObjectsAndKeys:
+                                          @"QSSpotifyTrackChangeEvent", QSNotifierType,
+                                          name, QSNotifierTitle,
+                                          [NSString stringWithFormat:@"%@\n%@",artist, album], QSNotifierText,
+                                          cover, QSNotifierIcon,
+                                          @"Music Video", QSNotifierStyle,
+                                          album, QSNotifierDetails,
+                                          nil]);
+            
+        }
+        
+    }
 }
 
 #pragma mark -

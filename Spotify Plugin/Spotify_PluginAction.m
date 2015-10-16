@@ -53,12 +53,23 @@
 
 - (void)volumeIncrease
 {
-    [_Spotify setSoundVolume:[_Spotify soundVolume] + 5];
+    if ([_Spotify soundVolume] > 95) {
+        [_Spotify setSoundVolume:100];
+    }
+    else {
+        [_Spotify setSoundVolume:[_Spotify soundVolume] + 5];
+
+    }
 }
 
 - (void)volumeDecrease
 {
-    [_Spotify setSoundVolume:[_Spotify soundVolume] - 5];
+    if ([_Spotify soundVolume] < 5) {
+        [_Spotify setSoundVolume:0];
+    }
+    else {
+        [_Spotify setSoundVolume:[_Spotify soundVolume] - 5];
+    }
 }
 
 - (void)volumeMute
@@ -104,20 +115,6 @@
     }
 }
 
-- (void)showCurrentTrackNotification {
-    if ([[NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.spotify.client"] count] == 0) {
-        return;
-    }
-    if ([_Spotify playerState] == SpotifyEPlSPlaying || [_Spotify playerState] == SpotifyEPlSPaused) {
-        SpotifyTrack *track = [_Spotify currentTrack];
-        NSString *name = [track name];
-        NSString *trackID = [track id];
-        NSString *uri = [track spotifyUrl];
-        NSString *artist = [track artist];
-        NSImage *cover = [track artwork];
-
-    }
-}
 @end
 
 @implementation QSSpotifyActionProvider

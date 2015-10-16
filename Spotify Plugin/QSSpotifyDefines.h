@@ -28,6 +28,7 @@
 #define PlaylistItemsAddedJobFinishedNotification @"PlaylistItemsAddedJobFinishedNotification"
 #define UserProfileDidGetNotification @"UserProfileDidGetNotification"
 #define AccessTokenDidGetNotification @"AccessTokenDidGetNotification"
+#define TrackChangeNotification @"QSSpotifyTrackChangedEvent"
 
 #define kAccessTokenPlaceholder @"AccessTokenPlaceholder"
 #define kRefreshTokenPlaceholder @"RefreshTokenPlaceholder"
