@@ -12,7 +12,7 @@
 #define Spotify_Plugin_QSSpotifyDefines_h
 
 
-#define kRedirect @"http://tuidao.me/callback"
+#define kRedirect @"https://tuidao.me/callback"
 #define kToken @"https://accounts.spotify.com/api/token"
 #define kAuthorization @"https://accounts.spotify.com/authorize"
 #define kCurrectUserProfile @"https://api.spotify.com/v1/me"

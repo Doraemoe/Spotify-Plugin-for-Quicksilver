@@ -31,6 +31,21 @@
 	</dict>
 	<key>QSActions</key>
 	<dict>
+		<key>QSSpotifyDirectAddToPlaylistAction - 2</key>
+		<dict>
+			<key>actionClass</key>
+			<string>QSSpotifyActionProvider</string>
+			<key>actionSelector</key>
+			<string>addPlayingTrackToPlaylist:</string>
+			<key>directTypes</key>
+			<array>
+				<string>com.spotify.playlist</string>
+			</array>
+			<key>name</key>
+			<string>Add playing track to this playlist</string>
+			<key>precedence</key>
+			<string>2</string>
+		</dict>
 		<key>QSSpotifyAddToPlaylistAction</key>
 		<dict>
 			<key>actionClass</key>
@@ -92,8 +107,8 @@
 		<key>description</key>
 		<string>Allows you to control Spotify</string>
 		<key>extendedDescription</key>
-		<string>&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;meta charset="utf-8"&gt;&lt;title&gt;Help.md&lt;/title&gt;&lt;style&gt;&lt;/style&gt;&lt;/head&gt;&lt;body id="preview"&gt;
-&lt;h1&gt;&lt;a id="Spotify_Quicksilver_Plugin_0"&gt;&lt;/a&gt;Spotify Quicksilver Plugin&lt;/h1&gt;
+		<string>&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;title&gt;Help.md&lt;/title&gt;&lt;style&gt;&lt;/style&gt;&lt;/head&gt;&lt;body id=&quot;preview&quot;&gt;
+&lt;h1&gt;&lt;a id=&quot;Spotify_Quicksilver_Plugin_0&quot;&gt;&lt;/a&gt;Spotify Quicksilver Plugin&lt;/h1&gt;
 &lt;p&gt;Support 11 different commands to control Spotify.&lt;/p&gt;
 &lt;p&gt;Commands include:&lt;/p&gt;
 &lt;ul&gt;

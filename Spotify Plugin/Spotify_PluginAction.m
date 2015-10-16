@@ -103,6 +103,21 @@
         [service performWithItems:shareItems];
     }
 }
+
+- (void)showCurrentTrackNotification {
+    if ([[NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.spotify.client"] count] == 0) {
+        return;
+    }
+    if ([_Spotify playerState] == SpotifyEPlSPlaying || [_Spotify playerState] == SpotifyEPlSPaused) {
+        SpotifyTrack *track = [_Spotify currentTrack];
+        NSString *name = [track name];
+        NSString *trackID = [track id];
+        NSString *uri = [track spotifyUrl];
+        NSString *artist = [track artist];
+        NSImage *cover = [track artwork];
+
+    }
+}
 @end
 
 @implementation QSSpotifyActionProvider
@@ -161,6 +176,27 @@
     
     return nil;
 }
+
+- (QSObject *)addPlayingTrackToPlaylist:(QSObject *)dObject {
+    if ([[dObject label] caseInsensitiveCompare:@"starred"] == NSOrderedSame) {
+        return nil;
+    }
+    
+    NSArray *uri = [[dObject objectForType:QSSpotifyPlaylistType] componentsSeparatedByString:@":"];
+    NSString *playlistID = uri[4];
+    
+    SpotifyTrack *track = [_Spotify currentTrack];
+    NSString *trackUri = [track spotifyUrl];
+    
+    //NSString *trackURI = [dObject objectForType:QSSpotifyTrackType];
+    //NSLog(@"id %@, uri %@", playlistID, trackURI);
+    
+    QSSpotifyUtil *su = [QSSpotifyUtil sharedInstance];
+    [su addTrack:trackUri toPlaylist:playlistID];
+    
+    return nil;
+}
+
 
 - (QSObject *)search:(QSObject *)dObject {
     NSMutableString *query = [NSMutableString stringWithString:[dObject stringValue]];

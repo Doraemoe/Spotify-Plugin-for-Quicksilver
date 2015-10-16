@@ -185,7 +185,8 @@
     
     [_codeWindow close];
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    //AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     NSString *clientIDandSecretString = [NSString stringWithFormat:@"%@:%@", kClientID, kClientSecret];
     NSString *encodedIDandSec = [NSString stringWithFormat:@"Basic %@", base64enc(clientIDandSecretString)];
@@ -193,14 +194,14 @@
     [manager.requestSerializer setValue:encodedIDandSec forHTTPHeaderField:@"Authorization"];
     
     NSDictionary *parameters = @{@"grant_type": @"authorization_code",
-                                 @"code": [callback substringFromIndex:32],
+                                 @"code": [callback substringFromIndex:33],
                                  @"redirect_uri": kRedirect
                                  };
 
     
     [manager POST:kToken
        parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, NSDictionary *tokenData) {
+          success:^(NSURLSessionTask *task, NSDictionary *tokenData) {
               
               _accessToken = [tokenData valueForKey:@"access_token"];
               _refreshToken = [tokenData valueForKey:@"refresh_token"];
@@ -210,7 +211,7 @@
               
               [[NSNotificationCenter defaultCenter] postNotificationName:AccessTokenDidGetNotification object:nil];
           }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          failure:^(NSURLSessionTask *task, NSError *error) {
               NSLog(@"Error: %@", error);
           }];
 }
@@ -233,7 +234,8 @@
         return;
     }
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    //AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     NSString *clientIDandSecretString = [NSString stringWithFormat:@"%@:%@", kClientID, kClientSecret];
     NSString *encodedIDandSec = [NSString stringWithFormat:@"Basic %@", base64enc(clientIDandSecretString)];
@@ -246,14 +248,14 @@
     
     [manager POST:kToken
        parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, NSDictionary *tokenData) {
+          success:^(NSURLSessionTask *task, NSDictionary *tokenData) {
               _accessToken = [tokenData valueForKey:@"access_token"];
               _tokenExpiresIn = [[tokenData valueForKey:@"expires_in"] integerValue];
               _tokenStartTime = [[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]] integerValue];
               
               [[NSNotificationCenter defaultCenter] postNotificationName:AccessTokenDidGetNotification object:nil];
           }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          failure:^(NSURLSessionTask *task, NSError *error) {
               NSLog(@"Error: %@", error);
           }];
 }
@@ -301,26 +303,27 @@
 #pragma mark function
 
 - (void)accessUserProfile {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    //AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     NSString *accessHeader = [NSString stringWithFormat:@"Bearer %@", _accessToken];
     [manager.requestSerializer setValue:accessHeader forHTTPHeaderField:@"Authorization"];
     
     [manager GET:kCurrectUserProfile
       parameters:nil
-         success:^(AFHTTPRequestOperation *operation, NSDictionary *userProfile) {
+         success:^(NSURLSessionTask *task, NSDictionary *userProfile) {
              //NSLog(@"access profile");
              _userID = [userProfile valueForKey:@"id"];
              _displayName = [userProfile valueForKey:@"display_name"];
              
              [[NSNotificationCenter defaultCenter] postNotificationName:UserProfileDidGetNotification object:nil];
          }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         failure:^(NSURLSessionTask *task, NSError *error) {
              NSLog(@"Error: %@", error);
          }];
 }
 
-- (void)getPlaylistsWithOffset:(NSString *)offset limit:(NSString *)limit manager:(AFHTTPRequestOperationManager *)manager {
+- (void)getPlaylistsWithOffset:(NSString *)offset limit:(NSString *)limit manager:(AFHTTPSessionManager *)manager {
     
     NSString *url = [kUserPlaylistsWildcard stringByReplacingOccurrencesOfString:@"USERID" withString:_userID];
     
@@ -331,7 +334,7 @@
     
     [manager GET:url
       parameters:parameters
-         success:^(AFHTTPRequestOperation *operation, NSDictionary *playlistData) {
+         success:^(NSURLSessionTask *task, NSDictionary *playlistData) {
              //NSLog(@"limit: %@, offset: %@", [playlistData valueForKey:@"limit"], [playlistData valueForKey:@"offset"]);
              
              [_playlists addObjectsFromArray:[playlistData valueForKey:@"items"]];
@@ -345,7 +348,7 @@
              
              [[NSNotificationCenter defaultCenter] postNotificationName:PlaylistItemsAddedJobFinishedNotification object:nil];
          }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         failure:^(NSURLSessionTask *task, NSError *error) {
              NSLog(@"Error: %@", error);
          }];
     
@@ -353,7 +356,8 @@
 
 - (void)getPlaylists {
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    //AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     NSString *accessHeader = [NSString stringWithFormat:@"Bearer %@", _accessToken];
     [manager.requestSerializer setValue:accessHeader forHTTPHeaderField:@"Authorization"];
@@ -367,7 +371,7 @@
     
     [manager GET:url
       parameters:parameters
-         success:^(AFHTTPRequestOperation *operation, NSDictionary *playlistData) {
+         success:^(NSURLSessionTask *task, NSDictionary *playlistData) {
              
              //NSLog(@"total: %@", [playlistData valueForKey:@"total"]);
              //NSLog(@"limit: %@, offset: %@", [playlistData valueForKey:@"limit"], [playlistData valueForKey:@"offset"]);
@@ -394,14 +398,15 @@
              }
              [[NSNotificationCenter defaultCenter] postNotificationName:PlaylistItemsAddedJobFinishedNotification object:nil];
          }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         failure:^(NSURLSessionTask *task, NSError *error) {
              NSLog(@"Error: %@", error);
          }];
 }
 
 - (void)getTrackInPlaylistWithEndpoint:(NSString *)endpoint name:(NSString *)playlistName {
     //NSLog(@"playlistname %@", playlistName);
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    //AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     NSString *accessHeader = [NSString stringWithFormat:@"Bearer %@", _accessToken];
     [manager.requestSerializer setValue:accessHeader forHTTPHeaderField:@"Authorization"];
@@ -412,7 +417,7 @@
     
     [manager GET:endpoint
       parameters:parameters
-         success:^(AFHTTPRequestOperation *operation, NSDictionary *tracksData) {
+         success:^(NSURLSessionTask *task, NSDictionary *tracksData) {
              /*
              NSLog(@"list number: %@",[tracksData valueForKey:@"total"]);
              if ([[tracksData valueForKey:@"total"]  isEqualToNumber:[NSNumber numberWithInt:0]]) {
@@ -459,7 +464,7 @@
              //NSLog(@"%@", [_tracksInPlaylist objectForKey:playlistName]);
             
          }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         failure:^(NSURLSessionTask *task, NSError *error) {
              NSLog(@"Error: %@", error);
          }];
     
@@ -475,7 +480,8 @@
 }
 
 - (void)saveTrack {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    //AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 
     NSString *accessHeader = [NSString stringWithFormat:@"Bearer %@", _accessToken];
     [manager.requestSerializer setValue:accessHeader forHTTPHeaderField:@"Authorization"];
@@ -484,10 +490,10 @@
     
     [manager PUT:url
       parameters:nil
-         success:^(AFHTTPRequestOperation *operation, NSDictionary *returnData) {
+         success:^(NSURLSessionTask *task, NSDictionary *returnData) {
              //NSLog(@"%@", returnData);
          }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         failure:^(NSURLSessionTask *task, NSError *error) {
              NSLog(@"Error: %@", error);
          }];
     
@@ -501,17 +507,18 @@
 }
 
 - (void)getArtistID {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    //AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *url = [kTrackInfo stringByReplacingOccurrencesOfString:@"TRACKID" withString:_trackID];
     
     [manager GET:url
       parameters:nil
-         success:^(AFHTTPRequestOperation *operation, NSDictionary *returnData) {
+         success:^(NSURLSessionTask *task, NSDictionary *returnData) {
              //NSLog(@"%@", returnData);
              NSArray *artistID = [[returnData valueForKey:@"artists"] valueForKey:@"id"];
              [self followArtist:artistID];
          }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         failure:^(NSURLSessionTask *task, NSError *error) {
              NSLog(@"Error: %@", error);
          }];
 }
@@ -519,7 +526,8 @@
 
      
 - (void)followArtist:(NSArray *)artistID {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    //AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     NSString *accessHeader = [NSString stringWithFormat:@"Bearer %@", _accessToken];
     [manager.requestSerializer setValue:accessHeader forHTTPHeaderField:@"Authorization"];
@@ -532,9 +540,9 @@
     
     [manager PUT:kFollowArtist
       parameters:parameters
-         success:^(AFHTTPRequestOperation *operation, NSDictionary *returnData) {
+         success:^(NSURLSessionTask *task, NSDictionary *returnData) {
          }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         failure:^(NSURLSessionTask *task, NSError *error) {
              NSLog(@"Error: %@", error);
          }];
 
@@ -549,7 +557,8 @@
 }
 
 - (void)saveToPlaylist {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    //AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *accessHeader = [NSString stringWithFormat:@"Bearer %@", _accessToken];
     [manager.requestSerializer setValue:accessHeader forHTTPHeaderField:@"Authorization"];
     
@@ -561,15 +570,15 @@
     
     [manager POST:url
       parameters:nil
-         success:^(AFHTTPRequestOperation *operation, NSDictionary *returnData) {
+         success:^(NSURLSessionTask *task, NSDictionary *returnData) {
              //NSLog(@"%@", returnData);
          }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         failure:^(NSURLSessionTask *task, NSError *error) {
              NSLog(@"Error: %@", error);
          }];
 
-    _trackURI = @"trackURIPlaceholder";
-    _playlistID = @"playlistIDPlaceholder";
+    _trackURI = kTrackIDPlaceholder;
+    _playlistID = kPlaylistIDPlaceholder;
 }
 
 #pragma mark -
@@ -663,7 +672,7 @@ OSStatus DelPasswordKeychain (char *acctName) {
 }
 
 - (NSString *)getRefreshToken {
-    NSString *refreshToken = @"RefreshTokenPlaceholder";
+    NSString *refreshToken = kRefreshTokenPlaceholder;
     OSStatus status;
     void *passwordData = NULL;
     SecKeychainItemRef itemRef = NULL;
