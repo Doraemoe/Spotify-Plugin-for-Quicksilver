@@ -3,7 +3,7 @@ Spotify Quicksilver Plugin
 
 DDL: [Dropbox](https://dl.dropboxusercontent.com/u/1660391/Spotify%20Plugin.qsplugin.zip)
 
-Support 11 different commands to control Spotify.
+Support 12 different commands to control Spotify.
 
 Commands include:
 
@@ -15,6 +15,7 @@ Commands include:
 - Play (Spotify)
 - Pause (Spotify)
 - Play/Pause (Spotify)
+- Show Playing Track (Spotify)
 - Share on Twitter (Spotify)*
 - Save (Spotify)** 
 - Follow Artist***
