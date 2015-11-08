@@ -404,6 +404,7 @@
 }
 
 - (void)getTrackInPlaylistWithEndpoint:(NSString *)endpoint name:(NSString *)playlistName {
+    //NSLog(@"endpoint: %@ playlist: %@", endpoint, playlistName);
     //NSLog(@"playlistname %@", playlistName);
     //AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -413,20 +414,12 @@
     
     NSDictionary *parameters = @{@"fields": @"total,items(track(name,id,uri,album(images),artists(name)))"};
     
-    //NSLog(@"track endpoint: %@", endpoint);
-    
     [manager GET:endpoint
       parameters:parameters
          success:^(NSURLSessionTask *task, NSDictionary *tracksData) {
-             /*
-             NSLog(@"list number: %@",[tracksData valueForKey:@"total"]);
-             if ([[tracksData valueForKey:@"total"]  isEqualToNumber:[NSNumber numberWithInt:0]]) {
-                 NSLog(@"empty playlist");
-                 return ;
-             }
-              */
              NSMutableArray *tracksArray = [[NSMutableArray alloc] initWithCapacity:[[tracksData valueForKey:@"total"] integerValue]];
              //NSLog(@"%@", tracksData);
+
              for (NSDictionary *track in [[tracksData valueForKey:@"items"] valueForKey:@"track"]) {
                  NSString *name = [track valueForKey:@"name"];
                  NSString *trackID = [track valueForKey:@"id"];
@@ -436,8 +429,11 @@
             
                  //NSLog(@"name: %@ trackID: %@ uri: %@ artistName: %@ url: %@", name, trackID, uri, artistsName, url);
                  
-                 if ((NSNull *)artistsName == [NSNull null] || artistsName == nil || [artistsName count] == 0 ) {
-                     return;
+                 if ((NSNull *)artistsName == [NSNull null] || artistsName == nil || [artistsName count] < 1 ) {
+                     continue;
+                 }
+                 if ((NSNull *)url == [NSNull null] || url == nil || [url count] < 2 ) {
+                     continue;
                  }
                  
                  if ((NSNull *)name != [NSNull null] &&
@@ -459,6 +455,7 @@
                      [tracksArray addObject:newObject];
                  }
              }
+
              
              [_tracksInPlaylist setObject:tracksArray forKey:playlistName];
              //NSLog(@"%@", [_tracksInPlaylist objectForKey:playlistName]);

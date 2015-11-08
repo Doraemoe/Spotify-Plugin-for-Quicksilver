@@ -24,6 +24,10 @@
 
 - (void)play
 {
+    if ([[NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.spotify.client"] count] == 0) {
+        return;
+    }
+    
     if ([_Spotify playerState] != SpotifyEPlSPlaying) {
         [_Spotify play];
     }
@@ -31,6 +35,9 @@
 
 - (void)pause
 {
+    if ([[NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.spotify.client"] count] == 0) {
+        return;
+    }
     if ([_Spotify playerState] != SpotifyEPlSPaused) {
         [_Spotify pause];
     }
@@ -38,21 +45,33 @@
 
 - (void)togglePlayPause
 {
+    if ([[NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.spotify.client"] count] == 0) {
+        return;
+    }
     [_Spotify playpause];
 }
 
 - (void)next
 {
+    if ([[NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.spotify.client"] count] == 0) {
+        return;
+    }
     [_Spotify nextTrack];
 }
 
 - (void)previous
 {
+    if ([[NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.spotify.client"] count] == 0) {
+        return;
+    }
     [_Spotify previousTrack];
 }
 
 - (void)volumeIncrease
 {
+    if ([[NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.spotify.client"] count] == 0) {
+        return;
+    }
     if ([_Spotify soundVolume] > 95) {
         [_Spotify setSoundVolume:100];
     }
@@ -64,6 +83,9 @@
 
 - (void)volumeDecrease
 {
+    if ([[NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.spotify.client"] count] == 0) {
+        return;
+    }
     if ([_Spotify soundVolume] < 5) {
         [_Spotify setSoundVolume:0];
     }
@@ -74,11 +96,17 @@
 
 - (void)volumeMute
 {
+    if ([[NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.spotify.client"] count] == 0) {
+        return;
+    }
     [_Spotify setSoundVolume:0];
 }
 
 - (void)save
 {
+    if ([[NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.spotify.client"] count] == 0) {
+        return;
+    }
     SpotifyTrack *track = [_Spotify currentTrack];
     NSString *uri = [track spotifyUrl];
     NSArray *uriArray = [uri componentsSeparatedByString:@":"];
@@ -89,6 +117,9 @@
 
 - (void)followArtist
 {
+    if ([[NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.spotify.client"] count] == 0) {
+        return;
+    }
     SpotifyTrack *track = [_Spotify currentTrack];
     NSString *uri = [track spotifyUrl];
     NSArray *uriArray = [uri componentsSeparatedByString:@":"];
@@ -99,6 +130,11 @@
 
 - (void)sendTrackToTwitter
 {
+    NSArray *shareItems;
+    
+    if ([[NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.spotify.client"] count] == 0) {
+        return;
+    }
     NSImage *albumImg = [[_Spotify currentTrack] artwork];
     NSString *artist = [[_Spotify currentTrack] artist];
     NSString *album = [[_Spotify currentTrack] album];
@@ -107,7 +143,13 @@
     NSSharingService * service = [NSSharingService sharingServiceNamed:NSSharingServiceNamePostOnTwitter];
     NSString *shareString = [NSString stringWithFormat:@"#NowPlaying %@ - %@ by %@", name, album, artist];
     
-    NSArray *shareItems = @[shareString, albumImg];
+    if (albumImg == nil) {
+        //NSLog(@"why image is nil?");
+        shareItems = @[shareString];
+    }
+    else {
+        shareItems = @[shareString, albumImg];
+    }
     
     service.delegate = self;
     if ([service canPerformWithItems:shareItems]) {
@@ -146,6 +188,8 @@
     NSString *playlistURI = [dObject objectForType:QSSpotifyPlaylistType];
     NSString *trackURI = [children[0] objectForType:QSSpotifyTrackType];
     
+    NSLog(@"playlist URI: %@, track URI: %@", playlistURI, trackURI);
+    
     [_Spotify playTrack:trackURI inContext:playlistURI];
     return nil;
 }
@@ -175,6 +219,10 @@
 }
 
 - (QSObject *)addPlayingTrackToPlaylist:(QSObject *)dObject {
+    if ([[NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.spotify.client"] count] == 0) {
+        return nil;
+    }
+    
     if ([[dObject label] caseInsensitiveCompare:@"starred"] == NSOrderedSame) {
         return nil;
     }
