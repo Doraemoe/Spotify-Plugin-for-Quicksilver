@@ -86,7 +86,7 @@
 		7D88756B1A198BC2008A8F9B /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		7DA9FFBF17A4C7F8001742FB /* SpotifyBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpotifyBridge.h; sourceTree = "<group>"; };
 		7DA9FFC017A4C7F8001742FB /* SpotifyBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotifyBridge.m; sourceTree = "<group>"; };
-		7DB4EB0017A4B81E00520108 /* Spotify Plugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spotify Plugin.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7DB4EB0017A4B81E00520108 /* Spotify Plugin.qsplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spotify Plugin.qsplugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DB4EB0317A4B81E00520108 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		7DB4EB0517A4B81E00520108 /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		7DB4EB0B17A4B81E00520108 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -161,7 +161,7 @@
 		7DB4EB0117A4B81E00520108 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7DB4EB0017A4B81E00520108 /* Spotify Plugin.bundle */,
+				7DB4EB0017A4B81E00520108 /* Spotify Plugin.qsplugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -248,7 +248,7 @@
 			);
 			name = "Spotify Plugin";
 			productName = "Spotify Plugin";
-			productReference = 7DB4EB0017A4B81E00520108 /* Spotify Plugin.bundle */;
+			productReference = 7DB4EB0017A4B81E00520108 /* Spotify Plugin.qsplugin */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */

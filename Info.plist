@@ -55,7 +55,7 @@
 			<key>name</key>
 			<string>Add Playing track to This Playlist</string>
 			<key>precedence</key>
-			<string>2</string>
+			<string>1</string>
 		</dict>
 		<key>QSSpotifyAddToPlaylistAction</key>
 		<dict>
@@ -74,10 +74,12 @@
 			<key>name</key>
 			<string>Add to playlist...</string>
 			<key>precedence</key>
-			<string>1</string>
+			<string>2</string>
 		</dict>
 		<key>QSSpotifySearch</key>
 		<dict>
+			<key>precedence</key>
+			<string>3</string>
 			<key>actionClass</key>
 			<string>QSSpotifyActionProvider</string>
 			<key>actionSelector</key>
