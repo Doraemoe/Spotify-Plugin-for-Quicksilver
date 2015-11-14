@@ -489,9 +489,26 @@
       parameters:nil
          success:^(NSURLSessionTask *task, NSDictionary *returnData) {
              //NSLog(@"%@", returnData);
+             NSInteger allowNotification = [[NSUserDefaults standardUserDefaults] integerForKey:@"allowNotification"];
+             if (allowNotification == NSOnState) {
+                 
+                 QSShowNotifierWithAttributes([NSDictionary dictionaryWithObjectsAndKeys:
+                                               @"Song Saved to My Music", QSNotifierTitle,
+                                               @"Music Video", QSNotifierStyle,
+                                               nil]);
+             }
+
          }
          failure:^(NSURLSessionTask *task, NSError *error) {
              NSLog(@"Error: %@", error);
+             NSInteger allowNotification = [[NSUserDefaults standardUserDefaults] integerForKey:@"allowNotification"];
+             if (allowNotification == NSOnState) {
+                 
+                 QSShowNotifierWithAttributes([NSDictionary dictionaryWithObjectsAndKeys:
+                                               @"Failed to Save the Song to My Music", QSNotifierTitle,
+                                               @"Music Video", QSNotifierStyle,
+                                               nil]);
+             }
          }];
     
     _trackID = @"trackIDPlaceholder";
@@ -538,9 +555,25 @@
     [manager PUT:kFollowArtist
       parameters:parameters
          success:^(NSURLSessionTask *task, NSDictionary *returnData) {
+             NSInteger allowNotification = [[NSUserDefaults standardUserDefaults] integerForKey:@"allowNotification"];
+             if (allowNotification == NSOnState) {
+                 
+                 QSShowNotifierWithAttributes([NSDictionary dictionaryWithObjectsAndKeys:
+                                               @"Followed Successful", QSNotifierTitle,
+                                               @"Music Video", QSNotifierStyle,
+                                               nil]);
+             }
          }
          failure:^(NSURLSessionTask *task, NSError *error) {
              NSLog(@"Error: %@", error);
+             NSInteger allowNotification = [[NSUserDefaults standardUserDefaults] integerForKey:@"allowNotification"];
+             if (allowNotification == NSOnState) {
+                 
+                 QSShowNotifierWithAttributes([NSDictionary dictionaryWithObjectsAndKeys:
+                                               @"Failded to Follow Artist", QSNotifierTitle,
+                                               @"Music Video", QSNotifierStyle,
+                                               nil]);
+             }
          }];
 
 }
@@ -569,9 +602,25 @@
       parameters:nil
          success:^(NSURLSessionTask *task, NSDictionary *returnData) {
              //NSLog(@"%@", returnData);
+             NSInteger allowNotification = [[NSUserDefaults standardUserDefaults] integerForKey:@"allowNotification"];
+             if (allowNotification == NSOnState) {
+                 
+                 QSShowNotifierWithAttributes([NSDictionary dictionaryWithObjectsAndKeys:
+                                               @"Song Saved to Playlist", QSNotifierTitle,
+                                               @"Music Video", QSNotifierStyle,
+                                               nil]);
+             }
          }
          failure:^(NSURLSessionTask *task, NSError *error) {
              NSLog(@"Error: %@", error);
+             NSInteger allowNotification = [[NSUserDefaults standardUserDefaults] integerForKey:@"allowNotification"];
+             if (allowNotification == NSOnState) {
+                 
+                 QSShowNotifierWithAttributes([NSDictionary dictionaryWithObjectsAndKeys:
+                                               @"Failed to Save Song to Playlist", QSNotifierTitle,
+                                               @"Music Video", QSNotifierStyle,
+                                               nil]);
+             }
          }];
 
     _trackURI = kTrackIDPlaceholder;
@@ -608,9 +657,9 @@
             }
             
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"QSEventNotification" object:TrackChangeNotification userInfo:[NSDictionary dictionaryWithObject:playingTrack forKey:@"object"]];
+            //[[NSNotificationCenter defaultCenter] postNotificationName:@"QSEventNotification" object:TrackChangeNotification userInfo:[NSDictionary dictionaryWithObject:playingTrack forKey:@"object"]];
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"QSSpotifyTrackChangeEvent" object:self userInfo:[playingTrack dictionaryRepresentation]];
+            //[[NSNotificationCenter defaultCenter] postNotificationName:@"QSSpotifyTrackChangeEvent" object:self userInfo:[playingTrack dictionaryRepresentation]];
             
             QSShowNotifierWithAttributes([NSDictionary dictionaryWithObjectsAndKeys:
                                           @"QSSpotifyTrackChangeEvent", QSNotifierType,

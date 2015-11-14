@@ -13,8 +13,10 @@
 @property (weak) IBOutlet NSButton *signInOutButton;
 @property (weak) IBOutlet NSTextField *username;
 @property (weak) IBOutlet NSButton *privateCheckBox;
+@property (weak) IBOutlet NSButton *notificationCheckBox;
 
 - (IBAction)authenticate:(id)sender;
+- (IBAction)toggleNotification:(id)sender;
 - (void)startAnimation;
 - (void)endAnimation;
 - (void)finishLoginWithUsername:(NSString *)username;

@@ -63,6 +63,12 @@
     }
 }
 
+- (IBAction)toggleNotification:(id)sender {
+    NSInteger checkbox = [_notificationCheckBox state];
+    [[NSUserDefaults standardUserDefaults] setInteger:checkbox forKey:@"allowNotification"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 - (void)finishLoginWithUsername:(NSString *)username {
     [_signInOutButton setTitle:@"Sign Out"];
     [_username setStringValue:[NSString stringWithFormat:@"Signed in as: %@", username]];
@@ -81,8 +87,11 @@
 }
 
 - (void)updateUI {
-    NSInteger checkbox = [[NSUserDefaults standardUserDefaults] integerForKey:@"allowPrivate"];
-    [_privateCheckBox setState:checkbox];
+    NSInteger privateCheckbox = [[NSUserDefaults standardUserDefaults] integerForKey:@"allowPrivate"];
+    [_privateCheckBox setState:privateCheckbox];
+    
+    NSInteger notificationCheckbox = [[NSUserDefaults standardUserDefaults] integerForKey:@"allowNotification"];
+    [_notificationCheckBox setState:notificationCheckbox];
     
     QSSpotifyUtil *su = [QSSpotifyUtil sharedInstance];
     

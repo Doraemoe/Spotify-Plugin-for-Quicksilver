@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9059"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9060"/>
         <capability name="box content view" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
@@ -10,6 +10,7 @@
             <connections>
                 <outlet property="_window" destination="1" id="x2W-64-2g3"/>
                 <outlet property="ind" destination="KDw-Bf-Sw2" id="LIF-JO-DSc"/>
+                <outlet property="notificationCheckBox" destination="BWm-V7-A7J" id="GPw-ft-4UC"/>
                 <outlet property="privateCheckBox" destination="bSx-Fo-TOZ" id="KXf-EC-a25"/>
                 <outlet property="signInOutButton" destination="zBc-Oz-Cge" id="a0z-ep-pEX"/>
                 <outlet property="username" destination="ABG-eY-pJI" id="d1h-YY-CzD"/>
@@ -97,6 +98,18 @@
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </box>
+                    <button id="BWm-V7-A7J">
+                        <rect key="frame" x="16" y="42" width="201" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <animations/>
+                        <buttonCell key="cell" type="check" title="Show Action Notifications" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="dW0-j6-Szs">
+                            <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="toggleNotification:" target="-2" id="08d-mn-MBF"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <animations/>
             </view>

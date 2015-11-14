@@ -188,7 +188,7 @@
     NSString *playlistURI = [dObject objectForType:QSSpotifyPlaylistType];
     NSString *trackURI = [children[0] objectForType:QSSpotifyTrackType];
     
-    NSLog(@"playlist URI: %@, track URI: %@", playlistURI, trackURI);
+    //NSLog(@"playlist URI: %@, track URI: %@", playlistURI, trackURI);
     
     [_Spotify playTrack:trackURI inContext:playlistURI];
     return nil;
