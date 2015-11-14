@@ -13,6 +13,8 @@
                 <outlet property="notificationCheckBox" destination="BWm-V7-A7J" id="GPw-ft-4UC"/>
                 <outlet property="privateCheckBox" destination="bSx-Fo-TOZ" id="KXf-EC-a25"/>
                 <outlet property="signInOutButton" destination="zBc-Oz-Cge" id="a0z-ep-pEX"/>
+                <outlet property="trackNotification" destination="0ra-ZT-PVF" id="vLS-3m-Xvi"/>
+                <outlet property="trackNotificationCheckBox" destination="0ra-ZT-PVF" id="CPM-xQ-vjU"/>
                 <outlet property="username" destination="ABG-eY-pJI" id="d1h-YY-CzD"/>
             </connections>
         </customObject>
@@ -108,6 +110,18 @@
                         </buttonCell>
                         <connections>
                             <action selector="toggleNotification:" target="-2" id="08d-mn-MBF"/>
+                        </connections>
+                    </button>
+                    <button id="0ra-ZT-PVF">
+                        <rect key="frame" x="16" y="18" width="201" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <animations/>
+                        <buttonCell key="cell" type="check" title="Display Track Notifications" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="oNB-bQ-bCj">
+                            <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="toggleTrackNotification:" target="-2" id="VRC-Mh-nFI"/>
                         </connections>
                     </button>
                 </subviews>

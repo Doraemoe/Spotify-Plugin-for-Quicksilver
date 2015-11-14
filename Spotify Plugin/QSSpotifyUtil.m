@@ -74,6 +74,12 @@
                                                  selector:@selector(tokenGet:)
                                                      name:AccessTokenDidGetNotification
                                                    object:nil];
+        
+        [[NSDistributedNotificationCenter defaultCenter] addObserver:self
+                                                            selector:@selector(playbackChanged:)
+                                                                name:@"com.spotify.client.PlaybackStateChanged"
+                                                              object:nil];
+
 
         
     }
@@ -147,6 +153,16 @@
     }
 }
 
+- (void)playbackChanged:(NSNotification *)noti {
+    NSDictionary *info = [noti userInfo];
+    
+    if ([[info objectForKey:@"Player State"] isEqualToString:@"Playing"]) {
+        NSInteger allowNotification = [[NSUserDefaults standardUserDefaults] integerForKey:@"allowTrackNotification"];
+        if (allowNotification == NSOnState) {
+            [self showCurrentTrackNotification];
+        }
+    }
+}
 #pragma mark -
 #pragma mark auth
 

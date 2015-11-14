@@ -14,9 +14,11 @@
 @property (weak) IBOutlet NSTextField *username;
 @property (weak) IBOutlet NSButton *privateCheckBox;
 @property (weak) IBOutlet NSButton *notificationCheckBox;
+@property (weak) IBOutlet NSButton *trackNotificationCheckBox;
 
 - (IBAction)authenticate:(id)sender;
 - (IBAction)toggleNotification:(id)sender;
+- (IBAction)toggleTrackNotification:(id)sender;
 - (void)startAnimation;
 - (void)endAnimation;
 - (void)finishLoginWithUsername:(NSString *)username;

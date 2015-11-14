@@ -69,6 +69,12 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+- (IBAction)toggleTrackNotification:(id)sender {
+    NSInteger checkbox = [_notificationCheckBox state];
+    [[NSUserDefaults standardUserDefaults] setInteger:checkbox forKey:@"allowTrackNotification"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 - (void)finishLoginWithUsername:(NSString *)username {
     [_signInOutButton setTitle:@"Sign Out"];
     [_username setStringValue:[NSString stringWithFormat:@"Signed in as: %@", username]];
@@ -92,6 +98,9 @@
     
     NSInteger notificationCheckbox = [[NSUserDefaults standardUserDefaults] integerForKey:@"allowNotification"];
     [_notificationCheckBox setState:notificationCheckbox];
+    
+    NSInteger trackNotificationCheckbox = [[NSUserDefaults standardUserDefaults] integerForKey:@"allowTrackNotification"];
+    [_trackNotificationCheckBox setState:trackNotificationCheckbox];
     
     QSSpotifyUtil *su = [QSSpotifyUtil sharedInstance];
     
