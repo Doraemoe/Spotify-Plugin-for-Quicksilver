@@ -102,9 +102,10 @@
 		<key>description</key>
 		<string>Allows you to control Spotify</string>
 		<key>extendedDescription</key>
-		<string>&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;title&gt;Help.md&lt;/title&gt;&lt;style&gt;&lt;/style&gt;&lt;/head&gt;&lt;body id=&quot;preview&quot;&gt;
+		<string>&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;title&gt;Help&lt;/title&gt;&lt;style&gt;&lt;/style&gt;&lt;/head&gt;&lt;body id=&quot;preview&quot;&gt;
 &lt;h1&gt;&lt;a id=&quot;Spotify_Quicksilver_Plugin_0&quot;&gt;&lt;/a&gt;Spotify Quicksilver Plugin&lt;/h1&gt;
-&lt;p&gt;Support 11 different commands to control Spotify.&lt;/p&gt;
+&lt;p&gt;DDL: &lt;a href=&quot;https://dl.dropboxusercontent.com/u/1660391/Spotify%20Plugin.qsplugin.zip&quot;&gt;Dropbox&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Support 12 different commands to control Spotify.&lt;/p&gt;
 &lt;p&gt;Commands include:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Decrease Volume (Spotify)&lt;/li&gt;
@@ -115,6 +116,7 @@
 &lt;li&gt;Play (Spotify)&lt;/li&gt;
 &lt;li&gt;Pause (Spotify)&lt;/li&gt;
 &lt;li&gt;Play/Pause (Spotify)&lt;/li&gt;
+&lt;li&gt;Show Playing Track (Spotify)&lt;/li&gt;
 &lt;li&gt;Share on Twitter (Spotify)*&lt;/li&gt;
 &lt;li&gt;Save (Spotify)**&lt;/li&gt;
 &lt;li&gt;Follow Artist***&lt;/li&gt;
@@ -131,8 +133,15 @@
 &lt;li&gt;Add track to a playlist (dose not support legacy starred playlist)&lt;/li&gt;
 &lt;li&gt;Search on Spotify (will open your default browser to show search results)&lt;/li&gt;
 &lt;/ul&gt;
+&lt;p&gt;Others:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Show notification when Spotify playing track changed.&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;Added “(Spotify)” suffix to some commands in order to distinguish with iTunes command.&lt;/p&gt;
+&lt;p&gt;Please Check &lt;a href=&quot;https://github.com/Doraemoe/Spotify-Plugin-for-Quicksilver/wiki&quot;&gt;Wiki&lt;/a&gt; for Manual and more information.&lt;/p&gt;
+&lt;hr&gt;
 &lt;p&gt;Thanks for Rob McBroom at Quicksilver Development Google group for all those suggestions.&lt;/p&gt;
+&lt;p&gt;This plugin is maintained by &lt;a href=&quot;https://twitter.com/iDoraemoe&quot;&gt;@iDoraemoe&lt;/a&gt;&lt;/p&gt;
 
 &lt;/body&gt;&lt;/html&gt;</string>
 		<key>icon</key>
