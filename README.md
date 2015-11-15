@@ -42,8 +42,10 @@ Others:
 
 Added "(Spotify)" suffix to some commands in order to distinguish with iTunes command.
 
-Thanks for Rob McBroom at Quicksilver Development Google group for all those suggestions.
+Please Check [Wiki](https://github.com/Doraemoe/Spotify-Plugin-for-Quicksilver/wiki) for Manual and more information.
 
-Check [Wiki](https://github.com/Doraemoe/Spotify-Plugin-for-Quicksilver/wiki) for Manual and more information.
+***
+
+Thanks for Rob McBroom at Quicksilver Development Google group for all those suggestions.
 
 This plugin is maintained by [@iDoraemoe](https://twitter.com/iDoraemoe)
