@@ -187,7 +187,7 @@
                                                                             parameters:parameters
                                                                                  error:nil];
     [[_web mainFrame] loadRequest:urlRequest];
-
+    
 }
 
 -(BOOL)windowShouldClose:(id)sender {
@@ -313,6 +313,147 @@
     status = DelPasswordKeychain(usr);
     
     [_prefPane finishLogout];
+}
+
+
+
+#pragma mark -
+#pragma mark Reactive Signal
+-(RACSignal *)finishLoginWithCallback:(NSString *)callback {
+    
+    RACSignal *loginSignal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        
+        NSString *clientIDandSecretString = [NSString stringWithFormat:@"%@:%@", kClientID, kClientSecret];
+        NSString *encodedIDandSec = [NSString stringWithFormat:@"Basic %@", base64enc(clientIDandSecretString)];
+        
+        [manager.requestSerializer setValue:encodedIDandSec forHTTPHeaderField:@"Authorization"];
+        
+        NSDictionary *parameters = @{@"grant_type": @"authorization_code",
+                                     @"code": [callback substringFromIndex:33],
+                                     @"redirect_uri": kRedirect
+                                     };
+        
+        
+        [manager POST:kToken
+           parameters:parameters
+              success:^(NSURLSessionTask *task, NSDictionary *tokenData) {
+                  
+                  _accessToken = [tokenData valueForKey:@"access_token"];
+                  _refreshToken = [tokenData valueForKey:@"refresh_token"];
+                  _tokenExpiresIn = [[tokenData valueForKey:@"expires_in"] integerValue];
+                  _tokenStartTime = [[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]] integerValue];
+                  [self storeRefreshToken];
+                  
+                  [subscriber sendNext:[tokenData valueForKey:@"access_token"]];
+                  [subscriber sendCompleted];
+              }
+              failure:^(NSURLSessionTask *task, NSError *error) {
+                  NSLog(@"Error: %@", error);
+                  [subscriber sendError:error];
+              }];
+        return nil;
+    }];
+    
+    return loginSignal;
+}
+
+
+-(RACSignal *)getAccessTokenFromRefreshToken:(NSString *)refreshToken {
+    
+    RACSignal *accessTokenSignal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        
+        NSString *clientIDandSecretString = [NSString stringWithFormat:@"%@:%@", kClientID, kClientSecret];
+        NSString *encodedIDandSec = [NSString stringWithFormat:@"Basic %@", base64enc(clientIDandSecretString)];
+        
+        [manager.requestSerializer setValue:encodedIDandSec forHTTPHeaderField:@"Authorization"];
+        
+        NSDictionary *parameters = @{@"grant_type": @"refresh_token",
+                                     @"refresh_token": refreshToken
+                                     };
+        
+        [manager POST:kToken
+           parameters:parameters
+              success:^(NSURLSessionTask *task, NSDictionary *tokenData) {
+                  _accessToken = [tokenData valueForKey:@"access_token"];
+                  _tokenExpiresIn = [[tokenData valueForKey:@"expires_in"] integerValue];
+                  _tokenStartTime = [[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]] integerValue];
+                  
+                  [[NSNotificationCenter defaultCenter] postNotificationName:AccessTokenDidGetNotification object:nil];
+                  [subscriber sendNext:[tokenData valueForKey:@"access_token"]];
+                  [subscriber sendCompleted];
+              }
+              failure:^(NSURLSessionTask *task, NSError *error) {
+                  NSLog(@"Error: %@", error);
+                  [subscriber sendError:error];
+                  
+              }];
+        return nil;
+    }];
+    return accessTokenSignal;
+}
+
+-(RACSignal *)getUserProfile:(NSString *)accessToken {
+    RACSignal *profileSignal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        
+        NSString *accessHeader = [NSString stringWithFormat:@"Bearer %@", accessToken];
+        [manager.requestSerializer setValue:accessHeader forHTTPHeaderField:@"Authorization"];
+        
+        [manager GET:kCurrectUserProfile
+          parameters:nil
+             success:^(NSURLSessionTask *task, NSDictionary *userProfile) {
+                 _userID = [userProfile valueForKey:@"id"];
+                 _displayName = [userProfile valueForKey:@"display_name"];
+                 
+                 [subscriber sendNext:[userProfile valueForKey:@"id"]];
+                 [subscriber sendCompleted];
+             }
+             failure:^(NSURLSessionTask *task, NSError *error) {
+                 NSLog(@"Error: %@", error);
+                 [subscriber sendError:error];
+             }];
+        return nil;
+    }];
+    return profileSignal;
+}
+
+- (RACSignal *)getPlaylistsWithOffset:(NSString *)offset limit:(NSString *)limit {
+    RACSignal *playlistSignal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+
+        NSString *accessHeader = [NSString stringWithFormat:@"Bearer %@", _accessToken];
+        [manager.requestSerializer setValue:accessHeader forHTTPHeaderField:@"Authorization"];
+        
+        NSString *url = [kUserPlaylistsWildcard stringByReplacingOccurrencesOfString:@"USERID" withString:_userID];
+        
+        NSDictionary *parameters = @{@"offset": offset,
+                                     @"limit": limit,
+                                     };
+        
+        
+        [manager GET:url
+          parameters:parameters
+             success:^(NSURLSessionTask *task, NSDictionary *playlistData) {
+                 
+                 _totalPlaylistsNumber = [[playlistData valueForKey:@"total"] integerValue];
+                 _playlists = [[NSMutableArray alloc] initWithCapacity:_totalPlaylistsNumber];
+                 _tracksInPlaylist = [[NSMutableDictionary alloc] initWithCapacity:_totalPlaylistsNumber];
+                 [_playlists addObjectsFromArray:[playlistData valueForKey:@"items"]];
+
+                 [subscriber sendNext:[playlistData valueForKey:@"items"]];
+                 [subscriber sendCompleted];
+             }
+             failure:^(NSURLSessionTask *task, NSError *error) {
+                 NSLog(@"Error: %@", error);
+                 [subscriber sendError:error];
+             }];
+        
+        return nil;
+    }];
+    
+    return playlistSignal;
 }
 
 #pragma mark -

@@ -9,6 +9,7 @@
 #import <WebKit/WebKit.h>
 #import "AFNetworking.h"
 #import "SpotifyBridge.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
 
 
 @class QSSpotifyPrefPane;

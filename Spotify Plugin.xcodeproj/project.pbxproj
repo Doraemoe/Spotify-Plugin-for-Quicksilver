@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		7D026622190CB7A500953F58 /* QSSpotifyPrefPane.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D026621190CB7A500953F58 /* QSSpotifyPrefPane.xib */; };
 		7D026625190CB7C500953F58 /* QSSpotifyPrefPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D026624190CB7C500953F58 /* QSSpotifyPrefPane.m */; };
+		7D12C8AD1BFAEF6000E200C8 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D12C8AC1BFAEF6000E200C8 /* ReactiveCocoa.framework */; };
+		7D12C8AF1BFAF0AE00E200C8 /* ReactiveCocoa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7D12C8AC1BFAEF6000E200C8 /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7D413BC3190E0563008CECFE /* QSSpotifyUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D413BC2190E0563008CECFE /* QSSpotifyUtil.m */; };
 		7D8875621A198AC8008A8F9B /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D8875501A198AC8008A8F9B /* AFHTTPRequestOperation.m */; };
 		7D8875631A198AC8008A8F9B /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D8875521A198AC8008A8F9B /* AFHTTPRequestOperationManager.m */; };
@@ -51,6 +53,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				7D12C8AF1BFAF0AE00E200C8 /* ReactiveCocoa.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,6 +65,7 @@
 		7D026624190CB7C500953F58 /* QSSpotifyPrefPane.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSpotifyPrefPane.m; sourceTree = "<group>"; };
 		7D0910D4182491D300991277 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		7D0910D61824936900991277 /* Spotify.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Spotify.h; sourceTree = "<group>"; };
+		7D12C8AC1BFAEF6000E200C8 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ReactiveCocoa.framework; sourceTree = "<group>"; };
 		7D413BC1190E0563008CECFE /* QSSpotifyUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSpotifyUtil.h; sourceTree = "<group>"; };
 		7D413BC2190E0563008CECFE /* QSSpotifyUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSpotifyUtil.m; sourceTree = "<group>"; };
 		7D88754F1A198AC8008A8F9B /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
@@ -113,6 +117,7 @@
 				7D88756C1A198BC2008A8F9B /* WebKit.framework in Frameworks */,
 				7DAA9BF1190CF182002652EC /* Cocoa.framework in Frameworks */,
 				7DB4EB0617A4B81E00520108 /* ScriptingBridge.framework in Frameworks */,
+				7D12C8AD1BFAEF6000E200C8 /* ReactiveCocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,6 +174,7 @@
 		7DB4EB0217A4B81E00520108 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7D12C8AC1BFAEF6000E200C8 /* ReactiveCocoa.framework */,
 				7D88756B1A198BC2008A8F9B /* WebKit.framework */,
 				7DB4EB0317A4B81E00520108 /* Cocoa.framework */,
 				7DB4EB0517A4B81E00520108 /* ScriptingBridge.framework */,
@@ -370,7 +376,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7DB4EB1117A4B81E00520108 /* QSPlugIn.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -385,7 +393,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7DB4EB1117A4B81E00520108 /* QSPlugIn.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
