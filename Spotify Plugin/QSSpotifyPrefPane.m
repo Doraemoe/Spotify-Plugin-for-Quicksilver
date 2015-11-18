@@ -19,6 +19,11 @@
                                                  selector:@selector(profileGet:)
                                                      name:UserProfileDidGetNotification
                                                    object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(loadFinished:)
+                                                     name:WebViewProgressFinishedNotification
+                                                   object:nil];
 
     }
     return self;
@@ -54,7 +59,7 @@
         QSSpotifyUtil *su = [QSSpotifyUtil sharedInstance];
         su.needUserID = YES;
         su.needPlaylists = YES;
-        [su attemptLoginWithPrivate:[_privateCheckBox state]];
+        [self attemptLoginWithPrivate:[_privateCheckBox state]];
     }
     else {
         [self startAnimation];
@@ -117,6 +122,66 @@
     //else {
         //NSLog(@"refresh token:%@", su.refreshToken);
     //}
+}
+
+#pragma mark -
+#pragma mark Login Window
+
+- (void)loadFinished:(NSNotification *)note {
+    NSString *url = _web.mainFrame.dataSource.request.URL.absoluteString;
+    
+    if ([url length] > 26 && [[url substringToIndex:kRedirect.length] compare:kRedirect] == NSOrderedSame) {
+        //[self finishAuthWithCallback:url];
+        QSSpotifyUtil *su = [QSSpotifyUtil sharedInstance];
+        
+        [su finishedLoginAndAddCatalogWithCallback:url];
+        
+    }
+}
+
+-(BOOL)windowShouldClose:(id)sender {
+    //[self signOut];
+    return YES;
+}
+
+- (void)createLoginWindow {
+    NSRect frame = NSMakeRect(100, 100, 1024, 768);
+    _codeWindow  = [[NSWindow alloc] initWithContentRect:frame
+                                               styleMask: NSTitledWindowMask | NSClosableWindowMask | NSResizableWindowMask
+                                                 backing:NSBackingStoreBuffered
+                                                   defer:NO];
+    [_codeWindow setReleasedWhenClosed:NO];
+    [_codeWindow setDelegate:self];
+    [_codeWindow setBackgroundColor:[NSColor blueColor]];
+    [_codeWindow setTitle:@"Authorization"];
+    _web = [WebView new];
+    [_codeWindow setContentView:_web];
+    [_codeWindow makeKeyAndOrderFront:NSApp];
+}
+
+- (void)attemptLoginWithPrivate:(NSInteger)allowPrivate {
+        NSString *scope;
+        if (allowPrivate == NSOnState) {
+            scope = @"playlist-modify-public user-library-read user-library-modify user-follow-modify playlist-read-private playlist-modify-private";
+        }
+        else {
+            scope = @"playlist-modify-public user-library-read user-library-modify user-follow-modify";
+        }
+        
+        [self createLoginWindow];
+        
+        NSDictionary *parameters = @{@"response_type": @"code",
+                                     @"redirect_uri": kRedirect,
+                                     @"client_id": kClientID,
+                                     @"scope": scope};
+        
+        NSURLRequest *urlRequest = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"GET"
+                                                                                 URLString:kAuthorization
+                                                                                parameters:parameters
+                                                                                     error:nil];
+        [[_web mainFrame] loadRequest:urlRequest];
+        
+    
 }
 
 @end

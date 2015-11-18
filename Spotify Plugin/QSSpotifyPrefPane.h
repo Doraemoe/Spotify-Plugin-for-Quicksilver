@@ -5,7 +5,7 @@
 //  Created by Jin Yifan on 14-4-27.
 //  Copyright (c) 2014年 Jin Yifan. All rights reserved.
 //
-
+#import <WebKit/WebKit.h>
 
 @interface QSSpotifyPrefPane : QSPreferencePane
     
@@ -15,6 +15,8 @@
 @property (weak) IBOutlet NSButton *privateCheckBox;
 @property (weak) IBOutlet NSButton *notificationCheckBox;
 @property (weak) IBOutlet NSButton *trackNotificationCheckBox;
+@property WebView *web;
+@property NSWindow *codeWindow;
 
 - (IBAction)authenticate:(id)sender;
 - (IBAction)toggleNotification:(id)sender;

@@ -60,5 +60,6 @@
 - (void)addTrack:(NSString *)uri toPlaylist:(NSString *)playlistID;
 - (void)showCurrentTrackNotification;
 
+- (void)finishedLoginAndAddCatalogWithCallback:(NSString *)callback;
 
 @end
