@@ -57,11 +57,11 @@
                                                      name:WebViewProgressStartedNotification
                                                    object:nil];
          */
-        [[NSNotificationCenter defaultCenter] addObserver:self
+/*        [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(loadFinished:)
                                                      name:WebViewProgressFinishedNotification
                                                    object:nil];
-        
+        */
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(playlistsAdded:)
                                                      name:PlaylistItemsAddedJobFinishedNotification
@@ -116,6 +116,7 @@
     }
 }
 */
+/*
 - (void)loadFinished:(NSNotification *)note {
     NSString *url = _web.mainFrame.dataSource.request.URL.absoluteString;
 
@@ -123,7 +124,7 @@
         [self finishAuthWithCallback:url];
     }
 }
-
+*/
 - (void)profileGet:(NSNotification *)note {
     if (_needPlaylists) {
         _needPlaylists = NO;
@@ -166,6 +167,39 @@
 #pragma mark -
 #pragma mark auth
 
+- (void)finishedLoginAndAddCatalogWithCallback:(NSString *)callback {
+    
+    [[[[[self finishLoginWithCallback:callback]
+     flattenMap:^(NSString *requestToken) {
+        return [self getUserProfile];
+    }]
+     flattenMap:^(NSString *userID) {
+         return [self getPlaylistsWithOffset:@"0" limit:@"50" first:YES];
+     }]
+     flattenMap:^(id x) {
+         RACSignal *sigs = [RACSignal createSignal:^ RACDisposable * (id<RACSubscriber> subscriber) {
+             
+             NSInteger totalLeft = _totalPlaylistsNumber - 50;
+             int offset = 50;
+             
+             while (totalLeft > 0) {
+                 [subscriber sendNext:[[self getPlaylistsWithOffset:[NSString stringWithFormat:@"%d", offset] limit:@"50" first:NO] catchTo:[RACSignal empty]]];
+                 totalLeft -= 50;
+                 offset += 50;
+             }
+             
+             [subscriber sendCompleted];
+             return nil;
+         }];
+         
+         RACSignal *flattened = [sigs flatten];
+         return flattened;
+     }]
+     subscribeCompleted:^{
+         NSLog(@"get playlist complete");
+     }];
+}
+/*
 - (void)attemptLoginWithPrivate:(NSInteger)allowPrivate {
     NSString *scope;
     if (allowPrivate == NSOnState) {
@@ -231,7 +265,7 @@
               NSLog(@"Error: %@", error);
           }];
 }
-
+*/
 - (void)requestAccessTokenFromRefreshToken {
     
     NSInteger currentTime = [[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]] integerValue];
@@ -341,8 +375,8 @@
                   
                   _accessToken = [tokenData valueForKey:@"access_token"];
                   _refreshToken = [tokenData valueForKey:@"refresh_token"];
-                  _tokenExpiresIn = [[tokenData valueForKey:@"expires_in"] integerValue];
-                  _tokenStartTime = [[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]] integerValue];
+                  //_tokenExpiresIn = [[tokenData valueForKey:@"expires_in"] integerValue];
+                  //_tokenStartTime = [[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]] integerValue];
                   [self storeRefreshToken];
                   
                   [subscriber sendNext:[tokenData valueForKey:@"access_token"]];
@@ -394,11 +428,11 @@
     return accessTokenSignal;
 }
 
--(RACSignal *)getUserProfile:(NSString *)accessToken {
+-(RACSignal *)getUserProfile {
     RACSignal *profileSignal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         
-        NSString *accessHeader = [NSString stringWithFormat:@"Bearer %@", accessToken];
+        NSString *accessHeader = [NSString stringWithFormat:@"Bearer %@", _accessToken];
         [manager.requestSerializer setValue:accessHeader forHTTPHeaderField:@"Authorization"];
         
         [manager GET:kCurrectUserProfile
@@ -419,27 +453,26 @@
     return profileSignal;
 }
 
-- (RACSignal *)getPlaylistsWithOffset:(NSString *)offset limit:(NSString *)limit {
+- (RACSignal *)getPlaylistsWithOffset:(NSString *)offset limit:(NSString *)limit first:(BOOL)first{
     RACSignal *playlistSignal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 
         NSString *accessHeader = [NSString stringWithFormat:@"Bearer %@", _accessToken];
         [manager.requestSerializer setValue:accessHeader forHTTPHeaderField:@"Authorization"];
-        
         NSString *url = [kUserPlaylistsWildcard stringByReplacingOccurrencesOfString:@"USERID" withString:_userID];
-        
         NSDictionary *parameters = @{@"offset": offset,
                                      @"limit": limit,
                                      };
         
-        
         [manager GET:url
           parameters:parameters
              success:^(NSURLSessionTask *task, NSDictionary *playlistData) {
-                 
-                 _totalPlaylistsNumber = [[playlistData valueForKey:@"total"] integerValue];
-                 _playlists = [[NSMutableArray alloc] initWithCapacity:_totalPlaylistsNumber];
-                 _tracksInPlaylist = [[NSMutableDictionary alloc] initWithCapacity:_totalPlaylistsNumber];
+                 if (first) {
+                     _totalPlaylistsNumber = [[playlistData valueForKey:@"total"] integerValue];
+                     _playlists = [[NSMutableArray alloc] initWithCapacity:_totalPlaylistsNumber];
+                     _tracksInPlaylist = [[NSMutableDictionary alloc] initWithCapacity:_totalPlaylistsNumber];
+
+                 }
                  [_playlists addObjectsFromArray:[playlistData valueForKey:@"items"]];
 
                  [subscriber sendNext:[playlistData valueForKey:@"items"]];

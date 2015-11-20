@@ -50,7 +50,7 @@
 + (QSSpotifyUtil *)sharedInstance;
 
 
-- (void)attemptLoginWithPrivate:(NSInteger)allowPrivate;
+//- (void)attemptLoginWithPrivate:(NSInteger)allowPrivate;
 - (void)signOut;
 - (void)saveSongWithID:(NSString *)ID;
 - (void)followArtistWithID:(NSString *)ID;
@@ -61,5 +61,4 @@
 - (void)showCurrentTrackNotification;
 
 - (void)finishedLoginAndAddCatalogWithCallback:(NSString *)callback;
-
 @end
