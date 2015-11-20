@@ -51,17 +51,7 @@
         _tracksInPlaylist = nil;
 
         _Spotify = QSSpotify();
-        /*
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(loadStart:)
-                                                     name:WebViewProgressStartedNotification
-                                                   object:nil];
-         */
-/*        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(loadFinished:)
-                                                     name:WebViewProgressFinishedNotification
-                                                   object:nil];
-        */
+
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(playlistsAdded:)
                                                      name:PlaylistItemsAddedJobFinishedNotification
@@ -107,24 +97,7 @@
     }
 
 }
-/*
-- (void)loadStart:(NSNotification *)note {
-    NSString *url = _web.mainFrame.provisionalDataSource.request.URL.absoluteString;
-    
-    if ([url length] > 26 && [[url substringToIndex:kRedirect.length] compare:kRedirect] == NSOrderedSame) {
-        [self finishAuthWithCallback:url];
-    }
-}
-*/
-/*
-- (void)loadFinished:(NSNotification *)note {
-    NSString *url = _web.mainFrame.dataSource.request.URL.absoluteString;
 
-    if ([url length] > 26 && [[url substringToIndex:kRedirect.length] compare:kRedirect] == NSOrderedSame) {
-        [self finishAuthWithCallback:url];
-    }
-}
-*/
 - (void)profileGet:(NSNotification *)note {
     if (_needPlaylists) {
         _needPlaylists = NO;
@@ -170,13 +143,13 @@
 - (void)finishedLoginAndAddCatalogWithCallback:(NSString *)callback {
     
     [[[[[self finishLoginWithCallback:callback]
-     flattenMap:^(NSString *requestToken) {
+     flattenMap:^(id empty) {
         return [self getUserProfile];
     }]
-     flattenMap:^(NSString *userID) {
+     flattenMap:^(id empty) {
          return [self getPlaylistsWithOffset:@"0" limit:@"50" first:YES];
      }]
-     flattenMap:^(id x) {
+     flattenMap:^(id empty) {
          RACSignal *sigs = [RACSignal createSignal:^ RACDisposable * (id<RACSubscriber> subscriber) {
              
              NSInteger totalLeft = _totalPlaylistsNumber - 50;
@@ -199,73 +172,7 @@
          NSLog(@"get playlist complete");
      }];
 }
-/*
-- (void)attemptLoginWithPrivate:(NSInteger)allowPrivate {
-    NSString *scope;
-    if (allowPrivate == NSOnState) {
-        scope = @"playlist-modify-public user-library-read user-library-modify user-follow-modify playlist-read-private playlist-modify-private";
-    }
-    else {
-        scope = @"playlist-modify-public user-library-read user-library-modify user-follow-modify";
-    }
-    
-    [self createLoginWindow];
 
-    NSDictionary *parameters = @{@"response_type": @"code",
-                                 @"redirect_uri": kRedirect,
-                                 @"client_id": kClientID,
-                                 @"scope": scope};
-    
-    NSURLRequest *urlRequest = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"GET"
-                                                                             URLString:kAuthorization
-                                                                            parameters:parameters
-                                                                                 error:nil];
-    [[_web mainFrame] loadRequest:urlRequest];
-    
-}
-
--(BOOL)windowShouldClose:(id)sender {
-    //NSString *url = _web.mainFrame.dataSource.request.URL.absoluteString;
-    //NSLog(@"url is: %@", url);
-    [self signOut];
-    return YES;
-}
-
-- (void)finishAuthWithCallback:(NSString *)callback {
-    
-    [_codeWindow close];
-    
-    //AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
-    NSString *clientIDandSecretString = [NSString stringWithFormat:@"%@:%@", kClientID, kClientSecret];
-    NSString *encodedIDandSec = [NSString stringWithFormat:@"Basic %@", base64enc(clientIDandSecretString)];
-    
-    [manager.requestSerializer setValue:encodedIDandSec forHTTPHeaderField:@"Authorization"];
-    
-    NSDictionary *parameters = @{@"grant_type": @"authorization_code",
-                                 @"code": [callback substringFromIndex:33],
-                                 @"redirect_uri": kRedirect
-                                 };
-
-    
-    [manager POST:kToken
-       parameters:parameters
-          success:^(NSURLSessionTask *task, NSDictionary *tokenData) {
-              
-              _accessToken = [tokenData valueForKey:@"access_token"];
-              _refreshToken = [tokenData valueForKey:@"refresh_token"];
-              _tokenExpiresIn = [[tokenData valueForKey:@"expires_in"] integerValue];
-              _tokenStartTime = [[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]] integerValue];
-              [self storeRefreshToken];
-              
-              [[NSNotificationCenter defaultCenter] postNotificationName:AccessTokenDidGetNotification object:nil];
-          }
-          failure:^(NSURLSessionTask *task, NSError *error) {
-              NSLog(@"Error: %@", error);
-          }];
-}
-*/
 - (void)requestAccessTokenFromRefreshToken {
     
     NSInteger currentTime = [[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]] integerValue];
@@ -379,7 +286,7 @@
                   //_tokenStartTime = [[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]] integerValue];
                   [self storeRefreshToken];
                   
-                  [subscriber sendNext:[tokenData valueForKey:@"access_token"]];
+                  [subscriber sendNext:[RACSignal empty]];
                   [subscriber sendCompleted];
               }
               failure:^(NSURLSessionTask *task, NSError *error) {
@@ -393,7 +300,7 @@
 }
 
 
--(RACSignal *)getAccessTokenFromRefreshToken:(NSString *)refreshToken {
+-(RACSignal *)getAccessTokenFromRefreshToken {
     
     RACSignal *accessTokenSignal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -404,7 +311,7 @@
         [manager.requestSerializer setValue:encodedIDandSec forHTTPHeaderField:@"Authorization"];
         
         NSDictionary *parameters = @{@"grant_type": @"refresh_token",
-                                     @"refresh_token": refreshToken
+                                     @"refresh_token": _refreshToken
                                      };
         
         [manager POST:kToken
@@ -415,7 +322,7 @@
                   _tokenStartTime = [[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]] integerValue];
                   
                   [[NSNotificationCenter defaultCenter] postNotificationName:AccessTokenDidGetNotification object:nil];
-                  [subscriber sendNext:[tokenData valueForKey:@"access_token"]];
+                  [subscriber sendNext:[RACSignal empty]];
                   [subscriber sendCompleted];
               }
               failure:^(NSURLSessionTask *task, NSError *error) {
@@ -441,7 +348,7 @@
                  _userID = [userProfile valueForKey:@"id"];
                  _displayName = [userProfile valueForKey:@"display_name"];
                  
-                 [subscriber sendNext:[userProfile valueForKey:@"id"]];
+                 [subscriber sendNext:[RACSignal empty]];
                  [subscriber sendCompleted];
              }
              failure:^(NSURLSessionTask *task, NSError *error) {
@@ -475,11 +382,13 @@
                  }
                  [_playlists addObjectsFromArray:[playlistData valueForKey:@"items"]];
 
-                 [subscriber sendNext:[playlistData valueForKey:@"items"]];
+                 [subscriber sendNext:[RACSignal empty]];
                  [subscriber sendCompleted];
              }
              failure:^(NSURLSessionTask *task, NSError *error) {
                  NSLog(@"Error: %@", error);
+                 NSHTTPURLResponse* r = (NSHTTPURLResponse*)task.response;
+                 NSLog( @"success: %ld", (long)r.statusCode );
                  [subscriber sendError:error];
              }];
         
@@ -487,6 +396,76 @@
     }];
     
     return playlistSignal;
+}
+
+- (RACSignal *)getTracksInPlaylistWithEndpoint:(NSString *)endpoint name:(NSString *) name Offset:(NSString *)offset limit:(NSString *)limit {
+    RACSignal *trackInPlaylistSignal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        
+        NSString *accessHeader = [NSString stringWithFormat:@"Bearer %@", _accessToken];
+        [manager.requestSerializer setValue:accessHeader forHTTPHeaderField:@"Authorization"];
+        
+        NSDictionary *parameters = @{@"fields": @"total,items(track(name,id,uri,album(images),artists(name)))"};
+        
+        [manager GET:endpoint
+          parameters:parameters
+             success:^(NSURLSessionTask *task, NSDictionary *tracksData) {
+                 NSMutableArray *tracksArray = [[NSMutableArray alloc] initWithCapacity:[[tracksData valueForKey:@"total"] integerValue]];
+                 //NSLog(@"%@", tracksData);
+                 
+                 for (NSDictionary *track in [[tracksData valueForKey:@"items"] valueForKey:@"track"]) {
+                     NSString *name = [track valueForKey:@"name"];
+                     NSString *trackID = [track valueForKey:@"id"];
+                     NSString *uri = [track valueForKey:@"uri"];
+                     NSArray *artistsName = [[track valueForKey:@"artists"] valueForKey:@"name"];
+                     NSArray *url = [[[track valueForKey:@"album"] valueForKey:@"images"] valueForKey:@"url"];
+                     
+                     //NSLog(@"name: %@ trackID: %@ uri: %@ artistName: %@ url: %@", name, trackID, uri, artistsName, url);
+                     
+                     if ((NSNull *)artistsName == [NSNull null] || artistsName == nil || [artistsName count] < 1 ) {
+                         continue;
+                     }
+                     if ((NSNull *)url == [NSNull null] || url == nil || [url count] < 2 ) {
+                         continue;
+                     }
+                     
+                     if ((NSNull *)name != [NSNull null] &&
+                         (NSNull *)uri != [NSNull null] &&
+                         (NSNull *)artistsName[0] != [NSNull null] &&
+                         (NSNull *)url != [NSNull null] &&
+                         (NSNull *)trackID != [NSNull null] &&
+                         (NSNull *)url[1] != [NSNull null]) {
+                         
+                         QSObject *newObject = [QSObject objectWithString:name];
+                         [newObject setLabel:name];
+                         [newObject setObject:uri forType:QSSpotifyTrackType];
+                         [newObject setPrimaryType:QSSpotifyTrackType];
+                         [newObject setIdentifier:[@"SpotifyTrack" stringByAppendingString:trackID]];
+                         [newObject setDetails:artistsName[0]];
+                         [newObject setObject:url[1] forMeta:@"coverImage"];
+                         
+                         
+                         [tracksArray addObject:newObject];
+                     }
+                 }
+                 
+                 
+                 [_tracksInPlaylist setObject:tracksArray forKey:name];
+                 //NSLog(@"%@", [_tracksInPlaylist objectForKey:playlistName]);
+                 [subscriber sendNext:[RACSignal empty]];
+                 [subscriber sendCompleted];
+             }
+             failure:^(NSURLSessionTask *task, NSError *error) {
+                 NSLog(@"Error: %@", error);
+                 [subscriber sendError:error];
+
+             }];
+
+        return nil;
+    }];
+    
+    return trackInPlaylistSignal;
 }
 
 #pragma mark -

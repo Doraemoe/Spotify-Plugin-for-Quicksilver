@@ -133,7 +133,7 @@
     if ([url length] > 26 && [[url substringToIndex:kRedirect.length] compare:kRedirect] == NSOrderedSame) {
         //[self finishAuthWithCallback:url];
         QSSpotifyUtil *su = [QSSpotifyUtil sharedInstance];
-        
+        [_codeWindow close];
         [su finishedLoginAndAddCatalogWithCallback:url];
         
     }
