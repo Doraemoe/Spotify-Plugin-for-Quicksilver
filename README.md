@@ -1,8 +1,6 @@
 Spotify Quicksilver Plugin
 ==========================
 
-DDL: [Dropbox](https://dl.dropboxusercontent.com/u/1660391/Spotify%20Plugin.qsplugin.zip)
-
 Support 12 different commands to control Spotify.
 
 Commands include:
