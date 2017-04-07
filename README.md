@@ -1,5 +1,6 @@
 Spotify Quicksilver Plugin
 ==========================
+Please download this plugin from the [release page](https://github.com/Doraemoe/Spotify-Plugin-for-Quicksilver/releases).
 
 Support 12 different commands to control Spotify.
 
